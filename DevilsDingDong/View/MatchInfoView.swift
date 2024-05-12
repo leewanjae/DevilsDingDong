@@ -16,12 +16,34 @@
 import UIKit
 
 class MatchInfoView: UIViewController {
-    lazy var titleLabel: UILabel = {
+    var buttons: [UIButton] = []
+    lazy var container: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .blue
+        return view
+    }()
+    lazy var season: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.text = "맨체스터유나이티드 일정"
+        label.text = PageElement.season
+        label.font = UIFont.systemFont(ofSize: 25, weight: .medium)
         return label
+    }()
+    
+    lazy var scrollContainer: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = .green
+        return scrollView
+    }()
+    
+    lazy var dateContainer: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 20
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
     }()
     
     var isRedirected: Bool = false {
@@ -36,27 +58,48 @@ class MatchInfoView: UIViewController {
         setUI()
     }
     
-    
-    func setUI() {
-        self.view.backgroundColor = .white
+    private func setUI() {
+        view.backgroundColor = UIColor.bgColor
+        self.navigationItem.title = PageElement.matchInfoNavTitle
+        
         Addview()
         setAutoLayout()
     }
     
-    func Addview() {
-        view.addSubview(titleLabel)
+    private func Addview() {
+        view.addSubview(container)
+        
+        container.addSubview(season)
+        container.addSubview(scrollContainer)
+        
+        scrollContainer.addSubview(dateContainer)
+        addMonthBtn()
     }
     
-    func setAutoLayout() {
+    private func setAutoLayout() {
         let safeArea = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor),
-            titleLabel.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor)
+            container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            container.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            container.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2),
+            
+            season.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+            
+            scrollContainer.topAnchor.constraint(equalTo: season.bottomAnchor, constant: 10),
+            scrollContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollContainer.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 0.5),
+            
+            dateContainer.topAnchor.constraint(equalTo: scrollContainer.topAnchor),
+            dateContainer.bottomAnchor.constraint(equalTo: scrollContainer.bottomAnchor),
+            dateContainer.trailingAnchor.constraint(equalTo: scrollContainer.trailingAnchor),
+            dateContainer.leadingAnchor.constraint(equalTo: scrollContainer.leadingAnchor),
+            dateContainer.centerYAnchor.constraint(equalTo: scrollContainer.centerYAnchor)
         ])
     }
     
-    
-    func notificationRedirected() {
+    private func notificationRedirected() {
         if isRedirected {
             if let navigationController = navigationController {
                 let targetView = MatchInfoDetailView()
@@ -69,7 +112,7 @@ class MatchInfoView: UIViewController {
         }
     }
     
-     func setNotification() {
+    private func setNotification() {
         let center = UNUserNotificationCenter.current()
         let content = UNMutableNotificationContent()
         content.title = "DevilsDingDong"
@@ -83,6 +126,35 @@ class MatchInfoView: UIViewController {
             if let error = error {
                 print("Error = \(error.localizedDescription)")
             }
+        }
+    }
+    
+    private func addMonthBtn() {
+        for month in Month.months {
+            let createBtn = createMonthBtn(month: month)
+            dateContainer.addArrangedSubview(createBtn)
+            buttons.append(createBtn)
+        }
+    }
+    
+    private func createMonthBtn(month: String) -> UIButton {
+        let button = UIButton()
+        button.setTitle(month, for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(tappedMonthBtn), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }
+    
+    @objc func tappedMonthBtn(sender: UIButton) {
+        if let month = sender.title(for: .normal) {
+            print("selected: \(month)")
+            for button in buttons {
+                button.isSelected = false
+                button.setTitleColor(.black, for: .normal)
+            }
+            sender.isSelected = true
+            sender.setTitleColor(.accentColor, for: .normal)
         }
     }
 }
