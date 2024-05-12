@@ -8,8 +8,8 @@
 import Foundation
 
 struct PageElement {
-    static let matchInfoNavTitle = "맨체스터유나이티드 일정"
-    static let season = "2023-24"
+    static let matchInfoNavTitle = "경기 일정"
+    static let season = "2023-24시즌"
 }
 
 struct Month {
