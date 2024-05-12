@@ -16,6 +16,7 @@
 import UIKit
 
 class MatchInfoView: UIViewController {
+    var filteredMatches: [Match] = []
     var buttons: [UIButton] = []
     lazy var container: UIView = {
         let view = UIView()
@@ -50,7 +51,13 @@ class MatchInfoView: UIViewController {
         return tableView
     }()
     
-    var isRedirected: Bool = false {
+    var selectedMonth: String? {
+        didSet {
+            updateTableSelectedMonth()
+        }
+    }
+    
+    lazy var isRedirected: Bool = false {
         didSet { // 변경 확인
             print("isRedirected가 변경되었습니다.: \(isRedirected)")
             notificationRedirected()
@@ -60,6 +67,7 @@ class MatchInfoView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        filteredMatches = Match.data
         tableView.register(MatchInfoCell.self, forCellReuseIdentifier: MatchInfoCell.id)
         tableView.delegate = self
         tableView.dataSource = self
@@ -161,9 +169,21 @@ class MatchInfoView: UIViewController {
         return button
     }
     
+    private func updateTableSelectedMonth() {
+        guard let month = selectedMonth else {
+            filteredMatches = Match.data
+            tableView.reloadData()
+            return
+        }
+        
+        filteredMatches = Match.data.filter{$0.date.contains(month)}
+        tableView.reloadData()
+    }
+    
     @objc func tappedMonthBtn(sender: UIButton) {
         if let month = sender.title(for: .normal) {
             print("selected: \(month)")
+            selectedMonth = month
             for button in buttons {
                 button.isSelected = false
                 button.setTitleColor(.black, for: .normal)
@@ -176,13 +196,12 @@ class MatchInfoView: UIViewController {
 
 extension MatchInfoView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Match.data.count
+        return filteredMatches.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MatchInfoCell.id, for: indexPath) as? MatchInfoCell else { return UITableViewCell() }
-        
-        let matchInfo = Match.data[indexPath.row]
+        let matchInfo = filteredMatches[indexPath.row]
         let state = matchInfo.finished ?? false ? "종료" : "예정"
         cell.configure(matchDate: matchInfo.date, matchTime: matchInfo.time, stadium: matchInfo.stadium, state: state, enemy: matchInfo.enemy, round: "\(matchInfo.round ?? 0)R")
         return cell
