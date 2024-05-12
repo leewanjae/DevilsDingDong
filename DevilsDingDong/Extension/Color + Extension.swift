@@ -10,4 +10,6 @@ import UIKit
 extension UIColor {
     static let accentColor = UIColor(named: "AccentColor")
     static let bgColor = UIColor(named: "bg")
+    static let cellHeaderBGColor = UIColor(named: "headerbg")
+    static let subTextColor = UIColor(named: "subText")
 }

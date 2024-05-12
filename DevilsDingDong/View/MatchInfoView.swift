@@ -20,7 +20,6 @@ class MatchInfoView: UIViewController {
     lazy var container: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .blue
         return view
     }()
     lazy var season: UILabel = {
@@ -34,7 +33,6 @@ class MatchInfoView: UIViewController {
     lazy var scrollContainer: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.backgroundColor = .green
         return scrollView
     }()
     
@@ -44,6 +42,12 @@ class MatchInfoView: UIViewController {
         stackView.spacing = 20
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
+    }()
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
     }()
     
     var isRedirected: Bool = false {
@@ -56,11 +60,15 @@ class MatchInfoView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        tableView.register(MatchInfoCell.self, forCellReuseIdentifier: MatchInfoCell.id)
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     private func setUI() {
         view.backgroundColor = UIColor.bgColor
         self.navigationItem.title = PageElement.matchInfoNavTitle
+        navigationItem.largeTitleDisplayMode = .never
         
         Addview()
         setAutoLayout()
@@ -74,6 +82,8 @@ class MatchInfoView: UIViewController {
         
         scrollContainer.addSubview(dateContainer)
         addMonthBtn()
+        
+        view.addSubview(tableView)
     }
     
     private func setAutoLayout() {
@@ -95,7 +105,12 @@ class MatchInfoView: UIViewController {
             dateContainer.bottomAnchor.constraint(equalTo: scrollContainer.bottomAnchor),
             dateContainer.trailingAnchor.constraint(equalTo: scrollContainer.trailingAnchor),
             dateContainer.leadingAnchor.constraint(equalTo: scrollContainer.leadingAnchor),
-            dateContainer.centerYAnchor.constraint(equalTo: scrollContainer.centerYAnchor)
+            dateContainer.centerYAnchor.constraint(equalTo: scrollContainer.centerYAnchor),
+            
+            tableView.topAnchor.constraint(equalTo: container.bottomAnchor, constant: 20),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
     
@@ -156,5 +171,24 @@ class MatchInfoView: UIViewController {
             sender.isSelected = true
             sender.setTitleColor(.accentColor, for: .normal)
         }
+    }
+}
+
+extension MatchInfoView: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return Match.data.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MatchInfoCell.id, for: indexPath) as? MatchInfoCell else { return UITableViewCell() }
+        
+        let matchInfo = Match.data[indexPath.row]
+        let state = matchInfo.finished ?? false ? "종료" : "예정"
+        cell.configure(matchDate: matchInfo.date, matchTime: matchInfo.time, stadium: matchInfo.stadium, state: state, enemy: matchInfo.enemy, round: "\(matchInfo.round ?? 0)R")
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
 }
