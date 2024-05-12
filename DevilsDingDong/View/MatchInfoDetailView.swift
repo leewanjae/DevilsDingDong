@@ -23,7 +23,7 @@ class MatchInfoDetailView: UIViewController {
     }
     
     func setUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.bg
         view.addSubview(titleLabel)
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
