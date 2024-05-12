@@ -16,15 +16,14 @@
 import UIKit
 
 class MatchInfoView: UIViewController {
-    lazy var testBtn: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Test", for: .normal)
-        button.setTitleColor(UIColor.black, for: .normal)
-        button.backgroundColor = .green
-        button.addTarget(self, action: #selector(setNotification), for: .touchUpInside)
-        return button
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.text = "맨체스터유나이티드 일정"
+        return label
     }()
+    
     var isRedirected: Bool = false {
         didSet { // 변경 확인
             print("isRedirected가 변경되었습니다.: \(isRedirected)")
@@ -37,16 +36,25 @@ class MatchInfoView: UIViewController {
         setUI()
     }
     
+    
     func setUI() {
-        view.backgroundColor = .white
-        view.addSubview(testBtn)
+        self.view.backgroundColor = .white
+        Addview()
+        setAutoLayout()
+    }
+    
+    func Addview() {
+        view.addSubview(titleLabel)
+    }
+    
+    func setAutoLayout() {
+        let safeArea = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            testBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            testBtn.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            testBtn.heightAnchor.constraint(equalToConstant: 200),
-            testBtn.widthAnchor.constraint(equalToConstant: 200)
+            titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            titleLabel.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor)
         ])
     }
+    
     
     func notificationRedirected() {
         if isRedirected {
@@ -61,7 +69,7 @@ class MatchInfoView: UIViewController {
         }
     }
     
-    @objc func setNotification() {
+     func setNotification() {
         let center = UNUserNotificationCenter.current()
         let content = UNMutableNotificationContent()
         content.title = "DevilsDingDong"
