@@ -37,14 +37,15 @@ class MatchInfoCell: UITableViewCell {
     lazy var matchTime: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.textColor = .white
         return label
     }()
     
     lazy var stadium: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 8, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = UIColor.subTextColor
         label.numberOfLines = 0
         return label
@@ -53,7 +54,7 @@ class MatchInfoCell: UITableViewCell {
     lazy var manutd: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         label.text = Teams.manUtd
         return label
     }()
@@ -61,7 +62,7 @@ class MatchInfoCell: UITableViewCell {
     lazy var state: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 10, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = UIColor.subTextColor
         return label
     }()
@@ -69,14 +70,14 @@ class MatchInfoCell: UITableViewCell {
     lazy var enemy: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         return label
     }()
     
     lazy var round: UILabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textColor = UIColor.subTextColor
         return label
     }()
@@ -113,9 +114,9 @@ class MatchInfoCell: UITableViewCell {
     private func addView() {
         contentView.addSubview(matchDateContianer)
         matchDateContianer.addSubview(matchDate)
+        matchDateContianer.addSubview(matchTime)
         
         contentView.addSubview(matchInfoContainer)
-        matchInfoContainer.addSubview(matchTime)
         matchInfoContainer.addSubview(stadium)
         matchInfoContainer.addSubview(manutd)
         matchInfoContainer.addSubview(state)
@@ -128,21 +129,21 @@ class MatchInfoCell: UITableViewCell {
             matchDateContianer.topAnchor.constraint(equalTo: contentView.topAnchor),
             matchDateContianer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             matchDateContianer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            matchDateContianer.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.4),
+            matchDateContianer.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.3),
             matchDate.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
             matchDate.centerYAnchor.constraint(equalTo: matchDateContianer.centerYAnchor),
+            matchTime.leadingAnchor.constraint(equalTo: matchDate.trailingAnchor, constant: 10),
+            matchTime.centerYAnchor.constraint(equalTo: matchDateContianer.centerYAnchor),
             
             matchInfoContainer.topAnchor.constraint(equalTo: matchDateContianer.bottomAnchor),
             matchInfoContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             matchInfoContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             matchInfoContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            matchInfoContainer.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.6),
+            matchInfoContainer.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.7),
             
             // matchInfoContainer에 matchTime, stadium, manutd, enemy, round 들어가기
-            matchTime.leadingAnchor.constraint(equalTo: matchDate.leadingAnchor),
-            matchTime.centerYAnchor.constraint(equalTo: matchInfoContainer.centerYAnchor),
-            stadium.leadingAnchor.constraint(equalTo: matchTime.trailingAnchor, constant: 15),
-            stadium.widthAnchor.constraint(equalToConstant: 50),
+            stadium.leadingAnchor.constraint(equalTo: matchDate.leadingAnchor),
+            stadium.widthAnchor.constraint(equalToConstant: 70),
             stadium.centerYAnchor.constraint(equalTo: matchInfoContainer.centerYAnchor),
             state.centerXAnchor.constraint(equalTo: matchInfoContainer.centerXAnchor),
             state.centerYAnchor.constraint(equalTo: matchInfoContainer.centerYAnchor),

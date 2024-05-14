@@ -10,6 +10,7 @@ import NotificationCenter
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let center = UNUserNotificationCenter.current()
@@ -38,10 +39,23 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        DispatchQueue.main.async {
-            let matchInfoView = MatchInfoView()
-            matchInfoView.isRedirected = true
-            completionHandler()
+        let userInfo = response.notification.request.content.userInfo
+        
+        let matchInfoView = MatchInfoView()
+        matchInfoView.isRedirected = true
+        if let matchID = userInfo["MatchID"] as? Int {
+            matchInfoView.selectedMatchID = matchID
         }
+        
+        // Presenting MatchInfoView within a navigation controller
+        let navigationController = UINavigationController(rootViewController: matchInfoView)
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let sceneDelegate = windowScene.delegate as? SceneDelegate {
+            sceneDelegate.window?.rootViewController = navigationController
+            sceneDelegate.window?.makeKeyAndVisible()
+        }
+        
+        completionHandler()
     }
 }
+
