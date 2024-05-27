@@ -10,7 +10,15 @@ import UIKit
 class MatchInfoCell: UITableViewCell {
     static let id = "MatchInfoCell"
     
-    // matchDateContainer에 MatchDate 넣기
+    lazy var container: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 10
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    // matchDateContainer에 MatchDate, matchTime 넣기
     lazy var matchDateContianer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -26,14 +34,6 @@ class MatchInfoCell: UITableViewCell {
         return label
     }()
     
-    // matchInfoContainer에 matchTime, stadium, manutd, enemy, round 들어가기
-    lazy var matchInfoContainer: UIView = {
-       let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.bgColor
-        return view
-    }()
-    
     lazy var matchTime: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -41,6 +41,16 @@ class MatchInfoCell: UITableViewCell {
         label.textColor = .white
         return label
     }()
+    
+    // matchInfoContainer에 stadium, manutd, enemy, round 들어가기
+    lazy var matchInfoContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 12
+        return view
+    }()
+    
     
     lazy var stadium: UILabel = {
         let label = UILabel()
@@ -85,12 +95,13 @@ class MatchInfoCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
+        self.backgroundColor = .bgColor
         setUI()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16))
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
     }
     
     required init?(coder: NSCoder) {
@@ -104,6 +115,12 @@ class MatchInfoCell: UITableViewCell {
         self.state.text = state
         self.enemy.text = enemy
         self.round.text = round
+        
+        if state == "종료" {
+            self.state.textColor = .red.withAlphaComponent(0.7)
+        } else if state == "예정" {
+            self.state.textColor = .blue.withAlphaComponent(0.7)
+        }
     }
     
     private func setUI() {
@@ -112,11 +129,13 @@ class MatchInfoCell: UITableViewCell {
     }
     
     private func addView() {
-        contentView.addSubview(matchDateContianer)
+        contentView.addSubview(container)
+        container.addSubview(matchDateContianer)
+        container.addSubview(matchInfoContainer)
+        
         matchDateContianer.addSubview(matchDate)
         matchDateContianer.addSubview(matchTime)
         
-        contentView.addSubview(matchInfoContainer)
         matchInfoContainer.addSubview(stadium)
         matchInfoContainer.addSubview(manutd)
         matchInfoContainer.addSubview(state)
@@ -126,20 +145,27 @@ class MatchInfoCell: UITableViewCell {
     
     private func setAutoLayout() {
         NSLayoutConstraint.activate([
-            matchDateContianer.topAnchor.constraint(equalTo: contentView.topAnchor),
-            matchDateContianer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            matchDateContianer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            matchDateContianer.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.3),
+            
+            container.topAnchor.constraint(equalTo: contentView.topAnchor),
+            container.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            container.heightAnchor.constraint(equalTo: contentView.heightAnchor),
+            
+            matchDateContianer.topAnchor.constraint(equalTo: container.topAnchor),
+            matchDateContianer.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            matchDateContianer.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            matchDateContianer.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 0.3),
+            
             matchDate.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
             matchDate.centerYAnchor.constraint(equalTo: matchDateContianer.centerYAnchor),
             matchTime.leadingAnchor.constraint(equalTo: matchDate.trailingAnchor, constant: 10),
             matchTime.centerYAnchor.constraint(equalTo: matchDateContianer.centerYAnchor),
             
             matchInfoContainer.topAnchor.constraint(equalTo: matchDateContianer.bottomAnchor),
-            matchInfoContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            matchInfoContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            matchInfoContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            matchInfoContainer.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.7),
+            matchInfoContainer.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            matchInfoContainer.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            matchInfoContainer.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+            matchInfoContainer.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 0.7),
             
             // matchInfoContainer에 matchTime, stadium, manutd, enemy, round 들어가기
             stadium.leadingAnchor.constraint(equalTo: matchDate.leadingAnchor),
