@@ -23,6 +23,7 @@ class MatchInfoView: UIViewController {
     lazy var scrollContainer: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsHorizontalScrollIndicator = false
         return scrollView
     }()
     
