@@ -9,7 +9,7 @@ import Foundation
 
 struct PageElement {
     static let matchInfoNavTitle = "경기 일정"
-    static let season = "2023-24시즌"
+    static let season = "2023-24"
 }
 
 struct Month {
