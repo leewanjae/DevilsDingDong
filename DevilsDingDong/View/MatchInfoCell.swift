@@ -47,7 +47,6 @@ class MatchInfoCell: UITableViewCell {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.layer.cornerRadius = 12
         return view
     }()
     
