@@ -63,12 +63,12 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		CC27E4402BF0A82000DC8ACF /* Util */ = {
+		CC27E4402BF0A82000DC8ACF /* App */ = {
 			isa = PBXGroup;
 			children = (
 				CC27E43E2BF0A81200DC8ACF /* AppStrings.swift */,
 			);
-			path = Util;
+			path = App;
 			sourceTree = "<group>";
 		};
 		CC27E4442BF0D3E000DC8ACF /* Extension */ = {
@@ -99,7 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				CC27E4442BF0D3E000DC8ACF /* Extension */,
-				CC27E4402BF0A82000DC8ACF /* Util */,
+				CC27E4402BF0A82000DC8ACF /* App */,
 				CC27E43D2BF0A78900DC8ACF /* View */,
 				CC27E43C2BF0A77F00DC8ACF /* Resource */,
 				CC4FBC632BEEF67800B23124 /* Model */,

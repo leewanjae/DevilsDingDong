@@ -1,18 +1,3 @@
-//
-//  MatchInfoView.swift
-//  DevilsDingDong
-//
-//  Created by LeeWanJae on 5/7/24.
-//
-
-
-// TODO: Push 알람 클릭시 MatchInfoDetail로 뷰 이동
-/**
- 푸쉬 알람을 클릭하면 메인화면인 MatchInfoView로 도착 -> Appdelegate에 있는 userNotificationCenter의 didReceive에서 isRedirected를 true로 변경 -> MatchInfoView의 notificationRedirected 함수 실행 -> 화면 전환 성공
- 문제  -> notificationRedirected 함수에서 네비게이션 nil이 발생.
- */
-// TODO: Push 알림 경기 일정에 매핑하기
-// TODO: MatchInfoDeail 뷰로 이동 시 경기 데이터 함께 넘겨주기
 import UIKit
 
 class MatchInfoView: UIViewController {
@@ -21,6 +6,7 @@ class MatchInfoView: UIViewController {
     var selectedMatchID: Int?
     var filteredMatches: [Match] = []
     var buttons: [UIButton] = []
+    
     lazy var container: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -51,6 +37,8 @@ class MatchInfoView: UIViewController {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.showsVerticalScrollIndicator = false
+        tableView.backgroundColor = .bgColor
         return tableView
     }()
     
@@ -59,11 +47,7 @@ class MatchInfoView: UIViewController {
             updateTableSelectedMonth()
         }
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -73,10 +57,11 @@ class MatchInfoView: UIViewController {
         tableView.dataSource = self
         setNotification()
         notificationRedirected()
+        tableView.separatorStyle = .none
     }
     
     private func setUI() {
-        view.backgroundColor = UIColor.bgColor
+        view.backgroundColor = .bgColor
         self.navigationItem.title = PageElement.matchInfoNavTitle
         navigationItem.largeTitleDisplayMode = .never
         
@@ -102,7 +87,7 @@ class MatchInfoView: UIViewController {
             container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             container.topAnchor.constraint(equalTo: safeArea.topAnchor),
-            container.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.15),
+            container.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
             
             season.centerXAnchor.constraint(equalTo: container.centerXAnchor),
             
@@ -117,10 +102,10 @@ class MatchInfoView: UIViewController {
             dateContainer.leadingAnchor.constraint(equalTo: scrollContainer.leadingAnchor, constant: 15),
             dateContainer.centerYAnchor.constraint(equalTo: scrollContainer.centerYAnchor),
             
-            tableView.topAnchor.constraint(equalTo: container.bottomAnchor, constant: 20),
+            tableView.topAnchor.constraint(equalTo: container.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }
     
