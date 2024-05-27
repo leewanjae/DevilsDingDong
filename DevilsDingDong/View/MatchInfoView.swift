@@ -80,7 +80,7 @@ class MatchInfoView: UIViewController {
            
             scrollContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollContainer.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 1),
+            scrollContainer.heightAnchor.constraint(equalTo: container.heightAnchor),
             
             dateContainer.topAnchor.constraint(equalTo: scrollContainer.topAnchor),
             dateContainer.bottomAnchor.constraint(equalTo: scrollContainer.bottomAnchor),
@@ -88,7 +88,7 @@ class MatchInfoView: UIViewController {
             dateContainer.leadingAnchor.constraint(equalTo: scrollContainer.leadingAnchor, constant: 15),
             dateContainer.centerYAnchor.constraint(equalTo: scrollContainer.centerYAnchor),
             
-            tableView.topAnchor.constraint(equalTo: container.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: container.bottomAnchor, constant: 10),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
@@ -98,7 +98,15 @@ class MatchInfoView: UIViewController {
     private func addMonthBtn() {
         for month in Month.months {
             let monthBtn = createMonthBtn(title: month, action: #selector(tappedMonthBtn))
-            monthBtn.setTitleColor(.white, for: .normal)
+            let boldFont = UIFont.boldSystemFont(ofSize: monthBtn.titleLabel?.font.pointSize ?? 17)
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: boldFont,
+                .foregroundColor: UIColor.white
+            ]
+            let attributedTitle = NSAttributedString(string: month, attributes: attributes)
+            
+            // Set the attributed title for the normal state
+            monthBtn.setAttributedTitle(attributedTitle, for: .normal)
             dateContainer.addArrangedSubview(monthBtn)
             monthButtons.append(monthBtn)
         }
