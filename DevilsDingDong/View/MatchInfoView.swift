@@ -5,28 +5,22 @@ class MatchInfoView: UIViewController {
     var isRedirected: Bool = false
     var selectedMatchID: Int?
     var filteredMatches: [Match] = []
-    var buttons: [UIButton] = []
-    
+    var monthButtons: [UIButton] = []
+    var filterButtons: [UIButton] = []
     lazy var container: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    lazy var season: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = PageElement.season
-        label.font = UIFont.systemFont(ofSize: 25, weight: .medium)
-        return label
-    }()
-    
     lazy var scrollContainer: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsHorizontalScrollIndicator = false
+        scrollView.layer.borderColor = UIColor.black.cgColor
+        scrollView.layer.borderWidth = 0.5
+        scrollView.backgroundColor = .black
         return scrollView
     }()
-    
     lazy var dateContainer: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -34,7 +28,6 @@ class MatchInfoView: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
-    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +35,6 @@ class MatchInfoView: UIViewController {
         tableView.backgroundColor = .bgColor
         return tableView
     }()
-    
     var selectedMonth: String? {
         didSet {
             updateTableSelectedMonth()
@@ -72,13 +64,9 @@ class MatchInfoView: UIViewController {
     
     private func Addview() {
         view.addSubview(container)
-        
-        container.addSubview(season)
         container.addSubview(scrollContainer)
-        
         scrollContainer.addSubview(dateContainer)
         addMonthBtn()
-        
         view.addSubview(tableView)
     }
     
@@ -88,14 +76,11 @@ class MatchInfoView: UIViewController {
             container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             container.topAnchor.constraint(equalTo: safeArea.topAnchor),
-            container.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
-            
-            season.centerXAnchor.constraint(equalTo: container.centerXAnchor),
-            
-            scrollContainer.topAnchor.constraint(equalTo: season.bottomAnchor, constant: 10),
+            container.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+           
             scrollContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollContainer.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 0.5),
+            scrollContainer.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 1),
             
             dateContainer.topAnchor.constraint(equalTo: scrollContainer.topAnchor),
             dateContainer.bottomAnchor.constraint(equalTo: scrollContainer.bottomAnchor),
@@ -112,17 +97,18 @@ class MatchInfoView: UIViewController {
     
     private func addMonthBtn() {
         for month in Month.months {
-            let createBtn = createMonthBtn(month: month)
-            dateContainer.addArrangedSubview(createBtn)
-            buttons.append(createBtn)
+            let monthBtn = createMonthBtn(title: month, action: #selector(tappedMonthBtn))
+            monthBtn.setTitleColor(.white, for: .normal)
+            dateContainer.addArrangedSubview(monthBtn)
+            monthButtons.append(monthBtn)
         }
     }
-    
-    private func createMonthBtn(month: String) -> UIButton {
+  
+    private func createMonthBtn(title: String, action: Selector) -> UIButton {
         let button = UIButton()
-        button.setTitle(month, for: .normal)
+        button.setTitle(title, for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(tappedMonthBtn), for: .touchUpInside)
+        button.addTarget(self, action: action, for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }
@@ -133,7 +119,6 @@ class MatchInfoView: UIViewController {
             tableView.reloadData()
             return
         }
-        
         filteredMatches = Match.data.filter{$0.date.contains(month)}
         tableView.reloadData()
     }
@@ -142,9 +127,9 @@ class MatchInfoView: UIViewController {
         if let month = sender.title(for: .normal) {
             print("selected: \(month)")
             selectedMonth = month
-            for button in buttons {
+            for button in monthButtons {
                 button.isSelected = false
-                button.setTitleColor(.black, for: .normal)
+                button.setTitleColor(.white, for: .normal)
             }
             sender.isSelected = true
             sender.setTitleColor(.accentColor, for: .normal)
