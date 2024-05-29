@@ -14,7 +14,7 @@ class MatchInfoCell: UITableViewCell {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 10
-        view.clipsToBounds = true
+        view.layer.shadowOpacity = 0.3
         return view
     }()
     
@@ -23,6 +23,8 @@ class MatchInfoCell: UITableViewCell {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .accentColor
+        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        view.layer.cornerRadius = 10
         return view
     }()
     
@@ -47,6 +49,9 @@ class MatchInfoCell: UITableViewCell {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
+        view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        view.layer.cornerRadius = 10
+        
         return view
     }()
     
@@ -116,9 +121,9 @@ class MatchInfoCell: UITableViewCell {
         self.round.text = round
         
         if state == "종료" {
-            self.state.textColor = .red.withAlphaComponent(0.7)
+            self.state.textColor = .subTextColor?.withAlphaComponent(0.7)
         } else if state == "예정" {
-            self.state.textColor = .blue.withAlphaComponent(0.7)
+            self.state.textColor = .accent.withAlphaComponent(0.7)
         }
     }
     
