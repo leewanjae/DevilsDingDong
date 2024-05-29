@@ -1,5 +1,8 @@
 import UIKit
 
+// TODO: - 경기의 일정 임박에 따른 위계부여 회색, 파랑, 빨강
+// TODO: - 오늘의 달로 포커싱 되도록
+// TODO: - 위의 달력이 수평 휠처럼 보일 수 있게 왼쪽 오른쪽은 Opacity, 현재 달인 가운데만 뚜렷하게
 class MatchInfoView: UIViewController {
     
     var isRedirected: Bool = false
@@ -16,9 +19,7 @@ class MatchInfoView: UIViewController {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsHorizontalScrollIndicator = false
-        scrollView.layer.borderColor = UIColor.black.cgColor
-        scrollView.layer.borderWidth = 0.5
-        scrollView.backgroundColor = .black
+        scrollView.backgroundColor = .bgColor
         return scrollView
     }()
     lazy var dateContainer: UIStackView = {
@@ -98,15 +99,6 @@ class MatchInfoView: UIViewController {
     private func addMonthBtn() {
         for month in Month.months {
             let monthBtn = createMonthBtn(title: month, action: #selector(tappedMonthBtn))
-            let boldFont = UIFont.boldSystemFont(ofSize: monthBtn.titleLabel?.font.pointSize ?? 17)
-            let attributes: [NSAttributedString.Key: Any] = [
-                .font: boldFont,
-                .foregroundColor: UIColor.white
-            ]
-            let attributedTitle = NSAttributedString(string: month, attributes: attributes)
-            
-            // Set the attributed title for the normal state
-            monthBtn.setAttributedTitle(attributedTitle, for: .normal)
             dateContainer.addArrangedSubview(monthBtn)
             monthButtons.append(monthBtn)
         }
@@ -137,7 +129,7 @@ class MatchInfoView: UIViewController {
             selectedMonth = month
             for button in monthButtons {
                 button.isSelected = false
-                button.setTitleColor(.white, for: .normal)
+                button.setTitleColor(.black, for: .normal)
             }
             sender.isSelected = true
             sender.setTitleColor(.accentColor, for: .normal)

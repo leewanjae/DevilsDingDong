@@ -15,6 +15,7 @@
 		CC37807D2BE9E95A009313EA /* MatchInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC37807C2BE9E95A009313EA /* MatchInfoView.swift */; };
 		CC3780822BE9E95B009313EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC3780812BE9E95B009313EA /* Assets.xcassets */; };
 		CC3780852BE9E95B009313EA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC3780832BE9E95B009313EA /* LaunchScreen.storyboard */; };
+		CC3B8EA12C073524005A48D6 /* MatchInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3B8EA02C073524005A48D6 /* MatchInfoViewModel.swift */; };
 		CC4FBC652BEEF68800B23124 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4FBC642BEEF68800B23124 /* Match.swift */; };
 		CC84E0CF2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */; };
 /* End PBXBuildFile section */
@@ -30,6 +31,7 @@
 		CC3780812BE9E95B009313EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CC3780842BE9E95B009313EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CC3780862BE9E95B009313EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CC3B8EA02C073524005A48D6 /* MatchInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoViewModel.swift; sourceTree = "<group>"; };
 		CC4FBC642BEEF68800B23124 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,12 +105,21 @@
 				CC27E4442BF0D3E000DC8ACF /* Extension */,
 				CC27E4402BF0A82000DC8ACF /* App */,
 				CC27E43D2BF0A78900DC8ACF /* View */,
-				CC27E43C2BF0A77F00DC8ACF /* Resource */,
+				CC3B8E9F2C073503005A48D6 /* ViewModel */,
 				CC4FBC632BEEF67800B23124 /* Model */,
+				CC27E43C2BF0A77F00DC8ACF /* Resource */,
 				CC3780832BE9E95B009313EA /* LaunchScreen.storyboard */,
 				CC3780862BE9E95B009313EA /* Info.plist */,
 			);
 			path = DevilsDingDong;
+			sourceTree = "<group>";
+		};
+		CC3B8E9F2C073503005A48D6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CC3B8EA02C073524005A48D6 /* MatchInfoViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		CC4FBC632BEEF67800B23124 /* Model */ = {
@@ -197,6 +208,7 @@
 				CC4FBC652BEEF68800B23124 /* Match.swift in Sources */,
 				CC84E0CF2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift in Sources */,
 				CC27E4482BF0DDA200DC8ACF /* MatchInfoCell.swift in Sources */,
+				CC3B8EA12C073524005A48D6 /* MatchInfoViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
