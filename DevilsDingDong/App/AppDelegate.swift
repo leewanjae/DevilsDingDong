@@ -41,20 +41,19 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
         
-        let matchInfoView = MatchInfoView()
-        matchInfoView.isRedirected = true
+        let matchInfoViewModel = MatchInfoViewModel()
+        matchInfoViewModel.isRedirected = true
         if let matchID = userInfo["MatchID"] as? Int {
-            matchInfoView.selectedMatchID = matchID
+            matchInfoViewModel.selectedMatchID = matchID
         }
         
-        // Presenting MatchInfoView within a navigation controller
+        let matchInfoView = MatchInfoView()
         let navigationController = UINavigationController(rootViewController: matchInfoView)
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let sceneDelegate = windowScene.delegate as? SceneDelegate {
             sceneDelegate.window?.rootViewController = navigationController
             sceneDelegate.window?.makeKeyAndVisible()
         }
-        
         completionHandler()
     }
 }

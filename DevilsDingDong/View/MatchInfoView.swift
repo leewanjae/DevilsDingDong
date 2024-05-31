@@ -4,12 +4,8 @@ import UIKit
 // TODO: - 오늘의 달로 포커싱 되도록
 // TODO: - 위의 달력이 수평 휠처럼 보일 수 있게 왼쪽 오른쪽은 Opacity, 현재 달인 가운데만 뚜렷하게
 class MatchInfoView: UIViewController {
+    let matchInfoViewModel = MatchInfoViewModel()
     
-    var isRedirected: Bool = false
-    var selectedMatchID: Int?
-    var filteredMatches: [Match] = []
-    var monthButtons: [UIButton] = []
-    var filterButtons: [UIButton] = []
     lazy var container: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -36,29 +32,25 @@ class MatchInfoView: UIViewController {
         tableView.backgroundColor = .bgColor
         return tableView
     }()
-    var selectedMonth: String? {
-        didSet {
-            updateTableSelectedMonth()
-        }
-    }
- 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        filteredMatches = Match.data
-        tableView.register(MatchInfoCell.self, forCellReuseIdentifier: MatchInfoCell.id)
+        tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        setNotification()
+        tableView.register(MatchInfoCell.self, forCellReuseIdentifier: MatchInfoCell.id)
         notificationRedirected()
-        tableView.separatorStyle = .none
+        matchInfoViewModel.updateTableView = { [weak self] in
+            self?.tableView.reloadData()
+        }
+        NotificationManger.shared.setNotification()
     }
     
     private func setUI() {
         view.backgroundColor = .bgColor
         self.navigationItem.title = PageElement.matchInfoNavTitle
         navigationItem.largeTitleDisplayMode = .never
-        
         Addview()
         setAutoLayout()
     }
@@ -78,7 +70,7 @@ class MatchInfoView: UIViewController {
             container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             container.topAnchor.constraint(equalTo: safeArea.topAnchor),
             container.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
-           
+            
             scrollContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollContainer.heightAnchor.constraint(equalTo: container.heightAnchor),
@@ -95,15 +87,17 @@ class MatchInfoView: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }
-    
+}
+
+extension MatchInfoView {
     private func addMonthBtn() {
         for month in Month.months {
-            let monthBtn = createMonthBtn(title: month, action: #selector(tappedMonthBtn))
+            let monthBtn = createMonthBtn(title: month, action: #selector(tappedMonthButton))
             dateContainer.addArrangedSubview(monthBtn)
-            monthButtons.append(monthBtn)
+            matchInfoViewModel.monthButtons.append(monthBtn)
         }
     }
-  
+    
     private func createMonthBtn(title: String, action: Selector) -> UIButton {
         let button = UIButton()
         button.setTitle(title, for: .normal)
@@ -113,63 +107,25 @@ class MatchInfoView: UIViewController {
         return button
     }
     
-    private func updateTableSelectedMonth() {
-        guard let month = selectedMonth else {
-            filteredMatches = Match.data
-            tableView.reloadData()
-            return
-        }
-        filteredMatches = Match.data.filter{$0.date.contains(month)}
-        tableView.reloadData()
-    }
-    
-    @objc private func tappedMonthBtn(sender: UIButton) {
-        if let month = sender.title(for: .normal) {
-            print("selected: \(month)")
-            selectedMonth = month
-            for button in monthButtons {
-                button.isSelected = false
-                button.setTitleColor(.black, for: .normal)
-            }
-            sender.isSelected = true
-            sender.setTitleColor(.accentColor, for: .normal)
-        }
-    }
-    
-    private func setNotification() {
-        let center = UNUserNotificationCenter.current()
-        let content = UNMutableNotificationContent()
-        content.title = "DevilsDingDong"
-        content.body = "맨체스터유나이티드 VS 크리스탈펠리스"
-        content.sound = .default
-        content.badge = 1
-        content.userInfo = ["MatchID" : Match.data[0].id]
-        
-        let fireDate = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute, .second], from: Date().addingTimeInterval((3)))
-        let trigger = UNCalendarNotificationTrigger(dateMatching: fireDate, repeats: false)
-        let request = UNNotificationRequest(identifier: "MatchInfo", content: content, trigger: trigger)
-        center.add(request) { error in
-            if let error = error {
-                print("Error = \(error.localizedDescription)")
-            }
-        }
+    @objc private func tappedMonthButton(_ sender: UIButton) {
+        matchInfoViewModel.tappedMonthBtn(sender: sender)
     }
     
     private func notificationRedirected() {
-        if isRedirected {
+        if matchInfoViewModel.isRedirected {
             guard navigationController != nil else {
                 print("네비게이션 nil")
                 return
             }
             
-            if let matchID = selectedMatchID, let index = filteredMatches.firstIndex(where: { $0.id == matchID }) {
+            if let matchID = matchInfoViewModel.selectedMatchID, let index = matchInfoViewModel.filteredMatches.firstIndex(where: { $0.id == matchID }) {
                 let indexPath = IndexPath(row: index, section: 0)
                 tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                 self.tableView(tableView, didSelectRowAt: indexPath)
             } else {
                 print("해당 경기를 찾을 수 없다.")
             }
-        }else {
+        } else {
             print("화면전환 실행되지 않음")
         }
     }
@@ -177,12 +133,12 @@ class MatchInfoView: UIViewController {
 
 extension MatchInfoView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredMatches.count
+        return matchInfoViewModel.filteredMatches.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MatchInfoCell.id, for: indexPath) as? MatchInfoCell else { return UITableViewCell() }
-        let matchInfo = filteredMatches[indexPath.row]
+        let matchInfo = matchInfoViewModel.filteredMatches[indexPath.row]
         let state = matchInfo.finished ?? false ? "종료" : "예정"
         cell.configure(matchDate: matchInfo.date, matchTime: matchInfo.time, stadium: matchInfo.stadium, state: state, enemy: matchInfo.enemy, round: "\(matchInfo.round ?? 0)R")
         return cell
