@@ -19,7 +19,7 @@ class MatchInfoCell: UITableViewCell {
     }()
     
     // matchDateContainer에 MatchDate, matchTime 넣기
-    lazy var matchDateContianer: UIView = {
+    lazy var matchDateContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .accentColor
@@ -125,6 +125,27 @@ class MatchInfoCell: UITableViewCell {
         } else if state == "예정" {
             self.state.textColor = .accent.withAlphaComponent(0.7)
         }
+       
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yy년 MM월 dd일 (E)"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        
+        guard let matchDateParsed = dateFormatter.date(from: matchDate) else {
+            print("Date parsing failed for matchDate: \(matchDate)")
+            return
+        }
+        
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let matchDateWithoutTime = calendar.startOfDay(for: matchDateParsed)
+
+        if matchDateWithoutTime > today {
+            matchDateContainer.backgroundColor = .blue
+        } else if matchDateWithoutTime == today {
+            matchDateContainer.backgroundColor = .accentColor
+        } else {
+            matchDateContainer.backgroundColor = .gray
+        }
     }
     
     private func setUI() {
@@ -134,11 +155,11 @@ class MatchInfoCell: UITableViewCell {
     
     private func addView() {
         contentView.addSubview(container)
-        container.addSubview(matchDateContianer)
+        container.addSubview(matchDateContainer)
         container.addSubview(matchInfoContainer)
         
-        matchDateContianer.addSubview(matchDate)
-        matchDateContianer.addSubview(matchTime)
+        matchDateContainer.addSubview(matchDate)
+        matchDateContainer.addSubview(matchTime)
         
         matchInfoContainer.addSubview(stadium)
         matchInfoContainer.addSubview(manutd)
@@ -155,17 +176,17 @@ class MatchInfoCell: UITableViewCell {
             container.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             container.heightAnchor.constraint(equalTo: contentView.heightAnchor),
             
-            matchDateContianer.topAnchor.constraint(equalTo: container.topAnchor),
-            matchDateContianer.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            matchDateContianer.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            matchDateContianer.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 0.3),
+            matchDateContainer.topAnchor.constraint(equalTo: container.topAnchor),
+            matchDateContainer.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            matchDateContainer.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            matchDateContainer.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 0.3),
             
             matchDate.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            matchDate.centerYAnchor.constraint(equalTo: matchDateContianer.centerYAnchor),
+            matchDate.centerYAnchor.constraint(equalTo: matchDateContainer.centerYAnchor),
             matchTime.leadingAnchor.constraint(equalTo: matchDate.trailingAnchor, constant: 10),
-            matchTime.centerYAnchor.constraint(equalTo: matchDateContianer.centerYAnchor),
+            matchTime.centerYAnchor.constraint(equalTo: matchDateContainer.centerYAnchor),
             
-            matchInfoContainer.topAnchor.constraint(equalTo: matchDateContianer.bottomAnchor),
+            matchInfoContainer.topAnchor.constraint(equalTo: matchDateContainer.bottomAnchor),
             matchInfoContainer.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             matchInfoContainer.trailingAnchor.constraint(equalTo: container.trailingAnchor),
             matchInfoContainer.bottomAnchor.constraint(equalTo: container.bottomAnchor),
