@@ -8,7 +8,6 @@
 import UIKit
 
 // TODO: - 경기의 일정 임박에 따른 위계부여 회색, 파랑, 빨강
-// TODO: - 오늘의 달로 포커싱 되도록
 class MatchInfoView: UIViewController {
     let viewModel = MatchInfoViewModel()
     lazy var monthNavigationView: MonthNavigationView = {
@@ -108,7 +107,7 @@ extension MatchInfoView: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MatchInfoCell.id, for: indexPath) as? MatchInfoCell else { return UITableViewCell() }
         let matchInfo = viewModel.filteredMatches[indexPath.row]
         let state = matchInfo.finished ?? false ? "종료" : "예정"
-        cell.configure(matchDate: matchInfo.date, matchTime: matchInfo.time, stadium: matchInfo.stadium, state: state, enemy: matchInfo.enemy, round: "\(matchInfo.round ?? 0)R")
+        cell.configure(matchDate: matchInfo.date, matchTime: matchInfo.time, stadium: matchInfo.stadium, state: state, enemy: matchInfo.enemy, round: matchInfo.round ?? "")
         return cell
     }
     
