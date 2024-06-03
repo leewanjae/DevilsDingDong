@@ -12,7 +12,7 @@ class MonthNavigationView: UIView {
     
     lazy var prevButton: UIButton = {
         let button = UIButton()
-        button.setTitle("<", for: .normal)
+        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(previousMonthTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -29,7 +29,7 @@ class MonthNavigationView: UIView {
     }()
     lazy var nextButton: UIButton = {
         let button = UIButton()
-        button.setTitle(">", for: .normal)
+        button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(nextMonthTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -40,6 +40,7 @@ class MonthNavigationView: UIView {
         self.viewModel = viewModel
         super.init(frame: .zero)
         setUI()
+        setAutoLayout()
         viewModel.monthUpdateCloser = { [weak self] in
             self?.monthLabel.text = "\(self?.viewModel.formattedCurrentMonth ?? "00")월"
         }
@@ -53,12 +54,15 @@ class MonthNavigationView: UIView {
         addSubview(monthLabel)
         addSubview(prevButton)
         addSubview(nextButton)
-        
+    }
+    
+    private func setAutoLayout() {
         NSLayoutConstraint.activate([
             prevButton.trailingAnchor.constraint(equalTo: monthLabel.leadingAnchor, constant: -20),
             prevButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             monthLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             monthLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            monthLabel.widthAnchor.constraint(equalToConstant: 70),
             nextButton.leadingAnchor.constraint(equalTo: monthLabel.trailingAnchor, constant: 20),
             nextButton.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])

@@ -21,7 +21,7 @@ class MatchInfoViewModel {
     }
     var viewUpdateCloser: (() -> Void)?
     var monthUpdateCloser: (() -> Void)?
-
+    
     init() {
         setMatchData()
     }
@@ -35,7 +35,7 @@ class MatchInfoViewModel {
         }
         setMatchData()
     }
-
+    
     func nextMonthTapped() {
         currentMonth += 1
         if currentMonth > 12 {

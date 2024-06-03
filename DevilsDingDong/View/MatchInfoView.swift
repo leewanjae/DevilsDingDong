@@ -23,6 +23,15 @@ class MatchInfoView: UIViewController {
         tableView.backgroundColor = .bgColor
         return tableView
     }()
+    lazy var emptyStateLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "경기일정이 없습니다"
+        label.textColor = .gray
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +43,7 @@ class MatchInfoView: UIViewController {
         NotificationManger.shared.setNotification()
         viewModel.viewUpdateCloser = { [weak self] in
             self?.tableView.reloadData()
+            self?.updateEmptyState()
         }
     }
     
@@ -43,11 +53,13 @@ class MatchInfoView: UIViewController {
         navigationItem.largeTitleDisplayMode = .never
         Addview()
         setAutoLayout()
+        updateEmptyState()
     }
     
     private func Addview() {
         view.addSubview(monthNavigationView)
         view.addSubview(tableView)
+        view.addSubview(emptyStateLabel)
     }
     
     private func setAutoLayout() {
@@ -62,9 +74,14 @@ class MatchInfoView: UIViewController {
             tableView.topAnchor.constraint(equalTo: monthNavigationView.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            emptyStateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyStateLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
     }
+    
+  
 }
 
 extension MatchInfoView {
@@ -75,6 +92,10 @@ extension MatchInfoView {
         button.addTarget(self, action: action, for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
+    }
+    
+    private func updateEmptyState() {
+        emptyStateLabel.isHidden = viewModel.filteredMatches.count != 0
     }
 }
 
