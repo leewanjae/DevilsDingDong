@@ -8,47 +8,50 @@
 import UIKit
 
 class MatchInfoViewModel {
-    var selectedMatchID: Int?
-    var isRedirected: Bool = false
-    var filteredMatches: [Match] = []
-    var monthButtons: [UIButton] = []
-    var updateTableView: (() -> Void)?
-    var selectedMonth: String? {
+    var matches: [Match] = Match.data
+    var filteredMatches: [Match] = Match.data
+    var currentMonth = Calendar.current.component(.month, from: Date()) {
         didSet {
-            updateTableSelectedMonth()
+            viewUpdateCloser?()
+            monthUpdateCloser?()
         }
     }
-    
+    var formattedCurrentMonth: String {
+        return String(format: "%02d", currentMonth)
+    }
+    var viewUpdateCloser: (() -> Void)?
+    var monthUpdateCloser: (() -> Void)?
+
     init() {
-        filteredMatches = Match.data
+        setMatchData()
     }
     
-    func tappedMonthBtn(sender: UIButton) {
-        guard let month = sender.title(for: .normal) else {
-            print("Month title is nil")
-            return
+    func previousMonthTapped() {
+        currentMonth -= 1
+        if currentMonth > 12 {
+            currentMonth = 1
+        } else if currentMonth < 1 {
+            currentMonth = 12
         }
-        print("selected: \(month)")
-        selectedMonth = month
-        updateButtonSelectionState(sender: sender)
+        setMatchData()
+    }
+
+    func nextMonthTapped() {
+        currentMonth += 1
+        if currentMonth > 12 {
+            currentMonth = 1
+        } else if currentMonth < 1 {
+            currentMonth = 12
+        }
+        setMatchData()
     }
     
-    func updateButtonSelectionState(sender: UIButton) {
-        for button in monthButtons {
-            button.isSelected = false
-            button.setTitleColor(.black, for: .normal)
+    func setMatchData() {
+        filteredMatches = matches.filter { match in
+            match.date.contains("\(formattedCurrentMonth)월")
         }
-        sender.isSelected = true
-        sender.setTitleColor(.accentColor, for: .normal)
-    }
-    
-    func updateTableSelectedMonth() {
-        guard let month = selectedMonth else {
-            filteredMatches = Match.data
-            updateTableView?()
-            return
-        }
-        filteredMatches = Match.data.filter { $0.date.contains(month) }
-        updateTableView?()
+        viewUpdateCloser?()
+        print("현재 포메팅 월: \(formattedCurrentMonth)")
+        print("필터된 경기 데이터: \(filteredMatches.count)")
     }
 }

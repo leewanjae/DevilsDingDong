@@ -42,9 +42,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let userInfo = response.notification.request.content.userInfo
         
         let matchInfoViewModel = MatchInfoViewModel()
-        matchInfoViewModel.isRedirected = true
+//        matchInfoViewModel.isRedirected = true
         if let matchID = userInfo["MatchID"] as? Int {
-            matchInfoViewModel.selectedMatchID = matchID
+//            matchInfoViewModel.selectedMatchID = matchID
         }
         
         let matchInfoView = MatchInfoView()
