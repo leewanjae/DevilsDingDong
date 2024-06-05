@@ -8,8 +8,8 @@
 import UIKit
 
 class MatchInfoViewModel {
-    var matches: [Match] = Match.data
-    var filteredMatches: [Match] = Match.data
+    var matches: [MatchInfo] = MatchInfo.data
+    var filteredMatches: [MatchInfo] = MatchInfo.data
     var currentMonth = Calendar.current.component(.month, from: Date()) {
         didSet {
             viewUpdateCloser?()

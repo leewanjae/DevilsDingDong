@@ -14,7 +14,7 @@ class MatchInfoCell: UITableViewCell {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 10
-        view.layer.shadowOpacity = 0.3
+        view.layer.shadowOpacity = 0.2
         return view
     }()
     
@@ -144,7 +144,7 @@ class MatchInfoCell: UITableViewCell {
         } else if matchDateWithoutTime == today {
             matchDateContainer.backgroundColor = .accentColor
         } else {
-            matchDateContainer.backgroundColor = .gray
+            matchDateContainer.backgroundColor = .lightGray
         }
     }
     
