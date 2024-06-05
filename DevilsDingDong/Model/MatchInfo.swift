@@ -7,23 +7,37 @@
 
 import Foundation
 
-enum MatchType: String {
+enum MatchType: String, Codable {
     case league = "Premier League"
     case champion = "UEFA Champions League"
     case europa = "UEFA Europa League"
     case fa = "Football Association Challenge Cup"
 }
 
-struct MatchInfo {
+struct MatchInfo: Codable {
     let id: Int
     let matchType: MatchType
-    let round: String?
+    let round: String
     var date: String
     var time: String
     let stadium: String
     let enemy: String
     let home: Bool
-    var finished: Bool?
+    var finished: Bool
+    
+    func toDictionary() -> [String: Any] {
+        return [
+            "id": id,
+            "matchType": matchType.rawValue,
+            "round": round,
+            "date": date,
+            "time": time,
+            "stadium": stadium,
+            "enemy": enemy,
+            "home": home,
+            "finished": finished
+        ]
+    }
 }
 
 extension MatchInfo {
@@ -65,11 +79,6 @@ extension MatchInfo {
         MatchInfo(id: 35, matchType: .league, round: "35R", date: "24년 05월 07일 (화)", time: "04:00", stadium: "Selhurst \nPark Stadium", enemy: "팰리스", home: false, finished: true),
         MatchInfo(id: 36, matchType: .league, round: "36R", date: "24년 05월 13일 (월)", time: "00:30", stadium: "Old \nTrafford", enemy: "아스널", home: true, finished: true),
         MatchInfo(id: 37, matchType: .league, round: "37R", date: "24년 05월 16일 (목)", time: "04:00", stadium: "Old \nTrafford", enemy: "뉴캐슬", home: true, finished: true),
-        MatchInfo(id: 38, matchType: .league, round: "38R", date: "24년 05월 20일 (월)", time: "00:00", stadium: "American \nExpress \nCommunity \nStadium", enemy: "테스트1", home: false, finished: true),
-        MatchInfo(id: 38, matchType: .league, round: "38R", date: "24년 06월 02일 (월)", time: "23:30", stadium: "American \nExpress \nCommunity \nStadium", enemy: "테스트2", home: false, finished: true),
-        MatchInfo(id: 38, matchType: .league, round: "38R", date: "24년 06월 03일 (월)", time: "23:30", stadium: "American \nExpress \nCommunity \nStadium", enemy: "테스트3", home: false, finished: true),
-        MatchInfo(id: 38, matchType: .league, round: "38R", date: "24년 06월 04일 (월)", time: "23:30", stadium: "American \nExpress \nCommunity \nStadium", enemy: "테스트4", home: false, finished: false),
-        MatchInfo(id: 38, matchType: .league, round: "38R", date: "24년 06월 05일 (수)", time: "00:00", stadium: "American \nExpress \nCommunity \nStadium", enemy: "테스트5", home: false, finished: false),
-        MatchInfo(id: 39, matchType: .fa, round: "1R", date: "24년 08월 10일 (토)", time: "23:00", stadium: "Wembley \nStadium", enemy: "맨시티", home: false, finished: false),
+        MatchInfo(id: 38, matchType: .league, round: "38R", date: "24년 05월 20일 (월)", time: "00:00", stadium: "American \nExpress \nCommunity \nStadium", enemy: "브라이턴", home: false, finished: true),
     ]
 }
