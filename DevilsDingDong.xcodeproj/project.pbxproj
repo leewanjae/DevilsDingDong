@@ -183,7 +183,6 @@
 		CC3780772BE9E95A009313EA /* DevilsDingDong */ = {
 			isa = PBXGroup;
 			children = (
-				CC3620E62C1034D7005ECE60 /* GoogleService-Info.plist */,
 				CC3B8EA22C07749A005A48D6 /* Manager */,
 				CC27E4442BF0D3E000DC8ACF /* Extension */,
 				CC27E4402BF0A82000DC8ACF /* App */,
@@ -193,6 +192,7 @@
 				CC27E43C2BF0A77F00DC8ACF /* Resource */,
 				CC3780832BE9E95B009313EA /* LaunchScreen.storyboard */,
 				CC3780862BE9E95B009313EA /* Info.plist */,
+				CC3620E62C1034D7005ECE60 /* GoogleService-Info.plist */,
 			);
 			path = DevilsDingDong;
 			sourceTree = "<group>";
