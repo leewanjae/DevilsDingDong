@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         FirebaseApp.configure()
-        FirebaseStoreManager().addMatchesToFirestore()
+//      FirebaseStoreManager().addMatchesToFirestore()
         let center = UNUserNotificationCenter.current()
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { didAllow, error in
             if let error = error {

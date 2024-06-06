@@ -8,8 +8,9 @@
 import UIKit
 
 class MatchInfoViewModel {
-    var matches: [MatchInfo] = MatchInfo.data
-    var filteredMatches: [MatchInfo] = MatchInfo.data
+    private let firebaseStoreManager = FirebaseStoreManager()
+    var matches: [MatchInfo] = []
+    var filteredMatches: [MatchInfo] = []
     var currentMonth = Calendar.current.component(.month, from: Date()) {
         didSet {
             viewUpdateCloser?()
@@ -23,7 +24,7 @@ class MatchInfoViewModel {
     var monthUpdateCloser: (() -> Void)?
     
     init() {
-        setMatchData()
+        fetchMatchData()
     }
     
     func previousMonthTapped() {
@@ -45,6 +46,13 @@ class MatchInfoViewModel {
         }
         setMatchData()
     }
+    
+    func fetchMatchData() {
+            firebaseStoreManager.fetchMatches { [weak self] matches in
+                self?.matches = matches
+                self?.setMatchData()
+            }
+        }
     
     func setMatchData() {
         filteredMatches = matches.filter { match in

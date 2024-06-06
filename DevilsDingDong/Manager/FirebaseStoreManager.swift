@@ -26,4 +26,27 @@ class FirebaseStoreManager {
             }
         }
     }
+    
+    func fetchMatches(completion: @escaping ([MatchInfo]) -> Void) {
+        let db = Firestore.firestore()
+        
+        db.collection("matches").getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+                completion([])
+            } else {
+                guard let documents = querySnapshot?.documents else {
+                    print("No documents found")
+                    completion([])
+                    return
+                }
+                
+                let matches = documents.compactMap { document -> MatchInfo? in
+                    let data = document.data()
+                    return MatchInfo(dictionary: data)
+                }
+                completion(matches)
+            }
+        }
+    }
 }
