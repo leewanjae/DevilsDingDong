@@ -53,6 +53,7 @@ class MatchInfoView: UIViewController {
         Addview()
         setAutoLayout()
         updateEmptyState()
+        print(Calendar.current)
     }
     
     private func Addview() {
@@ -79,8 +80,6 @@ class MatchInfoView: UIViewController {
             emptyStateLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
     }
-    
-  
 }
 
 extension MatchInfoView {
@@ -106,8 +105,8 @@ extension MatchInfoView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MatchInfoCell.id, for: indexPath) as? MatchInfoCell else { return UITableViewCell() }
         let matchInfo = viewModel.filteredMatches[indexPath.row]
-        let state = matchInfo.finished ?? false ? "종료" : "예정"
-        cell.configure(matchDate: matchInfo.date, matchTime: matchInfo.time, stadium: matchInfo.stadium, state: state, enemy: matchInfo.enemy, round: matchInfo.round ?? "")
+        let state = matchInfo.finished ? "종료" : "예정"
+        cell.configure(matchDate: matchInfo.date, matchTime: matchInfo.time, stadium: matchInfo.stadium, state: state, enemy: matchInfo.enemy, round: matchInfo.round )
         return cell
     }
     
@@ -116,6 +115,7 @@ extension MatchInfoView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        navigationController?.pushViewController(MatchInfoDetailView(), animated: true)
+        let matchInfo = viewModel.filteredMatches[indexPath.row]
+        navigationController?.pushViewController(MatchInfoDetailView(matchInfo: matchInfo), animated: true)
     }
 }
