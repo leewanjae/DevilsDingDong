@@ -72,7 +72,7 @@ class MatchInfoView: UIViewController {
             monthNavigationView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
             
             tableView.topAnchor.constraint(equalTo: monthNavigationView.bottomAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor), // 변경된 부분
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
