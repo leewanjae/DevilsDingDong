@@ -120,6 +120,7 @@ class MatchInfoDetailView: UIViewController {
                 let label = UILabel()
                 label.translatesAutoresizingMaskIntoConstraints = false
                 label.text = goal
+                label.textColor = .white
                 label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
                 label.textAlignment = .right
                 view.addSubview(label)
@@ -154,6 +155,7 @@ class MatchInfoDetailView: UIViewController {
                 let label = UILabel()
                 label.translatesAutoresizingMaskIntoConstraints = false
                 label.text = goal
+                label.textColor = .white
                 label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
                 view.addSubview(label)
                 NSLayoutConstraint.activate([
@@ -257,7 +259,7 @@ class MatchInfoDetailView: UIViewController {
     private func setAutoLayout() {
         let safeArea = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 30),
+            scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
