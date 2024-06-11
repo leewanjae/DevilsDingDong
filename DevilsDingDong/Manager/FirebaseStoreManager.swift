@@ -42,7 +42,16 @@ class FirebaseStoreManager {
                 }
                 
                 let matches = documents.compactMap { document -> MatchInfo? in
-                    let data = document.data()
+                        var data = document.data()
+                    if var manUtdGoal = data["manUtdGoal"] as? [String] {
+                        manUtdGoal = manUtdGoal.filter { !$0.isEmpty }
+                        data["manUtdGoal"] = manUtdGoal
+                    }
+                    if var enemyGoal = data["enemyGoal"] as? [String] {
+                        enemyGoal = enemyGoal.filter { !$0.isEmpty }
+                        data["enemyGoal"] = enemyGoal
+                    }
+                    
                     return MatchInfo(dictionary: data)
                 }
                 completion(matches)

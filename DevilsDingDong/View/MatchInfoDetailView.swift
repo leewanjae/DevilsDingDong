@@ -116,12 +116,12 @@ class MatchInfoDetailView: UIViewController {
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.spacing = 4
-        if let goals = matchInfo?.manUtdGoal {
+        if let goals = matchInfo?.manUtdGoal?.filter({ !$0.isEmpty }) {
             for goal in goals {
                 let label = UILabel()
                 label.translatesAutoresizingMaskIntoConstraints = false
                 label.text = goal
-                label.font = UIFont.systemFont(ofSize: 8, weight: .semibold)
+                label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
                 stackView.addArrangedSubview(label)
             }
         }
@@ -133,12 +133,12 @@ class MatchInfoDetailView: UIViewController {
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.spacing = 4
-        if let goals = matchInfo?.enemyGoal {
+        if let goals = matchInfo?.manUtdGoal?.filter({ !$0.isEmpty }) {
             for goal in goals {
                 let label = UILabel()
                 label.translatesAutoresizingMaskIntoConstraints = false
                 label.text = goal
-                label.font = UIFont.systemFont(ofSize: 8, weight: .semibold)
+                label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
                 stackView.addArrangedSubview(label)
             }
         }
@@ -204,7 +204,6 @@ class MatchInfoDetailView: UIViewController {
             resultContainer.topAnchor.constraint(equalTo: resultTitleLabel.topAnchor, constant: 30),
             resultContainer.leadingAnchor.constraint(equalTo: resultTitleLabel.leadingAnchor),
             resultContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            resultContainer.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.25),
             
             matchType.centerXAnchor.constraint(equalTo: resultContainer.centerXAnchor),
             matchType.topAnchor.constraint(equalTo: resultContainer.topAnchor, constant: 10),
@@ -230,15 +229,18 @@ class MatchInfoDetailView: UIViewController {
             separatorHBar.heightAnchor.constraint(equalToConstant: 1),
             
             separatorVBar.topAnchor.constraint(equalTo: separatorHBar.bottomAnchor),
-            separatorVBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            separatorVBar.centerXAnchor.constraint(equalTo: resultContainer.centerXAnchor),
             separatorVBar.widthAnchor.constraint(equalToConstant: 1),
-            separatorVBar.bottomAnchor.constraint(equalTo: resultContainer.bottomAnchor),
+            separatorVBar.bottomAnchor.constraint(equalTo: resultContainer.bottomAnchor, constant: -10),
             
             manUtdGoalsStackView.topAnchor.constraint(equalTo: separatorHBar.bottomAnchor, constant: 5),
             manUtdGoalsStackView.trailingAnchor.constraint(equalTo: separatorVBar.leadingAnchor, constant: -15),
+            manUtdGoalsStackView.bottomAnchor.constraint(equalTo: resultContainer.bottomAnchor, constant: -10),
             
-            enemyGoalsStackView.topAnchor.constraint(equalTo: manUtdGoalsStackView.topAnchor),
+            enemyGoalsStackView.topAnchor.constraint(equalTo: separatorHBar.bottomAnchor, constant: 5),
             enemyGoalsStackView.leadingAnchor.constraint(equalTo: separatorVBar.trailingAnchor, constant: 15),
+            enemyGoalsStackView.bottomAnchor.constraint(equalTo: manUtdGoalsStackView.bottomAnchor),
+            
             
             highlightTitleLabel.topAnchor.constraint(equalTo: resultContainer.bottomAnchor, constant: 30),
             highlightTitleLabel.leadingAnchor.constraint(equalTo: resultTitleLabel.leadingAnchor),
