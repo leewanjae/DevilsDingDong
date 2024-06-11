@@ -19,6 +19,11 @@ class MatchInfoDetailView: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    lazy var scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     lazy var resultTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -32,6 +37,7 @@ class MatchInfoDetailView: UIViewController {
         view.backgroundColor = .placeholderText
         view.layer.cornerRadius = 20
         view.layer.borderColor = CGColor(red: 0.765, green: 0.2, blue: 0.18, alpha: 0)
+        view.layer.shadowOpacity = 0.2
         return view
     }()
     lazy var matchType: UILabel = {
@@ -49,11 +55,6 @@ class MatchInfoDetailView: UIViewController {
         return label
     }()
     lazy var scoreBox: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    lazy var manUtd: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -110,41 +111,6 @@ class MatchInfoDetailView: UIViewController {
         view.backgroundColor = .darkGray.withAlphaComponent(0)
         return view
     }()
-//    lazy var manUtdGoalsView: UIStackView = {
-//        let stackView = UIStackView()
-//        stackView.translatesAutoresizingMaskIntoConstraints = false
-//        stackView.axis = .vertical
-//        stackView.alignment = .leading
-//        stackView.spacing = 4
-//        stackView.distribution = .fillEqually
-//        if let goals = matchInfo?.manUtdGoal?.filter({ !$0.isEmpty }) {
-//            for goal in goals {
-//                let label = UILabel()
-//                label.text = goal
-//                label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-//                stackView.addArrangedSubview(label)
-//            }
-//        }
-//        return stackView
-//    }()
-//    lazy var enemyGoalsView: UIStackView = {
-//        let stackView = UIStackView()
-//        stackView.translatesAutoresizingMaskIntoConstraints = false
-//        stackView.axis = .vertical
-//        stackView.alignment = .leading
-//        stackView.spacing = 4
-//        stackView.distribution = .fillEqually
-//        if let goals = matchInfo?.enemyGoal?.filter({ !$0.isEmpty }) {
-//            for goal in goals {
-//                let label = UILabel()
-//                label.text = goal
-//                label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-//                label.backgroundColor = .red
-//                stackView.addArrangedSubview(label)
-//            }
-//        }
-//        return stackView
-//    }()
     lazy var manUtdGoalsView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -157,13 +123,11 @@ class MatchInfoDetailView: UIViewController {
                 label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
                 label.textAlignment = .right
                 view.addSubview(label)
-                
                 NSLayoutConstraint.activate([
                     label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
                     label.trailingAnchor.constraint(equalTo: view.trailingAnchor),
                     label.heightAnchor.constraint(equalToConstant: 20)
                 ])
-                
                 if let previousLabel = previousLabel {
                     NSLayoutConstraint.activate([
                         label.topAnchor.constraint(equalTo: previousLabel.bottomAnchor)
@@ -173,17 +137,14 @@ class MatchInfoDetailView: UIViewController {
                         label.topAnchor.constraint(equalTo: view.topAnchor)
                     ])
                 }
-                
                 previousLabel = label
             }
-            
             if let previousLabel = previousLabel {
                 previousLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
             }
         }
         return view
     }()
-
     lazy var enemyGoalsView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -195,13 +156,11 @@ class MatchInfoDetailView: UIViewController {
                 label.text = goal
                 label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
                 view.addSubview(label)
-                
                 NSLayoutConstraint.activate([
                     label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
                     label.trailingAnchor.constraint(equalTo: view.trailingAnchor),
                     label.heightAnchor.constraint(equalToConstant: 20)
                 ])
-                
                 if let previousLabel = previousLabel {
                     NSLayoutConstraint.activate([
                         label.topAnchor.constraint(equalTo: previousLabel.bottomAnchor)
@@ -211,18 +170,14 @@ class MatchInfoDetailView: UIViewController {
                         label.topAnchor.constraint(equalTo: view.topAnchor)
                     ])
                 }
-                
                 previousLabel = label
             }
-            
             if let previousLabel = previousLabel {
                 previousLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
             }
         }
         return view
     }()
-
-
     lazy var enemyGoal: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -247,9 +202,21 @@ class MatchInfoDetailView: UIViewController {
         let webView = WKWebView()
         webView.load(URLRequest(url: URL(string: matchInfo?.highlight ?? "")!))
         webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.layer.shadowOpacity = 0.2
         return webView
     }()
-
+    lazy var ranktitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "현재순위"
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        return label
+    }()
+    lazy var currentScoreView: MatchDetailCurrentScoreView = {
+        let view = MatchDetailCurrentScoreView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -257,16 +224,19 @@ class MatchInfoDetailView: UIViewController {
     
     private func setUI() {
         view.backgroundColor = UIColor.bg
-        AddView()
+        addView()
         setAutoLayout()
     }
     
-    private func AddView() {
-        view.addSubview(resultTitleLabel)
-        view.addSubview(resultContainer)
-        view.addSubview(highlightTitleLabel)
-        view.addSubview(highlightContainerView)
-        
+    private func addView() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(resultTitleLabel)
+        scrollView.addSubview(resultContainer)
+        scrollView.addSubview(highlightTitleLabel)
+        scrollView.addSubview(highlightContainerView)
+        scrollView.addSubview(ranktitleLabel)
+        scrollView.addSubview(currentScoreView)
+
         resultContainer.addSubview(matchType)
         resultContainer.addSubview(matchDate)
         resultContainer.addSubview(scoreBox)
@@ -287,8 +257,13 @@ class MatchInfoDetailView: UIViewController {
     private func setAutoLayout() {
         let safeArea = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            resultTitleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 30),
-            resultTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 30),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            resultTitleLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            resultTitleLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
             
             resultContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             resultContainer.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30),
@@ -344,6 +319,15 @@ class MatchInfoDetailView: UIViewController {
             highlightView.leadingAnchor.constraint(equalTo: highlightContainerView.leadingAnchor),
             highlightView.trailingAnchor.constraint(equalTo: highlightContainerView.trailingAnchor),
             highlightView.bottomAnchor.constraint(equalTo: highlightContainerView.bottomAnchor),
+            
+            ranktitleLabel.topAnchor.constraint(equalTo: highlightView.bottomAnchor, constant: 30),
+            ranktitleLabel.leadingAnchor.constraint(equalTo: resultTitleLabel.leadingAnchor),
+
+            currentScoreView.topAnchor.constraint(equalTo: ranktitleLabel.bottomAnchor, constant: 10),
+            currentScoreView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            currentScoreView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
+            currentScoreView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30),
+            currentScoreView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
     }
 }
