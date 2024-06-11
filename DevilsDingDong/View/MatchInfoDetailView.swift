@@ -156,7 +156,6 @@ class MatchInfoDetailView: UIViewController {
                 label.text = goal
                 label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
                 label.textAlignment = .right
-                label.backgroundColor = .red
                 view.addSubview(label)
                 
                 NSLayoutConstraint.activate([
@@ -195,7 +194,6 @@ class MatchInfoDetailView: UIViewController {
                 label.translatesAutoresizingMaskIntoConstraints = false
                 label.text = goal
                 label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-                label.backgroundColor = .red
                 view.addSubview(label)
                 
                 NSLayoutConstraint.activate([
