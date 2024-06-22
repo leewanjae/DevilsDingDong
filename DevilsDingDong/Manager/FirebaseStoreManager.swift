@@ -11,9 +11,7 @@ class FirebaseStoreManager {
     
     func addFirestore<T: Encodable>(collection: String, document: String, data: T) {
         let db = Firestore.firestore()
-        let batch = db.batch()
         let ref = db.collection(collection).document(document)
-        
         do {
             try ref.setData(from: data) { error in
                 if let error = error {
