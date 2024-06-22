@@ -9,52 +9,41 @@ import FirebaseFirestore
 
 class FirebaseStoreManager {
     
-//    func addMatchesToFirestore() {
-//        let db = Firestore.firestore()
-//        let batch = db.batch()
-//        
-//        for match in MatchInfo.data {
-//            let matchRef = db.collection("matches").document("\(match.id)")
-//            batch.setData(match.toDictionary(), forDocument: matchRef)
-//        }
-//        
-//        batch.commit { error in
-//            if let error = error {
-//                print("Error writing batch \(error)")
-//            } else {
-//                print("Batch write succeeded.")
-//            }
-//        }
-//    }
-    
-    func fetchMatches(completion: @escaping ([MatchInfo]) -> Void) {
+    func addFirestore<T: Encodable>(collection: String, document: String, data: T) {
         let db = Firestore.firestore()
+        let batch = db.batch()
+        let ref = db.collection(collection).document(document)
         
-        db.collection("matches").getDocuments { (querySnapshot, error) in
+        do {
+            try ref.setData(from: data) { error in
+                if let error = error {
+                    print("error: \(error)")
+                } else {
+                    print("sucess written")
+                }
+            }
+        } catch let error {
+            print("error: \(error)")
+        }
+    }
+    
+    func fetchFirestore<T: Decodable>(collection: String, completion: @escaping (([T]) -> Void)) {
+        let db = Firestore.firestore()
+        db.collection(collection).getDocuments { query, error in
             if let error = error {
-                print("Error getting documents: \(error)")
+                print("error: \(error)")
                 completion([])
             } else {
-                guard let documents = querySnapshot?.documents else {
-                    print("No documents found")
+                guard let document = query?.documents else {
+                    print("no found document")
                     completion([])
                     return
                 }
                 
-                let matches = documents.compactMap { document -> MatchInfo? in
-                        var data = document.data()
-                    if var manUtdGoal = data["manUtdGoal"] as? [String] {
-                        manUtdGoal = manUtdGoal.filter { !$0.isEmpty }
-                        data["manUtdGoal"] = manUtdGoal
-                    }
-                    if var enemyGoal = data["enemyGoal"] as? [String] {
-                        enemyGoal = enemyGoal.filter { !$0.isEmpty }
-                        data["enemyGoal"] = enemyGoal
-                    }
-                    
-                    return MatchInfo(dictionary: data)
+                let items = document.compactMap { document -> T? in
+                    return try? document.data(as: T.self)
                 }
-                completion(matches)
+                completion(items)
             }
         }
     }
