@@ -48,11 +48,11 @@ class MatchInfoViewModel {
     }
     
     func fetchMatchData() {
-            firebaseStoreManager.fetchMatches { [weak self] matches in
-                self?.matches = matches
-                self?.setMatchData()
-            }
+        firebaseStoreManager.fetchFirestore(collection: "matches") { [weak self] (matches: [MatchInfo]) in
+            self?.matches = matches
+            self?.setMatchData()
         }
+    }
     
     func setMatchData() {
         filteredMatches = matches.filter { match in
