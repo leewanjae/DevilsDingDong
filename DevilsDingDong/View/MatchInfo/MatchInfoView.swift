@@ -25,7 +25,7 @@ class MatchInfoView: UIViewController {
     lazy var emptyStateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "경기일정이 없습니다"
+        label.text = "경기 일정이 없습니다"
         label.textColor = .gray
         label.textAlignment = .center
         label.isHidden = true

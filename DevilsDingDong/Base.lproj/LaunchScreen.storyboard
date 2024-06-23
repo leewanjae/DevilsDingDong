@@ -17,9 +17,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DevilsDingDong" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TMX-tX-lWP">
-                                <rect key="frame" x="135.66666666666666" y="428" width="121.99999999999997" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Devils Ding Dong" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R7y-eZ-8sz">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -27,14 +27,16 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="TMX-tX-lWP" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="M0M-pZ-SWh"/>
-                            <constraint firstItem="TMX-tX-lWP" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="oyy-o2-VGO"/>
+                            <constraint firstAttribute="top" secondItem="R7y-eZ-8sz" secondAttribute="top" id="5aN-hf-fgA"/>
+                            <constraint firstItem="R7y-eZ-8sz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="EP6-jb-frW"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="R7y-eZ-8sz" secondAttribute="trailing" id="Oge-WC-1GM"/>
+                            <constraint firstItem="R7y-eZ-8sz" firstAttribute="bottom" secondItem="Ze5-6b-2t3" secondAttribute="bottom" id="jLM-Jm-Dpg"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.671755725190835" y="374.64788732394368"/>
         </scene>
     </scenes>
     <resources>
