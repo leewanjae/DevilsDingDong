@@ -11,6 +11,7 @@ class MatchInfoViewModel {
     private let firebaseStoreManager = FirebaseStoreManager()
     var matches: [MatchInfo] = []
     var filteredMatches: [MatchInfo] = []
+    var todayMatch: [MatchInfo] = []
     var currentMonth = Calendar.current.component(.month, from: Date()) {
         didSet {
             viewUpdateCloser?()
@@ -25,6 +26,7 @@ class MatchInfoViewModel {
     
     init() {
         fetchMatchData()
+        setTodayMatch()
     }
     
     func previousMonthTapped() {
@@ -34,7 +36,7 @@ class MatchInfoViewModel {
         } else if currentMonth < 1 {
             currentMonth = 12
         }
-        setMatchData()
+        setFilterMatchData()
     }
     
     func nextMonthTapped() {
@@ -44,22 +46,35 @@ class MatchInfoViewModel {
         } else if currentMonth < 1 {
             currentMonth = 12
         }
-        setMatchData()
+        setFilterMatchData()
     }
     
     func fetchMatchData() {
         firebaseStoreManager.fetchFirestore(collection: "matches") { [weak self] (matches: [MatchInfo]) in
             self?.matches = matches
-            self?.setMatchData()
+            self?.setFilterMatchData()
         }
     }
     
-    func setMatchData() {
+    func setFilterMatchData() {
         filteredMatches = matches.filter { match in
             match.date.contains("\(formattedCurrentMonth)월")
         }
         viewUpdateCloser?()
         print("현재 포메팅 월: \(formattedCurrentMonth)")
         print("필터된 경기 데이터: \(filteredMatches.count)")
+    }
+    
+    func setTodayMatch() {
+        let date = Date()
+        let formatted = DateFormatter()
+        formatted.dateFormat = "yy MM dd (E)"
+        formatted.locale = Locale(identifier: "ko_KR")
+        let formattedDate = formatted.string(from: date)
+        print("formattedDate: \(formattedDate)")
+        
+        todayMatch = matches.filter { match in
+            match.date.contains(formattedDate)
+        }
     }
 }
