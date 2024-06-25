@@ -9,20 +9,20 @@ import UIKit
 import WebKit
 
 class MatchInfoDetailView: UIViewController {
-    var matchInfo: MatchInfo?
-    lazy var scrollView: UIScrollView = {
+    private var matchInfo: MatchInfo?
+    private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    lazy var resultTitleLabel: UILabel = {
+    private lazy var resultTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "경기결과"
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         return label
     }()
-    lazy var resultContainer: UIView = {
+    private lazy var resultContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .placeholderText
@@ -31,31 +31,31 @@ class MatchInfoDetailView: UIViewController {
         view.layer.shadowOpacity = 0.2
         return view
     }()
-    lazy var matchType: UILabel = {
+    private lazy var matchType: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = matchInfo?.matchType
         label.textColor = .white
         return label
     }()
-    lazy var matchDate: UILabel = {
+    private lazy var matchDate: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = matchInfo?.date
         label.textColor = .white
         return label
     }()
-    lazy var scoreBox: UIView = {
+    private lazy var scoreBox: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    lazy var manUtdLogo: UIImageView = {
+    private lazy var manUtdLogo: UIImageView = {
         let image = UIImageView(image: UIImage(named: "맨유"))
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
-    lazy var manUtdLabel: UILabel = {
+    private lazy var manUtdLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "맨유"
@@ -63,7 +63,7 @@ class MatchInfoDetailView: UIViewController {
         label.textColor = .white
         return label
     }()
-    lazy var score: UILabel = {
+    private lazy var score: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = matchInfo?.score
@@ -71,17 +71,17 @@ class MatchInfoDetailView: UIViewController {
         label.textColor = .white
         return label
     }()
-    lazy var enemy: UIView = {
+    private lazy var enemy: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    lazy var enemyLogo: UIImageView = {
+    private lazy var enemyLogo: UIImageView = {
         let image = UIImageView(image: UIImage(named: "맨유"))
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
-    lazy var enemyLabel: UILabel = {
+    private lazy var enemyLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = matchInfo?.enemy
@@ -89,20 +89,20 @@ class MatchInfoDetailView: UIViewController {
         label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
-    lazy var separatorHBar: UIView = {
+    private lazy var separatorHBar: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .lightGray
         view.layer.borderWidth = 1
         return view
     }()
-    lazy var separatorVBar: UIView = {
+    private lazy var separatorVBar: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .darkGray.withAlphaComponent(0)
         return view
     }()
-    lazy var manUtdGoalsView: UIView = {
+    private lazy var manUtdGoalsView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         if let goals = matchInfo?.manUtdGoal?.filter({ !$0.isEmpty }) {
@@ -137,7 +137,7 @@ class MatchInfoDetailView: UIViewController {
         }
         return view
     }()
-    lazy var enemyGoalsView: UIView = {
+    private lazy var enemyGoalsView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         if let goals = matchInfo?.enemyGoal?.filter({ !$0.isEmpty }) {
@@ -171,41 +171,41 @@ class MatchInfoDetailView: UIViewController {
         }
         return view
     }()
-    lazy var enemyGoal: UILabel = {
+    private lazy var enemyGoal: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 8, weight: .semibold)
         return label
     }()
-    lazy var highlightTitleLabel: UILabel = {
+    private lazy var highlightTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "하이라이트"
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         return label
     }()
-    lazy var highlightContainerView: UIView = {
+    private lazy var highlightContainerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
         return view
     }()
-    lazy var highlightView: WKWebView = {
+    private lazy var highlightView: WKWebView = {
         let webView = WKWebView()
         webView.load(URLRequest(url: URL(string: matchInfo?.highlight ?? "")!))
         webView.translatesAutoresizingMaskIntoConstraints = false
         webView.layer.shadowOpacity = 0.2
         return webView
     }()
-    lazy var ranktitleLabel: UILabel = {
+    private lazy var ranktitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "현재순위"
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         return label
     }()
-    lazy var currentScoreView: MatchDetailCurrentScoreView = {
+    private lazy var currentScoreView: MatchDetailCurrentScoreView = {
         let view = MatchDetailCurrentScoreView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

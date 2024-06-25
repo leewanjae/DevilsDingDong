@@ -8,9 +8,9 @@
 import UIKit
 
 class MonthNavigationView: UIView {
-    var viewModel: MatchInfoViewModel
+    private var viewModel: MatchInfoViewModel
     
-    lazy var prevButton: UIButton = {
+    private lazy var prevButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         button.setTitleColor(.black, for: .normal)
@@ -18,7 +18,7 @@ class MonthNavigationView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    lazy var monthLabel: UILabel = {
+    private lazy var monthLabel: UILabel = {
         let label = UILabel()
         label.text = "\(viewModel.formattedCurrentMonth)월"
         label.textColor = .black
@@ -27,7 +27,7 @@ class MonthNavigationView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    lazy var nextButton: UIButton = {
+    private lazy var nextButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         button.setTitleColor(.black, for: .normal)

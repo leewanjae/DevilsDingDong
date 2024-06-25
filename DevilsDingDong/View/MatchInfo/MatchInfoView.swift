@@ -9,20 +9,20 @@ import UIKit
 
 // TODO: - 경기의 일정 임박에 따른 위계부여 회색, 파랑, 빨강
 class MatchInfoView: UIViewController {
-    let viewModel = MatchInfoViewModel()
-    lazy var monthNavigationView: MonthNavigationView = {
+    private let viewModel = MatchInfoViewModel()
+    private lazy var monthNavigationView: MonthNavigationView = {
         let view = MonthNavigationView(viewModel: viewModel)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    lazy var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.showsVerticalScrollIndicator = false
         tableView.backgroundColor = .bgColor
         return tableView
     }()
-    lazy var emptyStateLabel: UILabel = {
+    private lazy var emptyStateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "경기 일정이 없습니다"

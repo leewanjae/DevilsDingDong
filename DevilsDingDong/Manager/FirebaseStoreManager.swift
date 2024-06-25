@@ -8,7 +8,6 @@
 import FirebaseFirestore
 
 class FirebaseStoreManager {
-    
     func addFirestore<T: Encodable>(collection: String, document: String, data: T) {
         let db = Firestore.firestore()
         let ref = db.collection(collection).document(document)

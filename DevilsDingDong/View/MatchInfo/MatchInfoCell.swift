@@ -10,7 +10,7 @@ import UIKit
 class MatchInfoCell: UITableViewCell {
     static let id = "MatchInfoCell"
     
-    lazy var container: UIView = {
+    private lazy var container: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 10
@@ -19,7 +19,7 @@ class MatchInfoCell: UITableViewCell {
     }()
     
     // matchDateContainer에 MatchDate, matchTime 넣기
-    lazy var matchDateContainer: UIView = {
+    private lazy var matchDateContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .accentColor
@@ -28,7 +28,7 @@ class MatchInfoCell: UITableViewCell {
         return view
     }()
     
-    lazy var matchDate: UILabel = {
+    private lazy var matchDate: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
@@ -36,7 +36,7 @@ class MatchInfoCell: UITableViewCell {
         return label
     }()
     
-    lazy var matchTime: UILabel = {
+    private lazy var matchTime: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
@@ -45,7 +45,7 @@ class MatchInfoCell: UITableViewCell {
     }()
     
     // matchInfoContainer에 stadium, manutd, enemy, round 들어가기
-    lazy var matchInfoContainer: UIView = {
+    private lazy var matchInfoContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -56,7 +56,7 @@ class MatchInfoCell: UITableViewCell {
     }()
     
     
-    lazy var stadium: UILabel = {
+    private lazy var stadium: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
@@ -65,7 +65,7 @@ class MatchInfoCell: UITableViewCell {
         return label
     }()
     
-    lazy var manutd: UILabel = {
+    private lazy var manutd: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
@@ -73,7 +73,7 @@ class MatchInfoCell: UITableViewCell {
         return label
     }()
     
-    lazy var state: UILabel = {
+    private lazy var state: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
@@ -81,14 +81,14 @@ class MatchInfoCell: UITableViewCell {
         return label
     }()
     
-    lazy var enemy: UILabel = {
+    private lazy var enemy: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         return label
     }()
     
-    lazy var round: UILabel = {
+    private lazy var round: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
