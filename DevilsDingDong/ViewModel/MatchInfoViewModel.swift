@@ -26,13 +26,13 @@ class MatchInfoViewModel {
     
     init() {
         fetchMatchData()
-        setTodayMatch()
+        print("todayMatch: \(todayMatch)")
     }
     
     func previousMonthTapped() {
         currentMonth -= 1
         if currentMonth > 12 {
-            currentMonth = 1
+            currentMonth = 1 
         } else if currentMonth < 1 {
             currentMonth = 12
         }
@@ -53,6 +53,7 @@ class MatchInfoViewModel {
         firebaseStoreManager.fetchFirestore(collection: "matches") { [weak self] (matches: [MatchInfo]) in
             self?.matches = matches
             self?.setFilterMatchData()
+            self?.setTodayMatch()
         }
     }
     
@@ -68,7 +69,7 @@ class MatchInfoViewModel {
     func setTodayMatch() {
         let date = Date()
         let formatted = DateFormatter()
-        formatted.dateFormat = "yy MM dd (E)"
+        formatted.dateFormat = "yy년 MM월 dd일"
         formatted.locale = Locale(identifier: "ko_KR")
         let formattedDate = formatted.string(from: date)
         print("formattedDate: \(formattedDate)")

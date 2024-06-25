@@ -10,15 +10,6 @@ import WebKit
 
 class MatchInfoDetailView: UIViewController {
     var matchInfo: MatchInfo?
-    
-    init(matchInfo: MatchInfo) {
-        self.matchInfo = matchInfo
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -48,7 +39,7 @@ class MatchInfoDetailView: UIViewController {
         return label
     }()
     lazy var matchDate: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = matchInfo?.date
         label.textColor = .white
@@ -219,11 +210,23 @@ class MatchInfoDetailView: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    init(matchInfo: MatchInfo) {
+        self.matchInfo = matchInfo
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
     }
-    
+}
+
+extension MatchInfoDetailView {
     private func setUI() {
         view.backgroundColor = UIColor.bg
         addView()
@@ -238,7 +241,7 @@ class MatchInfoDetailView: UIViewController {
         scrollView.addSubview(highlightContainerView)
         scrollView.addSubview(ranktitleLabel)
         scrollView.addSubview(currentScoreView)
-
+        
         resultContainer.addSubview(matchType)
         resultContainer.addSubview(matchDate)
         resultContainer.addSubview(scoreBox)
@@ -255,7 +258,7 @@ class MatchInfoDetailView: UIViewController {
         
         highlightContainerView.addSubview(highlightView)
     }
-
+    
     private func setAutoLayout() {
         let safeArea = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
@@ -270,7 +273,7 @@ class MatchInfoDetailView: UIViewController {
             resultContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             resultContainer.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30),
             resultContainer.topAnchor.constraint(equalTo: resultTitleLabel.bottomAnchor, constant: 10),
-          
+            
             matchType.centerXAnchor.constraint(equalTo: resultContainer.centerXAnchor),
             matchType.topAnchor.constraint(equalTo: resultContainer.topAnchor, constant: 10),
             
@@ -324,7 +327,7 @@ class MatchInfoDetailView: UIViewController {
             
             ranktitleLabel.topAnchor.constraint(equalTo: highlightView.bottomAnchor, constant: 30),
             ranktitleLabel.leadingAnchor.constraint(equalTo: resultTitleLabel.leadingAnchor),
-
+            
             currentScoreView.topAnchor.constraint(equalTo: ranktitleLabel.bottomAnchor, constant: 10),
             currentScoreView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             currentScoreView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),

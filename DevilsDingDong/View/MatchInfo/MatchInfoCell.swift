@@ -89,7 +89,7 @@ class MatchInfoCell: UITableViewCell {
     }()
     
     lazy var round: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textColor = UIColor.subTextColor
@@ -111,43 +111,9 @@ class MatchInfoCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func configure(matchDate: String, matchTime:String, stadium: String, state:String, enemy: String, round: String) {
-        self.matchDate.text = matchDate
-        self.matchTime.text = matchTime
-        self.stadium.text = stadium
-        self.state.text = state
-        self.enemy.text = enemy
-        self.round.text = round
-        
-        if state == "종료" {
-            self.state.textColor = .subTextColor?.withAlphaComponent(0.7)
-        } else if state == "예정" {
-            self.state.textColor = .accent.withAlphaComponent(0.7)
-        }
-       
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yy년 MM월 dd일 (E)"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        
-        guard let matchDateParsed = dateFormatter.date(from: matchDate) else {
-            print("Date parsing failed for matchDate: \(matchDate)")
-            return
-        }
-        
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
-        let matchDateWithoutTime = calendar.startOfDay(for: matchDateParsed)
+}
 
-        if matchDateWithoutTime > today {
-            matchDateContainer.backgroundColor = .blue
-        } else if matchDateWithoutTime == today {
-            matchDateContainer.backgroundColor = .accentColor
-        } else {
-            matchDateContainer.backgroundColor = .lightGray
-        }
-    }
-    
+extension MatchInfoCell {
     private func setUI() {
         addView()
         setAutoLayout()
@@ -205,5 +171,41 @@ class MatchInfoCell: UITableViewCell {
             round.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
             round.centerYAnchor.constraint(equalTo: matchInfoContainer.centerYAnchor),
         ])
+    }
+    
+    func configure(matchDate: String, matchTime:String, stadium: String, state:String, enemy: String, round: String) {
+        self.matchDate.text = matchDate
+        self.matchTime.text = matchTime
+        self.stadium.text = stadium
+        self.state.text = state
+        self.enemy.text = enemy
+        self.round.text = round
+        
+        if state == "종료" {
+            self.state.textColor = .subTextColor?.withAlphaComponent(0.7)
+        } else if state == "예정" {
+            self.state.textColor = .accent.withAlphaComponent(0.7)
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yy년 MM월 dd일 (E)"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        
+        guard let matchDateParsed = dateFormatter.date(from: matchDate) else {
+            print("Date parsing failed for matchDate: \(matchDate)")
+            return
+        }
+        
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let matchDateWithoutTime = calendar.startOfDay(for: matchDateParsed)
+        
+        if matchDateWithoutTime > today {
+            matchDateContainer.backgroundColor = .blue
+        } else if matchDateWithoutTime == today {
+            matchDateContainer.backgroundColor = .accentColor
+        } else {
+            matchDateContainer.backgroundColor = .lightGray
+        }
     }
 }

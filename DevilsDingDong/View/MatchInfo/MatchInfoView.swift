@@ -45,21 +45,21 @@ class MatchInfoView: UIViewController {
             self?.updateEmptyState()
         }
     }
-    
+}
+
+extension MatchInfoView {
     private func setUI() {
         view.backgroundColor = .bgColor
+        
         self.navigationItem.title = PageElement.matchInfoNavTitle
         navigationItem.largeTitleDisplayMode = .never
-        Addview()
-        setAutoLayout()
-        updateEmptyState()
-        print(Calendar.current)
-    }
-    
-    private func Addview() {
+        
         view.addSubview(monthNavigationView)
         view.addSubview(tableView)
         view.addSubview(emptyStateLabel)
+        
+        setAutoLayout()
+        updateEmptyState()
     }
     
     private func setAutoLayout() {
@@ -80,9 +80,7 @@ class MatchInfoView: UIViewController {
             emptyStateLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
     }
-}
-
-extension MatchInfoView {
+    
     private func createMonthBtn(title: String, action: Selector) -> UIButton {
         let button = UIButton()
         button.setTitle(title, for: .normal)
