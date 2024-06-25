@@ -8,8 +8,8 @@
 import UIKit
 
 class TodayMatchView: UIViewController {
-    let viewModel = MatchInfoViewModel()
-    lazy var noMatchLabel: UILabel = {
+    private let viewModel = MatchInfoViewModel()
+    private lazy var noMatchLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "경기 일정이 없습니다"
@@ -17,88 +17,94 @@ class TodayMatchView: UIViewController {
         label.textAlignment = .center
         return label
     }()
-    lazy var matchStackView: UIStackView = {
+    private lazy var matchStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
         view.spacing = 10
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    lazy var manUtdLabel: UILabel = {
+    private lazy var manUtdLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
         label.text = "맨유"
         return label
     }()
-    lazy var manUtdImage: UIImageView = {
+    private lazy var manUtdImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.image = UIImage(named: "맨유")
         return image
     }()
-    lazy var vsLabel: UILabel = {
+    private lazy var vsLabel: UILabel = {
         let label = UILabel()
         label.text = "VS"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    lazy var enemyImage: UIImageView = {
+    private lazy var enemyImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.image = UIImage(named: "맨유")
         return image
     }()
-    lazy var enemyLabel: UILabel = {
+    private lazy var enemyLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
         return label
     }()
-    lazy var dateStackView: UIStackView = {
+    private lazy var dateStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    lazy var matchDate: UILabel = {
+    private lazy var matchDate: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
-    lazy var matchTime: UILabel = {
+    private lazy var matchTime: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
-    lazy var matchTypeStackView = {
+    private lazy var matchTypeStackView = {
         let view = UIStackView()
         view.axis = .horizontal
         view.spacing = 10
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    lazy var matchType: UILabel = {
+    private lazy var matchType: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .gray
         return label
     }()
-    lazy var round: UILabel = {
+    private lazy var round: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .gray
         return label
     }()
-    lazy var stadium: UILabel = {
+    private lazy var stadium: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .gray
+        return label
+    }()
+    private lazy var playerTitle: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         return label
     }()
     
@@ -114,7 +120,7 @@ class TodayMatchView: UIViewController {
 }
 
 extension TodayMatchView {
-    func setUI() {
+    private func setUI() {
         navigationItem.title = "오늘의 경기"
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -124,11 +130,12 @@ extension TodayMatchView {
         enemyLabel.text = viewModel.todayMatch.first?.enemy ?? "미정"
         matchDate.text = viewModel.todayMatch.first?.date ?? "00년 00월 00일 (E)"
         matchTime.text = viewModel.todayMatch.first?.time ?? "00:00"
+        playerTitle.text = "선수 명단"
         addView()
         setAutoLayout()
     }
     
-    func setNoMatchUI() {
+    private func setNoMatchUI() {
         view.addSubview(noMatchLabel)
         NSLayoutConstraint.activate([
             noMatchLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -136,11 +143,12 @@ extension TodayMatchView {
         ])
     }
     
-    func addView() {
+    private func addView() {
         view.addSubview(matchStackView)
         view.addSubview(stadium)
         view.addSubview(dateStackView)
         view.addSubview(matchTypeStackView)
+        view.addSubview(playerTitle)
         
         matchStackView.addArrangedSubview(manUtdLabel)
         matchStackView.addArrangedSubview(manUtdImage)
@@ -155,7 +163,7 @@ extension TodayMatchView {
         matchTypeStackView.addArrangedSubview(round)
     }
     
-    func setAutoLayout() {
+    private func setAutoLayout() {
         let safeArea = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
             matchStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
@@ -170,8 +178,8 @@ extension TodayMatchView {
             dateStackView.topAnchor.constraint(equalTo: stadium.bottomAnchor, constant: 20),
             dateStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-           
-            
+            playerTitle.topAnchor.constraint(equalTo: dateStackView.bottomAnchor, constant: 40),
+            playerTitle.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20)
         ])
     }
 }

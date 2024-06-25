@@ -8,8 +8,8 @@
 import UIKit
 
 class MatchDetailCurrentScoreView: UIView {
-   
-    lazy var mainStackView: UIStackView = {
+    
+    private lazy var mainStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .horizontal
@@ -31,8 +31,10 @@ class MatchDetailCurrentScoreView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func addView() {
+}
+
+extension MatchDetailCurrentScoreView {
+    private func addView() {
         addSubview(mainStackView)
         mainStackView.addArrangedSubview(createVerticalStackView(headerText: "순위", dataText: "8"))
         mainStackView.addArrangedSubview(createVerticalStackView(headerText: "경기", dataText: "38"))
@@ -45,7 +47,7 @@ class MatchDetailCurrentScoreView: UIView {
         mainStackView.addArrangedSubview(createVerticalStackView(headerText: "득실", dataText: "-1"))
     }
     
-    func setUI() {
+    private func setUI() {
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
             mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
@@ -54,6 +56,7 @@ class MatchDetailCurrentScoreView: UIView {
         ])
     }
 }
+
 
 extension MatchDetailCurrentScoreView {
     private func createVerticalStackView(headerText: String, dataText: String) -> UIStackView {
@@ -67,7 +70,7 @@ extension MatchDetailCurrentScoreView {
         let separatorHBar = UIView()
         separatorHBar.translatesAutoresizingMaskIntoConstraints = false
         separatorHBar.backgroundColor = .lightGray
-       
+        
         let dataLabel = UILabel()
         dataLabel.translatesAutoresizingMaskIntoConstraints = false
         dataLabel.text = dataText
