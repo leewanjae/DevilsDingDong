@@ -48,7 +48,6 @@
 		CC3B8EA12C073524005A48D6 /* MatchInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3B8EA02C073524005A48D6 /* MatchInfoViewModel.swift */; };
 		CC3B8EA42C0774AB005A48D6 /* NotificationManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3B8EA32C0774AB005A48D6 /* NotificationManger.swift */; };
 		CC3B8EA62C0982F9005A48D6 /* MonthNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3B8EA52C0982F9005A48D6 /* MonthNavigationView.swift */; };
-		CC42EEF12C2A776C0048D978 /* PlayerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC42EEF02C2A776C0048D978 /* PlayerListView.swift */; };
 		CC42EEF32C2A787B0048D978 /* PlayerListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC42EEF22C2A787B0048D978 /* PlayerListCell.swift */; };
 		CC4FBC652BEEF68800B23124 /* MatchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4FBC642BEEF68800B23124 /* MatchInfo.swift */; };
 		CC84E0CF2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */; };
@@ -73,7 +72,6 @@
 		CC3B8EA02C073524005A48D6 /* MatchInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoViewModel.swift; sourceTree = "<group>"; };
 		CC3B8EA32C0774AB005A48D6 /* NotificationManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManger.swift; sourceTree = "<group>"; };
 		CC3B8EA52C0982F9005A48D6 /* MonthNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthNavigationView.swift; sourceTree = "<group>"; };
-		CC42EEF02C2A776C0048D978 /* PlayerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerListView.swift; sourceTree = "<group>"; };
 		CC42EEF22C2A787B0048D978 /* PlayerListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerListCell.swift; sourceTree = "<group>"; };
 		CC4FBC642BEEF68800B23124 /* MatchInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfo.swift; sourceTree = "<group>"; };
 		CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoDetailView.swift; sourceTree = "<group>"; };
@@ -247,7 +245,6 @@
 			isa = PBXGroup;
 			children = (
 				CCD931002C183395009A6D42 /* TodayMatchView.swift */,
-				CC42EEF02C2A776C0048D978 /* PlayerListView.swift */,
 				CC42EEF22C2A787B0048D978 /* PlayerListCell.swift */,
 			);
 			path = TodayMatch;
@@ -368,7 +365,6 @@
 				CCD931012C183395009A6D42 /* TodayMatchView.swift in Sources */,
 				CC27E43F2BF0A81200DC8ACF /* AppStrings.swift in Sources */,
 				CC27E4462BF0D3EC00DC8ACF /* Color + Extension.swift in Sources */,
-				CC42EEF12C2A776C0048D978 /* PlayerListView.swift in Sources */,
 				CC3B8EA42C0774AB005A48D6 /* NotificationManger.swift in Sources */,
 				CC3621232C10AC40005ECE60 /* FirebaseStoreManager.swift in Sources */,
 				CC37807D2BE9E95A009313EA /* MatchInfoView.swift in Sources */,

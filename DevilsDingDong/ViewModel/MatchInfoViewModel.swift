@@ -26,7 +26,6 @@ class MatchInfoViewModel {
     
     init() {
         fetchMatchData()
-        print("todayMatch: \(todayMatch)")
     }
     
     func previousMonthTapped() {
@@ -54,6 +53,7 @@ class MatchInfoViewModel {
             self?.matches = matches
             self?.setFilterMatchData()
             self?.setTodayMatch()
+            print("todayMatch: \(self?.todayMatch)")
         }
     }
     

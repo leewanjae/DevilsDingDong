@@ -7,8 +7,18 @@
 
 import UIKit
 
+struct Section: Hashable {
+    let id: String
+}
+
 class TodayMatchView: UIViewController {
     private let viewModel = MatchInfoViewModel()
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Player>?
+    private let collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+       return collectionView
+    }()
     private lazy var noMatchLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -116,6 +126,10 @@ class TodayMatchView: UIViewController {
         } else {
             setNoMatchUI()
         }
+        collectionView.register(PlayerListCell.self, forCellWithReuseIdentifier: PlayerListCell.id)
+        setDataSource()
+        setSnapShot()
+        collectionView.setCollectionViewLayout(createLayout(), animated: true)
     }
 }
 
@@ -149,18 +163,19 @@ extension TodayMatchView {
         view.addSubview(dateStackView)
         view.addSubview(matchTypeStackView)
         view.addSubview(playerTitle)
-        
+        view.addSubview(collectionView)
+
         matchStackView.addArrangedSubview(manUtdLabel)
         matchStackView.addArrangedSubview(manUtdImage)
         matchStackView.addArrangedSubview(vsLabel)
         matchStackView.addArrangedSubview(enemyImage)
         matchStackView.addArrangedSubview(enemyLabel)
         
-        dateStackView.addArrangedSubview(matchDate)
-        dateStackView.addArrangedSubview(matchTime)
-        
         matchTypeStackView.addArrangedSubview(matchType)
         matchTypeStackView.addArrangedSubview(round)
+        
+        dateStackView.addArrangedSubview(matchDate)
+        dateStackView.addArrangedSubview(matchTime)
     }
     
     private func setAutoLayout() {
@@ -174,12 +189,67 @@ extension TodayMatchView {
             
             stadium.topAnchor.constraint(equalTo: matchTypeStackView.bottomAnchor, constant: 5),
             stadium.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stadium.heightAnchor.constraint(equalToConstant: 30),
             
             dateStackView.topAnchor.constraint(equalTo: stadium.bottomAnchor, constant: 20),
             dateStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             playerTitle.topAnchor.constraint(equalTo: dateStackView.bottomAnchor, constant: 40),
-            playerTitle.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20)
+            playerTitle.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
+            
+            collectionView.topAnchor.constraint(equalTo: playerTitle.bottomAnchor, constant: 20),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+}
+
+extension TodayMatchView {
+    private func createLayout() -> UICollectionViewCompositionalLayout {
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.interSectionSpacing = 20
+        
+        return UICollectionViewCompositionalLayout(sectionProvider: {[weak self] sectionIndex, _ in
+            switch sectionIndex {
+            case 0:
+                self?.createPlayerListSection()
+            default:
+                nil
+            }
+        }, configuration: config)
+    }
+    
+    func createPlayerListSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3), heightDimension: .absolute(150))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
+        return section
+    }
+    
+    private func setDataSource() {
+        dataSource = UICollectionViewDiffableDataSource<Section, Player>(collectionView: collectionView) { collectionView, indexPath, player in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlayerListCell.id, for: indexPath) as? PlayerListCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(imageURL: player.image, position: player.position, name: player.name)
+            return cell
+        }
+    }
+
+    private func setSnapShot() {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Player>()
+        let playerListSection = Section(id: "PlayerList")
+        snapshot.appendSections([playerListSection])
+        if let players = viewModel.todayMatch.first?.player {
+            snapshot.appendItems(players, toSection: playerListSection)
+        }
+        dataSource?.apply(snapshot, animatingDifferences: true)
     }
 }
