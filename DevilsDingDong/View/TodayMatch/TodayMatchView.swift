@@ -13,8 +13,14 @@ struct Section: Hashable {
 
 class TodayMatchView: UIViewController {
     private let viewModel = MatchInfoViewModel()
-    private var dataSource: UICollectionViewDiffableDataSource<Section, Player>?
-    private let collectionView: UICollectionView = {
+    private var playerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
+    private var enemyPlayerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
+    private let playerCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+       return collectionView
+    }()
+    private let enemyPlayerCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
        return collectionView
@@ -117,6 +123,19 @@ class TodayMatchView: UIViewController {
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         return label
     }()
+    private lazy var manUtdPlayerLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+        label.text = "맨유"
+        return label
+    }()
+    private lazy var enemyPlayerLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,10 +145,12 @@ class TodayMatchView: UIViewController {
         } else {
             setNoMatchUI()
         }
-        collectionView.register(PlayerListCell.self, forCellWithReuseIdentifier: PlayerListCell.id)
+        playerCollectionView.register(PlayerListCell.self, forCellWithReuseIdentifier: PlayerListCell.id)
+        enemyPlayerCollectionView.register(PlayerListCell.self, forCellWithReuseIdentifier: PlayerListCell.id)
         setDataSource()
         setSnapShot()
-        collectionView.setCollectionViewLayout(createLayout(), animated: true)
+        playerCollectionView.setCollectionViewLayout(createLayout(), animated: true)
+        enemyPlayerCollectionView.setCollectionViewLayout(createLayout(), animated: true)
     }
 }
 
@@ -145,6 +166,7 @@ extension TodayMatchView {
         matchDate.text = viewModel.todayMatch.first?.date ?? "00년 00월 00일 (E)"
         matchTime.text = viewModel.todayMatch.first?.time ?? "00:00"
         playerTitle.text = "선수 명단"
+        enemyPlayerLabel.text = viewModel.todayMatch.first?.enemy ?? "상대편"
         addView()
         setAutoLayout()
     }
@@ -163,8 +185,11 @@ extension TodayMatchView {
         view.addSubview(dateStackView)
         view.addSubview(matchTypeStackView)
         view.addSubview(playerTitle)
-        view.addSubview(collectionView)
-
+        view.addSubview(playerCollectionView)
+        view.addSubview(manUtdPlayerLabel)
+        view.addSubview(enemyPlayerLabel)
+        view.addSubview(enemyPlayerCollectionView)
+        
         matchStackView.addArrangedSubview(manUtdLabel)
         matchStackView.addArrangedSubview(manUtdImage)
         matchStackView.addArrangedSubview(vsLabel)
@@ -197,10 +222,22 @@ extension TodayMatchView {
             playerTitle.topAnchor.constraint(equalTo: dateStackView.bottomAnchor, constant: 40),
             playerTitle.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
             
-            collectionView.topAnchor.constraint(equalTo: playerTitle.bottomAnchor, constant: 20),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            manUtdPlayerLabel.topAnchor.constraint(equalTo: playerTitle.bottomAnchor, constant: 20),
+            manUtdPlayerLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
+            
+            playerCollectionView.topAnchor.constraint(equalTo: manUtdPlayerLabel.bottomAnchor, constant: 10),
+            playerCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            playerCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            playerCollectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
+            
+            enemyPlayerLabel.topAnchor.constraint(equalTo: playerCollectionView.bottomAnchor, constant: 20),
+            enemyPlayerLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
+            
+            enemyPlayerCollectionView.topAnchor.constraint(equalTo: enemyPlayerLabel.bottomAnchor, constant: 20),
+            enemyPlayerCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            enemyPlayerCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            enemyPlayerCollectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
+
         ])
     }
 }
@@ -214,6 +251,8 @@ extension TodayMatchView {
             switch sectionIndex {
             case 0:
                 self?.createPlayerListSection()
+            case 1:
+                self?.createEnemyPlayerListSection()
             default:
                 nil
             }
@@ -221,26 +260,47 @@ extension TodayMatchView {
     }
     
     func createPlayerListSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1.0))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1/3))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
+        item.contentInsets = .init(top: 5, leading: 5, bottom: 5, trailing: 5)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3), heightDimension: .absolute(150))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/2), heightDimension: .fractionalHeight(1))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         return section
     }
     
+    func createEnemyPlayerListSection() -> NSCollectionLayoutSection {
+           let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1/3))
+           let item = NSCollectionLayoutItem(layoutSize: itemSize)
+           item.contentInsets = .init(top: 5, leading: 5, bottom: 5, trailing: 5)
+           
+           let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/2), heightDimension: .fractionalHeight(1))
+           let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+           
+           let section = NSCollectionLayoutSection(group: group)
+           section.orthogonalScrollingBehavior = .groupPaging
+           return section
+       }
+    
     private func setDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<Section, Player>(collectionView: collectionView) { collectionView, indexPath, player in
+        playerDataSource = UICollectionViewDiffableDataSource<Section, Player>(collectionView: playerCollectionView) { collectionView, indexPath, player in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlayerListCell.id, for: indexPath) as? PlayerListCell else {
                 return UICollectionViewCell()
             }
-            cell.configure(imageURL: player.image, position: player.position, name: player.name)
+            cell.configure(position: player.position, name: player.name)
             return cell
         }
+        
+        enemyPlayerDataSource = UICollectionViewDiffableDataSource<Section, Player>(collectionView: enemyPlayerCollectionView, cellProvider: { collectionView, indexPath, player in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlayerListCell.id, for: indexPath) as? PlayerListCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(position: player.name, name: player.position)
+            return cell
+        })
     }
 
     private func setSnapShot() {
@@ -250,6 +310,14 @@ extension TodayMatchView {
         if let players = viewModel.todayMatch.first?.player {
             snapshot.appendItems(players, toSection: playerListSection)
         }
-        dataSource?.apply(snapshot, animatingDifferences: true)
+        playerDataSource?.apply(snapshot, animatingDifferences: true)
+        
+        var enemySnapshot = NSDiffableDataSourceSnapshot<Section, Player>()
+        let enemyPlayerListSection = Section(id: "EnemyPlayerList")
+        enemySnapshot.appendSections([enemyPlayerListSection])
+        if let players = viewModel.todayMatch.first?.enemyPlayer {
+            enemySnapshot.appendItems(players, toSection: enemyPlayerListSection)
+        }
+        enemyPlayerDataSource?.apply(enemySnapshot, animatingDifferences: true)
     }
 }
