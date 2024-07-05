@@ -12,15 +12,18 @@ class MatchInfoViewModel {
     var matches: [MatchInfo] = []
     var filteredMatches: [MatchInfo] = []
     var todayMatch: [MatchInfo] = []
-    var currentMonth = Calendar.current.component(.month, from: Date()) {
+    var currentDate = Calendar.current.dateComponents([.year, .month], from: Date()) {
         didSet {
             viewUpdateCloser?()
             monthUpdateCloser?()
         }
     }
-    var formattedCurrentMonth: String {
-        return String(format: "%02d", currentMonth)
-    }
+    var formattedCurrentYearMonth: String {
+           guard let year = currentDate.year, let month = currentDate.month else { return "" }
+           let formattedYear = String(format: "%02d", year % 100)
+           let formattedMonth = String(format: "%02d", month)
+           return "\(formattedYear)년 \(formattedMonth)월"
+       }
     var viewUpdateCloser: (() -> Void)?
     var monthUpdateCloser: (() -> Void)?
     
@@ -29,23 +32,45 @@ class MatchInfoViewModel {
     }
     
     func previousMonthTapped() {
-        currentMonth -= 1
-        if currentMonth > 12 {
-            currentMonth = 1 
-        } else if currentMonth < 1 {
-            currentMonth = 12
+        if let currentMonth = currentDate.month, let currentYear = currentDate.year {
+            var newMonth = currentMonth - 1
+            var newYear = currentYear
+            
+            if newMonth < 1 {
+                newMonth = 12
+                newYear -= 1
+            }
+            
+            if newYear < 2023 {
+                newYear = 2023
+                newMonth = 1
+            }
+            
+            currentDate.month = newMonth
+            currentDate.year = newYear
+            setFilterMatchData()
         }
-        setFilterMatchData()
     }
     
     func nextMonthTapped() {
-        currentMonth += 1
-        if currentMonth > 12 {
-            currentMonth = 1
-        } else if currentMonth < 1 {
-            currentMonth = 12
+        if let currentMonth = currentDate.month, let currentYear = currentDate.year {
+            var newMonth = currentMonth + 1
+            var newYear = currentYear
+            
+            if newMonth > 12 {
+                newMonth = 1
+                newYear += 1
+            }
+            
+            if newYear > 2024 {
+                newYear = 2024
+                newMonth = 12
+            }
+            
+            currentDate.month = newMonth
+            currentDate.year = newYear
+            setFilterMatchData()
         }
-        setFilterMatchData()
     }
     
     func fetchMatchData() {
@@ -53,16 +78,15 @@ class MatchInfoViewModel {
             self?.matches = matches
             self?.setFilterMatchData()
             self?.setTodayMatch()
-            print("todayMatch: \(self?.todayMatch)")
         }
     }
     
     func setFilterMatchData() {
         filteredMatches = matches.filter { match in
-            match.date.contains("\(formattedCurrentMonth)월")
+            match.date.contains("\(formattedCurrentYearMonth)")
         }
         viewUpdateCloser?()
-        print("현재 포메팅 월: \(formattedCurrentMonth)")
+        print("현재 포메팅 년월: \(formattedCurrentYearMonth)")
         print("필터된 경기 데이터: \(filteredMatches.count)")
     }
     
