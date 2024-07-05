@@ -20,7 +20,7 @@ class MonthNavigationView: UIView {
     }()
     private lazy var monthLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(viewModel.formattedCurrentMonth)월"
+        label.text = "\(viewModel.formattedCurrentYearMonth)"
         label.textColor = .black
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 28)
@@ -42,7 +42,7 @@ class MonthNavigationView: UIView {
         setUI()
         setAutoLayout()
         viewModel.monthUpdateCloser = { [weak self] in
-            self?.monthLabel.text = "\(self?.viewModel.formattedCurrentMonth ?? "00")월"
+            self?.monthLabel.text = "\(self?.viewModel.formattedCurrentYearMonth ?? "00년 00월")"
         }
     }
     
@@ -62,7 +62,7 @@ class MonthNavigationView: UIView {
             prevButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             monthLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             monthLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            monthLabel.widthAnchor.constraint(equalToConstant: 70),
+            monthLabel.widthAnchor.constraint(equalToConstant: 150),
             nextButton.leadingAnchor.constraint(equalTo: monthLabel.trailingAnchor, constant: 20),
             nextButton.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
