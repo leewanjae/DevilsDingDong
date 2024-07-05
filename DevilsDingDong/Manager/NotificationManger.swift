@@ -18,7 +18,11 @@ class NotificationManger {
         content.body = "맨체스터유나이티드 VS 크리스탈펠리스"
         content.sound = .default
         content.badge = 1
+<<<<<<< HEAD
+        content.userInfo = ["MatchID" : MatchInfo.data[0].id]
+=======
 //        content.userInfo = ["MatchID" : MatchInfo.data[0].id]
+>>>>>>> 53ff7b74eb07f851df93f38f1861e928ad351b46
 
         let fireDate = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute, .second], from: Date().addingTimeInterval((3)))
         let trigger = UNCalendarNotificationTrigger(dateMatching: fireDate, repeats: false)

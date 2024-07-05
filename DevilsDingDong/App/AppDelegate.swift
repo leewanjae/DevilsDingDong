@@ -7,17 +7,25 @@
 
 import UIKit
 import NotificationCenter
+<<<<<<< HEAD
+=======
 import FirebaseCore
+>>>>>>> 53ff7b74eb07f851df93f38f1861e928ad351b46
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+<<<<<<< HEAD
+        let center = UNUserNotificationCenter.current()
+        
+=======
 
         FirebaseApp.configure()
 //      FirebaseStoreManager().addMatchesToFirestore()
         let center = UNUserNotificationCenter.current()
+>>>>>>> 53ff7b74eb07f851df93f38f1861e928ad351b46
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { didAllow, error in
             if let error = error {
                 print("Error: \(error)")

@@ -72,7 +72,7 @@ class MatchInfoViewModel {
             setFilterMatchData()
         }
     }
-    
+
     func fetchMatchData() {
         firebaseStoreManager.fetchFirestore(collection: "matches") { [weak self] (matches: [MatchInfo]) in
             self?.matches = matches

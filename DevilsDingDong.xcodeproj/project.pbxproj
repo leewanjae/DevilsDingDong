@@ -10,6 +10,8 @@
 		CC27E43F2BF0A81200DC8ACF /* AppStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC27E43E2BF0A81200DC8ACF /* AppStrings.swift */; };
 		CC27E4462BF0D3EC00DC8ACF /* Color + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC27E4452BF0D3EC00DC8ACF /* Color + Extension.swift */; };
 		CC27E4482BF0DDA200DC8ACF /* MatchInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC27E4472BF0DDA200DC8ACF /* MatchInfoCell.swift */; };
+<<<<<<< HEAD
+=======
 		CC3620E72C1034D7005ECE60 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC3620E62C1034D7005ECE60 /* GoogleService-Info.plist */; };
 		CC3620EA2C1035D7005ECE60 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = CC3620E92C1035D7005ECE60 /* FirebaseAnalytics */; };
 		CC3620EC2C1035D7005ECE60 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = CC3620EB2C1035D7005ECE60 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -40,6 +42,7 @@
 		CC36211E2C1035D7005ECE60 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = CC36211D2C1035D7005ECE60 /* FirebaseStorageCombine-Community */; };
 		CC3621202C1035D7005ECE60 /* FirebaseVertexAI-Preview in Frameworks */ = {isa = PBXBuildFile; productRef = CC36211F2C1035D7005ECE60 /* FirebaseVertexAI-Preview */; };
 		CC3621232C10AC40005ECE60 /* FirebaseStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3621222C10AC40005ECE60 /* FirebaseStoreManager.swift */; };
+>>>>>>> 53ff7b74eb07f851df93f38f1861e928ad351b46
 		CC3780792BE9E95A009313EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3780782BE9E95A009313EA /* AppDelegate.swift */; };
 		CC37807B2BE9E95A009313EA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC37807A2BE9E95A009313EA /* SceneDelegate.swift */; };
 		CC37807D2BE9E95A009313EA /* MatchInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC37807C2BE9E95A009313EA /* MatchInfoView.swift */; };
@@ -48,20 +51,28 @@
 		CC3B8EA12C073524005A48D6 /* MatchInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3B8EA02C073524005A48D6 /* MatchInfoViewModel.swift */; };
 		CC3B8EA42C0774AB005A48D6 /* NotificationManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3B8EA32C0774AB005A48D6 /* NotificationManger.swift */; };
 		CC3B8EA62C0982F9005A48D6 /* MonthNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3B8EA52C0982F9005A48D6 /* MonthNavigationView.swift */; };
+<<<<<<< HEAD
+		CC4FBC652BEEF68800B23124 /* MatchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4FBC642BEEF68800B23124 /* MatchInfo.swift */; };
+		CC84E0CF2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */; };
+=======
 		CC42EEF32C2A787B0048D978 /* PlayerListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC42EEF22C2A787B0048D978 /* PlayerListCell.swift */; };
 		CC4FBC652BEEF68800B23124 /* MatchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4FBC642BEEF68800B23124 /* MatchInfo.swift */; };
 		CC84E0CF2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */; };
 		CCD931012C183395009A6D42 /* TodayMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD931002C183395009A6D42 /* TodayMatchView.swift */; };
 		CCD931032C1833A6009A6D42 /* TotalRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD931022C1833A6009A6D42 /* TotalRecordView.swift */; };
 		CCD931052C186D0F009A6D42 /* MatchDetailCurrentScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD931042C186D0F009A6D42 /* MatchDetailCurrentScoreView.swift */; };
+>>>>>>> 53ff7b74eb07f851df93f38f1861e928ad351b46
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CC27E43E2BF0A81200DC8ACF /* AppStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStrings.swift; sourceTree = "<group>"; };
 		CC27E4452BF0D3EC00DC8ACF /* Color + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color + Extension.swift"; sourceTree = "<group>"; };
 		CC27E4472BF0DDA200DC8ACF /* MatchInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoCell.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
+=======
 		CC3620E62C1034D7005ECE60 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CC3621222C10AC40005ECE60 /* FirebaseStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStoreManager.swift; sourceTree = "<group>"; };
+>>>>>>> 53ff7b74eb07f851df93f38f1861e928ad351b46
 		CC3780752BE9E95A009313EA /* DevilsDingDong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevilsDingDong.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC3780782BE9E95A009313EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC37807A2BE9E95A009313EA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,12 +83,17 @@
 		CC3B8EA02C073524005A48D6 /* MatchInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoViewModel.swift; sourceTree = "<group>"; };
 		CC3B8EA32C0774AB005A48D6 /* NotificationManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManger.swift; sourceTree = "<group>"; };
 		CC3B8EA52C0982F9005A48D6 /* MonthNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthNavigationView.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
+		CC4FBC642BEEF68800B23124 /* MatchInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfo.swift; sourceTree = "<group>"; };
+		CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoDetailView.swift; sourceTree = "<group>"; };
+=======
 		CC42EEF22C2A787B0048D978 /* PlayerListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerListCell.swift; sourceTree = "<group>"; };
 		CC4FBC642BEEF68800B23124 /* MatchInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfo.swift; sourceTree = "<group>"; };
 		CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoDetailView.swift; sourceTree = "<group>"; };
 		CCD931002C183395009A6D42 /* TodayMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayMatchView.swift; sourceTree = "<group>"; };
 		CCD931022C1833A6009A6D42 /* TotalRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRecordView.swift; sourceTree = "<group>"; };
 		CCD931042C186D0F009A6D42 /* MatchDetailCurrentScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDetailCurrentScoreView.swift; sourceTree = "<group>"; };
+>>>>>>> 53ff7b74eb07f851df93f38f1861e928ad351b46
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,9 +147,16 @@
 		CC27E43D2BF0A78900DC8ACF /* View */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
+				CC3620E12C0D7A0F005ECE60 /* Component */,
+				CC37807C2BE9E95A009313EA /* MatchInfoView.swift */,
+				CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */,
+				CC27E4472BF0DDA200DC8ACF /* MatchInfoCell.swift */,
+=======
 				CCD930FF2C18333F009A6D42 /* TotalRecord */,
 				CCD930FE2C18331E009A6D42 /* TodayMatch */,
 				CCD930FD2C183296009A6D42 /* MatchInfo */,
+>>>>>>> 53ff7b74eb07f851df93f38f1861e928ad351b46
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -159,11 +182,16 @@
 			isa = PBXGroup;
 			children = (
 				CC3B8EA52C0982F9005A48D6 /* MonthNavigationView.swift */,
+<<<<<<< HEAD
+=======
 				CCD931042C186D0F009A6D42 /* MatchDetailCurrentScoreView.swift */,
+>>>>>>> 53ff7b74eb07f851df93f38f1861e928ad351b46
 			);
 			path = Component;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
+=======
 		CC3621212C10362E005ECE60 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +199,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+>>>>>>> 53ff7b74eb07f851df93f38f1861e928ad351b46
 		CC37806C2BE9E95A009313EA = {
 			isa = PBXGroup;
 			children = (
@@ -191,9 +220,15 @@
 		CC3780772BE9E95A009313EA /* DevilsDingDong */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
+				CC3B8EA22C07749A005A48D6 /* Manager */,
+				CC27E4442BF0D3E000DC8ACF /* Extension */,
+				CC27E4402BF0A82000DC8ACF /* App */,
+=======
 				CC27E4402BF0A82000DC8ACF /* App */,
 				CC3B8EA22C07749A005A48D6 /* Manager */,
 				CC27E4442BF0D3E000DC8ACF /* Extension */,
+>>>>>>> 53ff7b74eb07f851df93f38f1861e928ad351b46
 				CC27E43D2BF0A78900DC8ACF /* View */,
 				CC3B8E9F2C073503005A48D6 /* ViewModel */,
 				CC4FBC632BEEF67800B23124 /* Model */,
@@ -217,7 +252,10 @@
 			isa = PBXGroup;
 			children = (
 				CC3B8EA32C0774AB005A48D6 /* NotificationManger.swift */,
+<<<<<<< HEAD
+=======
 				CC3621222C10AC40005ECE60 /* FirebaseStoreManager.swift */,
+>>>>>>> 53ff7b74eb07f851df93f38f1861e928ad351b46
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -230,6 +268,8 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
+=======
 		CCD930FD2C183296009A6D42 /* MatchInfo */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,6 +298,7 @@
 			path = TotalRecord;
 			sourceTree = "<group>";
 		};
+>>>>>>> 53ff7b74eb07f851df93f38f1861e928ad351b46
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -362,19 +403,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
+				CC27E43F2BF0A81200DC8ACF /* AppStrings.swift in Sources */,
+				CC27E4462BF0D3EC00DC8ACF /* Color + Extension.swift in Sources */,
+				CC3B8EA42C0774AB005A48D6 /* NotificationManger.swift in Sources */,
+=======
 				CCD931012C183395009A6D42 /* TodayMatchView.swift in Sources */,
 				CC27E43F2BF0A81200DC8ACF /* AppStrings.swift in Sources */,
 				CC27E4462BF0D3EC00DC8ACF /* Color + Extension.swift in Sources */,
 				CC3B8EA42C0774AB005A48D6 /* NotificationManger.swift in Sources */,
 				CC3621232C10AC40005ECE60 /* FirebaseStoreManager.swift in Sources */,
+>>>>>>> 53ff7b74eb07f851df93f38f1861e928ad351b46
 				CC37807D2BE9E95A009313EA /* MatchInfoView.swift in Sources */,
 				CC3780792BE9E95A009313EA /* AppDelegate.swift in Sources */,
 				CC37807B2BE9E95A009313EA /* SceneDelegate.swift in Sources */,
 				CC4FBC652BEEF68800B23124 /* MatchInfo.swift in Sources */,
+<<<<<<< HEAD
+				CC84E0CF2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift in Sources */,
+=======
 				CCD931052C186D0F009A6D42 /* MatchDetailCurrentScoreView.swift in Sources */,
 				CC84E0CF2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift in Sources */,
 				CC42EEF32C2A787B0048D978 /* PlayerListCell.swift in Sources */,
 				CCD931032C1833A6009A6D42 /* TotalRecordView.swift in Sources */,
+>>>>>>> 53ff7b74eb07f851df93f38f1861e928ad351b46
 				CC27E4482BF0DDA200DC8ACF /* MatchInfoCell.swift in Sources */,
 				CC3B8EA62C0982F9005A48D6 /* MonthNavigationView.swift in Sources */,
 				CC3B8EA12C073524005A48D6 /* MatchInfoViewModel.swift in Sources */,

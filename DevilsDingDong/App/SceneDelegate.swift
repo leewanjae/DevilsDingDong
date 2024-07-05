@@ -13,6 +13,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
+<<<<<<< HEAD
+        let matchInfoView = MatchInfoView()
+        let navigationController = UINavigationController(rootViewController: matchInfoView)
+        navigationController.navigationBar.prefersLargeTitles = true
+        
+        window = UIWindow(windowScene: windowScene)
+        window?.rootViewController = navigationController
+=======
         
         let vc1 = UINavigationController(rootViewController: MatchInfoView())
         let vc2 = UINavigationController(rootViewController: TodayMatchView())
@@ -26,6 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = tabBarController
+>>>>>>> 53ff7b74eb07f851df93f38f1861e928ad351b46
         window?.makeKeyAndVisible()
     }
 }
