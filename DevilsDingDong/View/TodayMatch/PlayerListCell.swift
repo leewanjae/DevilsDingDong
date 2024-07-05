@@ -9,17 +9,12 @@ import UIKit
 
 class PlayerListCell: UICollectionViewCell {
     static let id = "PlayerListCell"
-    private lazy var playerImage: UIImageView = {
-        let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
-    }()
     private lazy var playerStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.distribution = .fill
         view.spacing = 10
-        view.distribution = .fillProportionally
         return view
     }()
     private lazy var playerPosition: UILabel = {
@@ -46,7 +41,6 @@ class PlayerListCell: UICollectionViewCell {
 
 extension PlayerListCell {
     private func setUI() {
-        addSubview(playerImage)
         addSubview(playerStackView)
         
         playerStackView.addArrangedSubview(playerPosition)
@@ -57,38 +51,16 @@ extension PlayerListCell {
     
     private func setAutoLayout() {
         NSLayoutConstraint.activate([
-            playerImage.topAnchor.constraint(equalTo: topAnchor),
-            playerImage.leadingAnchor.constraint(equalTo: leadingAnchor),
-            playerImage.trailingAnchor.constraint(equalTo: trailingAnchor),
-            playerImage.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.8),
+            playerName.widthAnchor.constraint(equalToConstant: 100),
             
-            playerStackView.topAnchor.constraint(equalTo: playerImage.bottomAnchor),
+            playerStackView.topAnchor.constraint(equalTo: topAnchor),
             playerStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            playerStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             playerStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
-    func configure(imageURL: String, position: String, name: String) {
+    func configure(position: String, name: String) {
             playerPosition.text = position
             playerName.text = name
-            
-            if let url = URL(string: imageURL) {
-                DispatchQueue.global().async { [weak self] in
-                    guard let self = self else { return }
-                    do {
-                        let data = try Data(contentsOf: url)
-                        if let image = UIImage(data: data) {
-                            DispatchQueue.main.async {
-                                self.playerImage.image = image
-                            }
-                        }
-                    } catch {
-                        print("Error loading image from URL: \(error)")
-                    }
-                }
-            } else {
-                playerImage.image = nil
-            }
         }
 }
