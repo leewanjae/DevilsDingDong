@@ -146,9 +146,11 @@ class TodayMatchView: UIViewController {
         playerCollectionView.setCollectionViewLayout(createLayout(), animated: true)
         enemyPlayerCollectionView.setCollectionViewLayout(createLayout(), animated: true)
         
-        if let notiData = viewModel.todayMatch.first {
-            NotificationManger.shared.setNotification(enemy: notiData.enemy, date: notiData.date, time: notiData.time)
-        } else { return }
+        if viewModel.todayMatch.isEmpty != true {
+            if let notiData = viewModel.todayMatch.first {
+                NotificationManger.shared.setNotification(enemy: notiData.enemy, date: notiData.date, time: notiData.time)
+            } else { return }
+        }
     }
 }
 

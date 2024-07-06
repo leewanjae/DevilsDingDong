@@ -12,7 +12,7 @@ class FirebaseStoreManager {
         let db = Firestore.firestore()
         let ref = db.collection(collection).document(document)
         do {
-            try ref.setData(from: data) { error in
+            try ref.setData(from: data, merge: true) { error in
                 if let error = error {
                     print("error: \(error)")
                 } else {
