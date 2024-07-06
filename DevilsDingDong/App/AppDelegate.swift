@@ -17,6 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         FirebaseApp.configure()
         requestNotificationAuthorization()
+//        let firebase = FirebaseStoreManager()
+//        MatchInfo.match.forEach { match in
+//            firebase.addFirestore(collection: "matches", document: "\(match.id)", data: match)
+//        }
         return true
     }
     
@@ -32,11 +36,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
     private func requestNotificationAuthorization() {
         let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+        center.requestAuthorization(options: [.alert, .sound]) { granted, error in
             if let error = error {
                 print("Error requesting notification authorization: \(error)")
             }
-            // Enable or disable features based on authorization
             DispatchQueue.main.async {
                 if granted {
                     UIApplication.shared.registerForRemoteNotifications()

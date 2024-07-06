@@ -18,7 +18,6 @@ class NotificationManger {
         content.subtitle = "맨유 vs \(enemy)"
         content.body = "\(date) \(time)시"
         content.sound = .default
-        content.badge = 1
 
         var dateCompoents = DateComponents()
         dateCompoents.hour = 00
