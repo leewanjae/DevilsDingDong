@@ -25,14 +25,14 @@ class TotalRecordView: UIViewController {
         let rankTitle = createTitleLabel(text: "순위")
         let teamLabel = createTitleLabel(text: "팀")
         let roundLabel = createTitleLabel(text: "경기")
-        let pointLabel = createTitleLabel(text: "승점")
         let winLabel = createTitleLabel(text: "승")
         let drawLabel = createTitleLabel(text: "무")
         let lossLabel = createTitleLabel(text: "패")
+        let pointLabel = createTitleLabel(text: "승점")
         let gfLabel = createTitleLabel(text: "득")
         let gaLabel = createTitleLabel(text: "실")
         let gdLabel = createTitleLabel(text: "득실")
-        return [rankTitle, teamLabel, roundLabel, pointLabel, winLabel, drawLabel, lossLabel, gfLabel, gaLabel, gdLabel]
+        return [rankTitle, teamLabel, roundLabel, winLabel, drawLabel, lossLabel, pointLabel, gfLabel, gaLabel, gdLabel]
     }()
     private lazy var scoreTitleStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: titleLabel)
@@ -74,13 +74,13 @@ extension TotalRecordView {
         let safeArea = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
             scoreTitleStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
-            scoreTitleStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scoreTitleStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scoreTitleStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            scoreTitleStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
             collectionView.topAnchor.constraint(equalTo: scoreTitleStackView.bottomAnchor),
             collectionView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: scoreTitleStackView.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: scoreTitleStackView.trailingAnchor),
             collectionView.centerXAnchor.constraint(equalTo: scoreTitleStackView.centerXAnchor),
         ])
     }
@@ -113,10 +113,10 @@ extension TotalRecordView: UICollectionViewDataSource, UICollectionViewDelegateF
             rankLabel: "\(score.rank)",
             teamLabel: score.team,
             roundLabel: "\(score.round)",
-            pointLabel: "\(score.point)",
             winLabel: "\(score.win)",
             drawLabel: "\(score.draw)",
             lossLabel: "\(score.loss)",
+            pointLabel: "\(score.point)",
             gfLabel: "\(score.gf)",
             gaLabel: "\(score.ga)",
             gdLabel: "\(score.gd)"

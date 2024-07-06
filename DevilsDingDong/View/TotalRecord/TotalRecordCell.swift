@@ -22,7 +22,7 @@ class TotalRecordCell: UICollectionViewCell {
 
     private lazy var scoreDBStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
-            rankLabel, teamLabel, roundLabel, pointLabel, winLabel, drawLabel, lossLabel, gfLabel, gaLabel, gdLabel
+            rankLabel, teamLabel, roundLabel, winLabel, drawLabel, lossLabel, pointLabel, gfLabel, gaLabel, gdLabel
         ])
         stackView.axis = .horizontal
         stackView.alignment = .fill
@@ -73,14 +73,14 @@ extension TotalRecordCell {
         return label
     }
 
-    func configure(rankLabel: String, teamLabel: String, roundLabel: String, pointLabel: String, winLabel: String, drawLabel: String, lossLabel: String, gfLabel: String, gaLabel: String, gdLabel: String) {
+    func configure(rankLabel: String, teamLabel: String, roundLabel: String, winLabel: String, drawLabel: String, lossLabel: String, pointLabel: String, gfLabel: String, gaLabel: String, gdLabel: String) {
         self.rankLabel.text = rankLabel
         self.teamLabel.text = teamLabel
         self.roundLabel.text = roundLabel
-        self.pointLabel.text = pointLabel
         self.winLabel.text = winLabel
         self.drawLabel.text = drawLabel
         self.lossLabel.text = lossLabel
+        self.pointLabel.text = pointLabel
         self.gfLabel.text = gfLabel
         self.gaLabel.text = gaLabel
         self.gdLabel.text = gdLabel
