@@ -39,7 +39,6 @@ class MatchInfoView: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.register(MatchInfoCell.self, forCellReuseIdentifier: MatchInfoCell.id)
-        NotificationManger.shared.setNotification()
         viewModel.viewUpdateCloser = { [weak self] in
             self?.tableView.reloadData()
             self?.updateEmptyState()
