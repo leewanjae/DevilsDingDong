@@ -59,11 +59,13 @@ class MonthNavigationView: UIView {
     private func setAutoLayout() {
         NSLayoutConstraint.activate([
             prevButton.trailingAnchor.constraint(equalTo: monthLabel.leadingAnchor, constant: -20),
+            prevButton.widthAnchor.constraint(equalToConstant: 50),
             prevButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             monthLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             monthLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             monthLabel.widthAnchor.constraint(equalToConstant: 150),
             nextButton.leadingAnchor.constraint(equalTo: monthLabel.trailingAnchor, constant: 20),
+            nextButton.widthAnchor.constraint(equalToConstant: 50),
             nextButton.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
     }

@@ -49,23 +49,11 @@ class TodayMatchView: UIViewController {
         label.text = "맨유"
         return label
     }()
-    private lazy var manUtdImage: UIImageView = {
-        let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(named: "맨유")
-        return image
-    }()
     private lazy var vsLabel: UILabel = {
         let label = UILabel()
         label.text = "VS"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }()
-    private lazy var enemyImage: UIImageView = {
-        let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(named: "맨유")
-        return image
     }()
     private lazy var enemyLabel: UILabel = {
         let label = UILabel()
@@ -128,19 +116,22 @@ class TodayMatchView: UIViewController {
     private lazy var manUtdPlayerLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         label.text = "맨유"
         return label
     }()
     private lazy var enemyPlayerLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         return label
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "오늘의 경기"
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
         self.view.backgroundColor = .bgColor
         if viewModel.todayMatch.first?.enemy != nil {
             setUI()
@@ -158,9 +149,6 @@ class TodayMatchView: UIViewController {
 
 extension TodayMatchView {
     private func setUI() {
-        navigationItem.title = "오늘의 경기"
-        navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.prefersLargeTitles = true
         matchType.text = viewModel.todayMatch.first?.matchType ?? "프리미어리그"
         round.text = viewModel.todayMatch.first?.round ?? "0R"
         stadium.text = viewModel.todayMatch.first?.stadium ?? "Old Trafford"
@@ -193,9 +181,7 @@ extension TodayMatchView {
         view.addSubview(enemyPlayerCollectionView)
         
         matchStackView.addArrangedSubview(manUtdLabel)
-        matchStackView.addArrangedSubview(manUtdImage)
         matchStackView.addArrangedSubview(vsLabel)
-        matchStackView.addArrangedSubview(enemyImage)
         matchStackView.addArrangedSubview(enemyLabel)
         
         matchTypeStackView.addArrangedSubview(matchType)

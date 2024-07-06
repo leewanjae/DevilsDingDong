@@ -50,17 +50,13 @@ class MatchInfoDetailView: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    private lazy var manUtdLogo: UIImageView = {
-        let image = UIImageView(image: UIImage(named: "맨유"))
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
-    }()
     private lazy var manUtdLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "맨유"
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = .white
+        label.textAlignment = .right
         return label
     }()
     private lazy var score: UILabel = {
@@ -75,11 +71,6 @@ class MatchInfoDetailView: UIViewController {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-    }()
-    private lazy var enemyLogo: UIImageView = {
-        let image = UIImageView(image: UIImage(named: "맨유"))
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
     }()
     private lazy var enemyLabel: UILabel = {
         let label = UILabel()
@@ -198,18 +189,6 @@ class MatchInfoDetailView: UIViewController {
         webView.layer.shadowOpacity = 0.2
         return webView
     }()
-    private lazy var ranktitleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "현재순위"
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        return label
-    }()
-    private lazy var currentScoreView: MatchDetailCurrentScoreView = {
-        let view = MatchDetailCurrentScoreView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     
     init(matchInfo: MatchInfo) {
         self.matchInfo = matchInfo
@@ -239,8 +218,6 @@ extension MatchInfoDetailView {
         scrollView.addSubview(resultContainer)
         scrollView.addSubview(highlightTitleLabel)
         scrollView.addSubview(highlightContainerView)
-        scrollView.addSubview(ranktitleLabel)
-        scrollView.addSubview(currentScoreView)
         
         resultContainer.addSubview(matchType)
         resultContainer.addSubview(matchDate)
@@ -251,9 +228,7 @@ extension MatchInfoDetailView {
         resultContainer.addSubview(enemyGoalsView)
         
         scoreBox.addSubview(manUtdLabel)
-        scoreBox.addSubview(manUtdLogo)
         scoreBox.addSubview(score)
-        scoreBox.addSubview(enemyLogo)
         scoreBox.addSubview(enemyLabel)
         
         highlightContainerView.addSubview(highlightView)
@@ -280,17 +255,15 @@ extension MatchInfoDetailView {
             matchDate.centerXAnchor.constraint(equalTo: resultContainer.centerXAnchor),
             matchDate.topAnchor.constraint(equalTo: matchType.bottomAnchor, constant: 10),
             
-            scoreBox.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            scoreBox.centerXAnchor.constraint(equalTo: resultContainer.centerXAnchor),
             scoreBox.topAnchor.constraint(equalTo: matchDate.bottomAnchor, constant: 25),
             scoreBox.heightAnchor.constraint(equalToConstant: 30),
             
-            manUtdLabel.trailingAnchor.constraint(equalTo: manUtdLogo.leadingAnchor, constant: -5),
-            enemyLabel.leadingAnchor.constraint(equalTo: enemyLogo.trailingAnchor, constant: 5),
-            manUtdLogo.trailingAnchor.constraint(equalTo: score.leadingAnchor, constant: -5),
-            manUtdLogo.centerYAnchor.constraint(equalTo: score.centerYAnchor),
-            enemyLogo.leadingAnchor.constraint(equalTo: score.trailingAnchor, constant: 5),
-            enemyLogo.centerYAnchor.constraint(equalTo: score.centerYAnchor),
-            score.centerXAnchor.constraint(equalTo: scoreBox.centerXAnchor),
+            manUtdLabel.trailingAnchor.constraint(equalTo: score.leadingAnchor, constant: -30),
+            manUtdLabel.widthAnchor.constraint(equalToConstant: 100),
+            enemyLabel.leadingAnchor.constraint(equalTo: score.trailingAnchor, constant: 30),
+            enemyLabel.widthAnchor.constraint(equalToConstant: 100),
+            score.centerXAnchor.constraint(equalTo: resultContainer.centerXAnchor),
             
             separatorHBar.topAnchor.constraint(equalTo: scoreBox.bottomAnchor , constant: 20),
             separatorHBar.leadingAnchor.constraint(equalTo: resultContainer.leadingAnchor),
@@ -324,15 +297,6 @@ extension MatchInfoDetailView {
             highlightView.leadingAnchor.constraint(equalTo: highlightContainerView.leadingAnchor),
             highlightView.trailingAnchor.constraint(equalTo: highlightContainerView.trailingAnchor),
             highlightView.bottomAnchor.constraint(equalTo: highlightContainerView.bottomAnchor),
-            
-            ranktitleLabel.topAnchor.constraint(equalTo: highlightView.bottomAnchor, constant: 30),
-            ranktitleLabel.leadingAnchor.constraint(equalTo: resultTitleLabel.leadingAnchor),
-            
-            currentScoreView.topAnchor.constraint(equalTo: ranktitleLabel.bottomAnchor, constant: 10),
-            currentScoreView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            currentScoreView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
-            currentScoreView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30),
-            currentScoreView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
     }
 }

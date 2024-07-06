@@ -10,6 +10,9 @@
 		CC27E43F2BF0A81200DC8ACF /* AppStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC27E43E2BF0A81200DC8ACF /* AppStrings.swift */; };
 		CC27E4462BF0D3EC00DC8ACF /* Color + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC27E4452BF0D3EC00DC8ACF /* Color + Extension.swift */; };
 		CC27E4482BF0DDA200DC8ACF /* MatchInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC27E4472BF0DDA200DC8ACF /* MatchInfoCell.swift */; };
+		CC2EDA3B2C38400A00FDBD08 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2EDA3A2C38400A00FDBD08 /* Score.swift */; };
+		CC2EDA3E2C3844DD00FDBD08 /* TotalRecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2EDA3D2C3844DD00FDBD08 /* TotalRecordViewModel.swift */; };
+		CC2EDA402C38584C00FDBD08 /* TotalRecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2EDA3F2C38584C00FDBD08 /* TotalRecordCell.swift */; };
 		CC3620E72C1034D7005ECE60 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC3620E62C1034D7005ECE60 /* GoogleService-Info.plist */; };
 		CC3620EA2C1035D7005ECE60 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = CC3620E92C1035D7005ECE60 /* FirebaseAnalytics */; };
 		CC3620EC2C1035D7005ECE60 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = CC3620EB2C1035D7005ECE60 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -53,13 +56,15 @@
 		CC84E0CF2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */; };
 		CCD931012C183395009A6D42 /* TodayMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD931002C183395009A6D42 /* TodayMatchView.swift */; };
 		CCD931032C1833A6009A6D42 /* TotalRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD931022C1833A6009A6D42 /* TotalRecordView.swift */; };
-		CCD931052C186D0F009A6D42 /* MatchDetailCurrentScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD931042C186D0F009A6D42 /* MatchDetailCurrentScoreView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CC27E43E2BF0A81200DC8ACF /* AppStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStrings.swift; sourceTree = "<group>"; };
 		CC27E4452BF0D3EC00DC8ACF /* Color + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color + Extension.swift"; sourceTree = "<group>"; };
 		CC27E4472BF0DDA200DC8ACF /* MatchInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoCell.swift; sourceTree = "<group>"; };
+		CC2EDA3A2C38400A00FDBD08 /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
+		CC2EDA3D2C3844DD00FDBD08 /* TotalRecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRecordViewModel.swift; sourceTree = "<group>"; };
+		CC2EDA3F2C38584C00FDBD08 /* TotalRecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRecordCell.swift; sourceTree = "<group>"; };
 		CC3620E62C1034D7005ECE60 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CC3621222C10AC40005ECE60 /* FirebaseStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStoreManager.swift; sourceTree = "<group>"; };
 		CC3780752BE9E95A009313EA /* DevilsDingDong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevilsDingDong.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,7 +82,6 @@
 		CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoDetailView.swift; sourceTree = "<group>"; };
 		CCD931002C183395009A6D42 /* TodayMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayMatchView.swift; sourceTree = "<group>"; };
 		CCD931022C1833A6009A6D42 /* TotalRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRecordView.swift; sourceTree = "<group>"; };
-		CCD931042C186D0F009A6D42 /* MatchDetailCurrentScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDetailCurrentScoreView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,7 +163,6 @@
 			isa = PBXGroup;
 			children = (
 				CC3B8EA52C0982F9005A48D6 /* MonthNavigationView.swift */,
-				CCD931042C186D0F009A6D42 /* MatchDetailCurrentScoreView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				CC3B8EA02C073524005A48D6 /* MatchInfoViewModel.swift */,
+				CC2EDA3D2C3844DD00FDBD08 /* TotalRecordViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -226,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				CC4FBC642BEEF68800B23124 /* MatchInfo.swift */,
+				CC2EDA3A2C38400A00FDBD08 /* Score.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -254,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				CCD931022C1833A6009A6D42 /* TotalRecordView.swift */,
+				CC2EDA3F2C38584C00FDBD08 /* TotalRecordCell.swift */,
 			);
 			path = TotalRecord;
 			sourceTree = "<group>";
@@ -364,6 +370,8 @@
 			files = (
 				CCD931012C183395009A6D42 /* TodayMatchView.swift in Sources */,
 				CC27E43F2BF0A81200DC8ACF /* AppStrings.swift in Sources */,
+				CC2EDA3B2C38400A00FDBD08 /* Score.swift in Sources */,
+				CC2EDA402C38584C00FDBD08 /* TotalRecordCell.swift in Sources */,
 				CC27E4462BF0D3EC00DC8ACF /* Color + Extension.swift in Sources */,
 				CC3B8EA42C0774AB005A48D6 /* NotificationManger.swift in Sources */,
 				CC3621232C10AC40005ECE60 /* FirebaseStoreManager.swift in Sources */,
@@ -371,9 +379,9 @@
 				CC3780792BE9E95A009313EA /* AppDelegate.swift in Sources */,
 				CC37807B2BE9E95A009313EA /* SceneDelegate.swift in Sources */,
 				CC4FBC652BEEF68800B23124 /* MatchInfo.swift in Sources */,
-				CCD931052C186D0F009A6D42 /* MatchDetailCurrentScoreView.swift in Sources */,
 				CC84E0CF2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift in Sources */,
 				CC42EEF32C2A787B0048D978 /* PlayerListCell.swift in Sources */,
+				CC2EDA3E2C3844DD00FDBD08 /* TotalRecordViewModel.swift in Sources */,
 				CCD931032C1833A6009A6D42 /* TotalRecordView.swift in Sources */,
 				CC27E4482BF0DDA200DC8ACF /* MatchInfoCell.swift in Sources */,
 				CC3B8EA62C0982F9005A48D6 /* MonthNavigationView.swift in Sources */,
