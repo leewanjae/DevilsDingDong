@@ -50,11 +50,6 @@ class MatchInfoDetailView: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    private lazy var manUtdLogo: UIImageView = {
-        let image = UIImageView(image: UIImage(named: "맨유"))
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
-    }()
     private lazy var manUtdLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -75,11 +70,6 @@ class MatchInfoDetailView: UIViewController {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-    }()
-    private lazy var enemyLogo: UIImageView = {
-        let image = UIImageView(image: UIImage(named: "맨유"))
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
     }()
     private lazy var enemyLabel: UILabel = {
         let label = UILabel()
@@ -237,9 +227,7 @@ extension MatchInfoDetailView {
         resultContainer.addSubview(enemyGoalsView)
         
         scoreBox.addSubview(manUtdLabel)
-        scoreBox.addSubview(manUtdLogo)
         scoreBox.addSubview(score)
-        scoreBox.addSubview(enemyLogo)
         scoreBox.addSubview(enemyLabel)
         
         highlightContainerView.addSubview(highlightView)
@@ -270,12 +258,8 @@ extension MatchInfoDetailView {
             scoreBox.topAnchor.constraint(equalTo: matchDate.bottomAnchor, constant: 25),
             scoreBox.heightAnchor.constraint(equalToConstant: 30),
             
-            manUtdLabel.trailingAnchor.constraint(equalTo: manUtdLogo.leadingAnchor, constant: -5),
-            enemyLabel.leadingAnchor.constraint(equalTo: enemyLogo.trailingAnchor, constant: 5),
-            manUtdLogo.trailingAnchor.constraint(equalTo: score.leadingAnchor, constant: -5),
-            manUtdLogo.centerYAnchor.constraint(equalTo: score.centerYAnchor),
-            enemyLogo.leadingAnchor.constraint(equalTo: score.trailingAnchor, constant: 5),
-            enemyLogo.centerYAnchor.constraint(equalTo: score.centerYAnchor),
+            manUtdLabel.trailingAnchor.constraint(equalTo: score.leadingAnchor, constant: -5),
+            enemyLabel.leadingAnchor.constraint(equalTo: score.trailingAnchor, constant: 5),
             score.centerXAnchor.constraint(equalTo: scoreBox.centerXAnchor),
             
             separatorHBar.topAnchor.constraint(equalTo: scoreBox.bottomAnchor , constant: 20),

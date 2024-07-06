@@ -18,6 +18,7 @@ class TotalRecordView: UIViewController {
         collectionView.delegate = self
         collectionView.register(TotalRecordCell.self, forCellWithReuseIdentifier: TotalRecordCell.id)
         collectionView.backgroundColor = .bgColor
+        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
     private lazy var titleLabel: [UILabel] = {
@@ -74,8 +75,8 @@ extension TotalRecordView {
         let safeArea = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
             scoreTitleStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
-            scoreTitleStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            scoreTitleStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            scoreTitleStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            scoreTitleStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             
             collectionView.topAnchor.constraint(equalTo: scoreTitleStackView.bottomAnchor),
             collectionView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
