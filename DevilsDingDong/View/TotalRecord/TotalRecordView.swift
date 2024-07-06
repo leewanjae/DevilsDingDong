@@ -30,10 +30,8 @@ class TotalRecordView: UIViewController {
         let drawLabel = createTitleLabel(text: "무")
         let lossLabel = createTitleLabel(text: "패")
         let pointLabel = createTitleLabel(text: "승점")
-        let gfLabel = createTitleLabel(text: "득")
-        let gaLabel = createTitleLabel(text: "실")
         let gdLabel = createTitleLabel(text: "득실")
-        return [rankTitle, teamLabel, roundLabel, winLabel, drawLabel, lossLabel, pointLabel, gfLabel, gaLabel, gdLabel]
+        return [rankTitle, teamLabel, roundLabel, winLabel, drawLabel, lossLabel, pointLabel, gdLabel]
     }()
     private lazy var scoreTitleStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: titleLabel)
@@ -118,8 +116,6 @@ extension TotalRecordView: UICollectionViewDataSource, UICollectionViewDelegateF
             drawLabel: "\(score.draw)",
             lossLabel: "\(score.loss)",
             pointLabel: "\(score.point)",
-            gfLabel: "\(score.gf)",
-            gaLabel: "\(score.ga)",
             gdLabel: "\(score.gd)"
         )
         return cell
