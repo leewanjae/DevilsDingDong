@@ -12,6 +12,7 @@ class TotalRecordViewModel {
     var scores: [Score] = [] {
         didSet {
             viewUpdateCloser?()
+           
         }
     }
     var viewUpdateCloser: (() -> Void)?
@@ -22,6 +23,7 @@ class TotalRecordViewModel {
                    switch result {
                    case .success(let scoreList):
                        self?.scores = scoreList.scores
+                       self?.sortScores()
                        print("Fetched scores: \(scoreList.scores)")
                    case .failure(let error):
                        print("Error fetching scores: \(error)")
@@ -29,4 +31,8 @@ class TotalRecordViewModel {
                }
            }
        }
-   }
+    
+    func sortScores() {
+        scores.sort { $0.rank < $1.rank }
+    }
+}
