@@ -13,7 +13,7 @@ struct Section: Hashable {
 
 class TodayMatchView: UIViewController {
     private let viewModel = MatchInfoViewModel()
-    private lazy var emptyCharacter: UIImageView = {
+    private lazy var character: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "ch")
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -175,15 +175,15 @@ extension TodayMatchView {
     }
     
     private func setNoMatchUI() {
-        view.addSubview(emptyCharacter)
+        view.addSubview(character)
         view.addSubview(noMatchLabel)
         NSLayoutConstraint.activate([
-            emptyCharacter.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            emptyCharacter.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            emptyCharacter.widthAnchor.constraint(equalToConstant: 300),
-            emptyCharacter.heightAnchor.constraint(equalToConstant: 300),
-            noMatchLabel.topAnchor.constraint(equalTo: emptyCharacter.bottomAnchor),
-            noMatchLabel.centerXAnchor.constraint(equalTo: emptyCharacter.centerXAnchor)
+            character.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            character.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            character.widthAnchor.constraint(equalToConstant: 300),
+            character.heightAnchor.constraint(equalToConstant: 300),
+            noMatchLabel.topAnchor.constraint(equalTo: character.bottomAnchor),
+            noMatchLabel.centerXAnchor.constraint(equalTo: character.centerXAnchor)
         ])
     }
     
@@ -197,7 +197,7 @@ extension TodayMatchView {
         view.addSubview(manUtdPlayerLabel)
         view.addSubview(enemyPlayerLabel)
         view.addSubview(enemyPlayerCollectionView)
-        view.addSubview(emptyCharacter)
+        view.addSubview(character)
         
         matchStackView.addArrangedSubview(manUtdLabel)
         matchStackView.addArrangedSubview(vsLabel)
@@ -215,6 +215,11 @@ extension TodayMatchView {
         NSLayoutConstraint.activate([
             matchStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
             matchStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            character.topAnchor.constraint(equalTo: matchStackView.topAnchor),
+            character.trailingAnchor.constraint(equalTo: matchStackView.leadingAnchor, constant: -20),
+            character.widthAnchor.constraint(equalToConstant: 100),
+            character.heightAnchor.constraint(equalToConstant: 100),
             
             matchTypeStackView.topAnchor.constraint(equalTo: matchStackView.bottomAnchor, constant: 10),
             matchTypeStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
