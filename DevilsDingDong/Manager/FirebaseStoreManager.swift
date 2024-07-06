@@ -24,7 +24,7 @@ class FirebaseStoreManager {
         }
     }
     
-    func fetchFirestore<T: Decodable>(collection: String, completion: @escaping (Result<[T], Error>) -> Void) {
+    func fetchMatchesFirestore<T: Decodable>(collection: String, completion: @escaping (Result<[T], Error>) -> Void) {
         let db = Firestore.firestore()
         db.collection(collection).getDocuments { query, error in
             if let error = error {
@@ -45,7 +45,7 @@ class FirebaseStoreManager {
         }
     }
     
-    func fetchFirestore2<T: Decodable>(collection: String, completion: @escaping (Result<T, Error>) -> Void) {
+    func fetchScoreFirestore<T: Decodable>(collection: String, completion: @escaping (Result<T, Error>) -> Void) {
             let db = Firestore.firestore()
             db.collection(collection).getDocuments { query, error in
                 if let error = error {

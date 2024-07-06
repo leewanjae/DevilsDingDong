@@ -17,7 +17,7 @@ class TotalRecordViewModel {
     var viewUpdateCloser: (() -> Void)?
     
     func fetchScoreData() {
-           firebaseStoreManager.fetchFirestore2(collection: "24-25_Score") { [weak self] (result: Result< ScoreList, Error>) in
+           firebaseStoreManager.fetchScoreFirestore(collection: "24-25_Score") { [weak self] (result: Result< ScoreList, Error>) in
                DispatchQueue.main.async {
                    switch result {
                    case .success(let scoreList):

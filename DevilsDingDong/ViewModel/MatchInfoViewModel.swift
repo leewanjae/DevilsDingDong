@@ -74,7 +74,7 @@ class MatchInfoViewModel {
     }
     
     func fetchMatchData() {
-            firebaseStoreManager.fetchFirestore(collection: "matches") { [weak self] (result: Result<[MatchInfo], Error>) in
+            firebaseStoreManager.fetchMatchesFirestore(collection: "matches") { [weak self] (result: Result<[MatchInfo], Error>) in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let matches):
