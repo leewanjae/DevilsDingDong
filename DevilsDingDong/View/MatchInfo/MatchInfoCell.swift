@@ -14,7 +14,7 @@ class MatchInfoCell: UITableViewCell {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 10
-        view.layer.shadowOpacity = 0.2
+        view.layer.shadowOpacity = 0.1
         return view
     }()
     

@@ -25,10 +25,10 @@ class MatchInfoDetailView: UIViewController {
     private lazy var resultContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .placeholderText
+        view.backgroundColor = .resultbg
         view.layer.cornerRadius = 20
         view.layer.borderColor = CGColor(red: 0.765, green: 0.2, blue: 0.18, alpha: 0)
-        view.layer.shadowOpacity = 0.2
+        view.layer.shadowOpacity = 0.1
         return view
     }()
     private lazy var matchType: UILabel = {
