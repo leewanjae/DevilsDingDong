@@ -78,7 +78,7 @@ extension TotalRecordView {
             scoreTitleStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             scoreTitleStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             
-            collectionView.topAnchor.constraint(equalTo: scoreTitleStackView.bottomAnchor),
+            collectionView.topAnchor.constraint(equalTo: scoreTitleStackView.bottomAnchor, constant: 10),
             collectionView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: scoreTitleStackView.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: scoreTitleStackView.trailingAnchor),
@@ -129,6 +129,6 @@ extension TotalRecordView: UICollectionViewDataSource, UICollectionViewDelegateF
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
           let width = collectionView.bounds.width
-          return CGSize(width: width, height: 40)
+          return CGSize(width: width, height: 20)
       }
 }

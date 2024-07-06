@@ -242,12 +242,12 @@ extension MatchInfoDetailView {
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            resultTitleLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            resultTitleLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 30),
             resultTitleLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
             
             resultContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             resultContainer.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30),
-            resultContainer.topAnchor.constraint(equalTo: resultTitleLabel.bottomAnchor, constant: 10),
+            resultContainer.topAnchor.constraint(equalTo: resultTitleLabel.bottomAnchor, constant: 20),
             
             matchType.centerXAnchor.constraint(equalTo: resultContainer.centerXAnchor),
             matchType.topAnchor.constraint(equalTo: resultContainer.topAnchor, constant: 10),
@@ -291,7 +291,7 @@ extension MatchInfoDetailView {
             highlightContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             highlightContainerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.26),
             highlightContainerView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30),
-            highlightContainerView.topAnchor.constraint(equalTo: highlightTitleLabel.bottomAnchor, constant: 10),
+            highlightContainerView.topAnchor.constraint(equalTo: highlightTitleLabel.bottomAnchor, constant: 20),
             
             highlightView.topAnchor.constraint(equalTo: highlightContainerView.topAnchor),
             highlightView.leadingAnchor.constraint(equalTo: highlightContainerView.leadingAnchor),
