@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         vc1.tabBarItem = UITabBarItem(title: "경기일정", image: UIImage(systemName: "calendar.circle"), selectedImage: UIImage(systemName: "calendar.circle.fill"))
         vc2.tabBarItem = UITabBarItem(title: "오늘의 경기", image: UIImage(systemName: "figure.basketball") , selectedImage: UIImage(systemName: "figure.australian.football"))
-        vc3.tabBarItem = UITabBarItem(title: "기록", image: UIImage(systemName: "list.bullet.clipboard"), selectedImage: UIImage(systemName: "list.bullet.clipboard.fill"))
+        vc3.tabBarItem = UITabBarItem(title: "리그 순위", image: UIImage(systemName: "trophy"), selectedImage: UIImage(systemName: "trophy.fill"))
         let tabBarController = UITabBarController()
         tabBarController.viewControllers = [vc1, vc2, vc3]
         

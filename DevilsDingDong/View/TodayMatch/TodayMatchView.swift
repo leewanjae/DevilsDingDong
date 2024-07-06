@@ -128,14 +128,14 @@ class TodayMatchView: UIViewController {
     private lazy var manUtdPlayerLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         label.text = "맨유"
         return label
     }()
     private lazy var enemyPlayerLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         return label
     }()
     

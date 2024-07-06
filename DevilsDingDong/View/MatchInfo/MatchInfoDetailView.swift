@@ -198,18 +198,6 @@ class MatchInfoDetailView: UIViewController {
         webView.layer.shadowOpacity = 0.2
         return webView
     }()
-    private lazy var ranktitleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "현재순위"
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        return label
-    }()
-    private lazy var currentScoreView: MatchDetailCurrentScoreView = {
-        let view = MatchDetailCurrentScoreView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     
     init(matchInfo: MatchInfo) {
         self.matchInfo = matchInfo
@@ -239,8 +227,6 @@ extension MatchInfoDetailView {
         scrollView.addSubview(resultContainer)
         scrollView.addSubview(highlightTitleLabel)
         scrollView.addSubview(highlightContainerView)
-        scrollView.addSubview(ranktitleLabel)
-        scrollView.addSubview(currentScoreView)
         
         resultContainer.addSubview(matchType)
         resultContainer.addSubview(matchDate)
@@ -324,15 +310,6 @@ extension MatchInfoDetailView {
             highlightView.leadingAnchor.constraint(equalTo: highlightContainerView.leadingAnchor),
             highlightView.trailingAnchor.constraint(equalTo: highlightContainerView.trailingAnchor),
             highlightView.bottomAnchor.constraint(equalTo: highlightContainerView.bottomAnchor),
-            
-            ranktitleLabel.topAnchor.constraint(equalTo: highlightView.bottomAnchor, constant: 30),
-            ranktitleLabel.leadingAnchor.constraint(equalTo: resultTitleLabel.leadingAnchor),
-            
-            currentScoreView.topAnchor.constraint(equalTo: ranktitleLabel.bottomAnchor, constant: 10),
-            currentScoreView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            currentScoreView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
-            currentScoreView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30),
-            currentScoreView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
     }
 }

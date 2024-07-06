@@ -52,7 +52,6 @@ extension PlayerListCell {
     private func setAutoLayout() {
         NSLayoutConstraint.activate([
             playerName.widthAnchor.constraint(equalToConstant: 100),
-            
             playerStackView.topAnchor.constraint(equalTo: topAnchor),
             playerStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             playerStackView.bottomAnchor.constraint(equalTo: bottomAnchor)

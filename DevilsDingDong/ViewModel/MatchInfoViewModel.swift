@@ -74,12 +74,20 @@ class MatchInfoViewModel {
     }
     
     func fetchMatchData() {
-        firebaseStoreManager.fetchFirestore(collection: "matches") { [weak self] (matches: [MatchInfo]) in
-            self?.matches = matches
-            self?.setFilterMatchData()
-            self?.setTodayMatch()
+            firebaseStoreManager.fetchFirestore(collection: "matches") { [weak self] (result: Result<[MatchInfo], Error>) in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let matches):
+                        self?.matches = matches
+                        self?.setFilterMatchData()
+                        self?.setTodayMatch()
+                        print("Fetched matches: \(matches)")
+                    case .failure(let error):
+                        print("Error fetching matches: \(error)")
+                    }
+                }
+            }
         }
-    }
     
     func setFilterMatchData() {
         filteredMatches = matches.filter { match in
