@@ -13,6 +13,12 @@ struct Section: Hashable {
 
 class TodayMatchView: UIViewController {
     private let viewModel = MatchInfoViewModel()
+    private lazy var emptyCharacter: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "ch")
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
     private var playerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
     private var enemyPlayerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
     private let playerCollectionView: UICollectionView = {
@@ -169,10 +175,15 @@ extension TodayMatchView {
     }
     
     private func setNoMatchUI() {
+        view.addSubview(emptyCharacter)
         view.addSubview(noMatchLabel)
         NSLayoutConstraint.activate([
-            noMatchLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            noMatchLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            emptyCharacter.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyCharacter.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            emptyCharacter.widthAnchor.constraint(equalToConstant: 300),
+            emptyCharacter.heightAnchor.constraint(equalToConstant: 300),
+            noMatchLabel.topAnchor.constraint(equalTo: emptyCharacter.bottomAnchor),
+            noMatchLabel.centerXAnchor.constraint(equalTo: emptyCharacter.centerXAnchor)
         ])
     }
     
@@ -186,6 +197,7 @@ extension TodayMatchView {
         view.addSubview(manUtdPlayerLabel)
         view.addSubview(enemyPlayerLabel)
         view.addSubview(enemyPlayerCollectionView)
+        view.addSubview(emptyCharacter)
         
         matchStackView.addArrangedSubview(manUtdLabel)
         matchStackView.addArrangedSubview(vsLabel)

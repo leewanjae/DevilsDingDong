@@ -22,6 +22,12 @@ class MatchInfoView: UIViewController {
         tableView.backgroundColor = .bgColor
         return tableView
     }()
+    private lazy var emptyCharacter: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "ch")
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
     private lazy var emptyStateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -56,6 +62,7 @@ extension MatchInfoView {
         view.addSubview(monthNavigationView)
         view.addSubview(tableView)
         view.addSubview(emptyStateLabel)
+        view.addSubview(emptyCharacter)
         
         setAutoLayout()
         updateEmptyState()
@@ -75,8 +82,12 @@ extension MatchInfoView {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
-            emptyStateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            emptyStateLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            emptyCharacter.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyCharacter.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            emptyCharacter.widthAnchor.constraint(equalToConstant: 300),
+            emptyCharacter.heightAnchor.constraint(equalToConstant: 300),
+            emptyStateLabel.topAnchor.constraint(equalTo: emptyCharacter.bottomAnchor),
+            emptyStateLabel.centerXAnchor.constraint(equalTo: emptyCharacter.centerXAnchor)
         ])
     }
     
@@ -90,6 +101,7 @@ extension MatchInfoView {
     }
     
     private func updateEmptyState() {
+        emptyCharacter.isHidden = viewModel.filteredMatches.count != 0
         emptyStateLabel.isHidden = viewModel.filteredMatches.count != 0
     }
 }
