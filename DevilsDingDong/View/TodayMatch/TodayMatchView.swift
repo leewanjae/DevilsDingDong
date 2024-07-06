@@ -65,6 +65,7 @@ class TodayMatchView: UIViewController {
         let view = UIStackView()
         view.axis = .horizontal
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.spacing = 10
         return view
     }()
     private lazy var matchDate: UILabel = {
@@ -144,6 +145,10 @@ class TodayMatchView: UIViewController {
         setSnapShot()
         playerCollectionView.setCollectionViewLayout(createLayout(), animated: true)
         enemyPlayerCollectionView.setCollectionViewLayout(createLayout(), animated: true)
+        
+        if let notiData = viewModel.todayMatch.first {
+            NotificationManger.shared.setNotification(enemy: notiData.enemy, date: notiData.date, time: notiData.time)
+        } else { return }
     }
 }
 
