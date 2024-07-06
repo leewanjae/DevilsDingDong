@@ -129,6 +129,9 @@ class TodayMatchView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "오늘의 경기"
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
         self.view.backgroundColor = .bgColor
         if viewModel.todayMatch.first?.enemy != nil {
             setUI()
@@ -146,9 +149,6 @@ class TodayMatchView: UIViewController {
 
 extension TodayMatchView {
     private func setUI() {
-        navigationItem.title = "오늘의 경기"
-        navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.prefersLargeTitles = true
         matchType.text = viewModel.todayMatch.first?.matchType ?? "프리미어리그"
         round.text = viewModel.todayMatch.first?.round ?? "0R"
         stadium.text = viewModel.todayMatch.first?.stadium ?? "Old Trafford"

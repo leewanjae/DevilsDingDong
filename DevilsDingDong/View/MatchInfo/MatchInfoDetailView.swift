@@ -56,6 +56,7 @@ class MatchInfoDetailView: UIViewController {
         label.text = "맨유"
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = .white
+        label.textAlignment = .right
         return label
     }()
     private lazy var score: UILabel = {
@@ -254,13 +255,15 @@ extension MatchInfoDetailView {
             matchDate.centerXAnchor.constraint(equalTo: resultContainer.centerXAnchor),
             matchDate.topAnchor.constraint(equalTo: matchType.bottomAnchor, constant: 10),
             
-            scoreBox.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            scoreBox.centerXAnchor.constraint(equalTo: resultContainer.centerXAnchor),
             scoreBox.topAnchor.constraint(equalTo: matchDate.bottomAnchor, constant: 25),
             scoreBox.heightAnchor.constraint(equalToConstant: 30),
             
-            manUtdLabel.trailingAnchor.constraint(equalTo: score.leadingAnchor, constant: -5),
-            enemyLabel.leadingAnchor.constraint(equalTo: score.trailingAnchor, constant: 5),
-            score.centerXAnchor.constraint(equalTo: scoreBox.centerXAnchor),
+            manUtdLabel.trailingAnchor.constraint(equalTo: score.leadingAnchor, constant: -30),
+            manUtdLabel.widthAnchor.constraint(equalToConstant: 100),
+            enemyLabel.leadingAnchor.constraint(equalTo: score.trailingAnchor, constant: 30),
+            enemyLabel.widthAnchor.constraint(equalToConstant: 100),
+            score.centerXAnchor.constraint(equalTo: resultContainer.centerXAnchor),
             
             separatorHBar.topAnchor.constraint(equalTo: scoreBox.bottomAnchor , constant: 20),
             separatorHBar.leadingAnchor.constraint(equalTo: resultContainer.leadingAnchor),

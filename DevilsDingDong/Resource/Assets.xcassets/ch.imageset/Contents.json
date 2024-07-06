@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Soccer.svg",
+      "filename" : "1024.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Soccer 1.svg",
+      "filename" : "1024 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Soccer 2.svg",
+      "filename" : "1024 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
