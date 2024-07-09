@@ -14,11 +14,13 @@ class TotalRecordView: UIViewController {
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(TotalRecordCell.self, forCellWithReuseIdentifier: TotalRecordCell.id)
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(TotalRecordCell.self, forCellWithReuseIdentifier: TotalRecordCell.id)
-        collectionView.backgroundColor = .bgColor
+        collectionView.backgroundColor = .white
+        collectionView.layer.cornerRadius = 20
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.layer.shadowOpacity = 0.1
         return collectionView
     }()
     private lazy var titleLabel: [UILabel] = {
@@ -116,7 +118,8 @@ extension TotalRecordView: UICollectionViewDataSource, UICollectionViewDelegateF
             drawLabel: "\(score.draw)",
             lossLabel: "\(score.loss)",
             pointLabel: "\(score.point)",
-            gdLabel: "\(score.gd)"
+            gdLabel: "\(score.gd )",
+            logoURL: score.team
         )
         return cell
     }
@@ -125,6 +128,6 @@ extension TotalRecordView: UICollectionViewDataSource, UICollectionViewDelegateF
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
           let width = collectionView.bounds.width
-          return CGSize(width: width, height: 25)
+          return CGSize(width: width, height: 80)
       }
 }

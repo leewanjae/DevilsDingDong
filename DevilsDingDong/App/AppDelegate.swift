@@ -21,6 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        MatchInfo.match.forEach { match in
 //            firebase.addFirestore(collection: "matches", document: "\(match.id)", data: match)
 //        }
+        
+//        let scoreList = ScoreList(scores: Score.scoreDB)
+//                let firebaseStoreManager = FirebaseStoreManager()
+//                firebaseStoreManager.addFirestore(collection: "24-25_Score", document: "score", data: scoreList)
+
         return true
     }
     
