@@ -109,6 +109,16 @@ extension TotalRecordCell {
         self.pointLabel.text = pointLabel
         self.gdLabel.text = gdLabel
         self.logoImage.image = UIImage(named: teamLabel)
-        
+     
+        switch rankLabel {
+        case "1", "2", "3", "4":
+            self.rankLabel.textColor = .rank14
+        case "5", "6":
+            self.rankLabel.textColor = .rank56
+        case "18", "19", "20":
+            self.rankLabel.textColor = .lightGray
+        default:
+            self.rankLabel.textColor = .black
+        }
     }
 }
