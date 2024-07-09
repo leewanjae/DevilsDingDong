@@ -82,6 +82,7 @@
 		CC42EEF22C2A787B0048D978 /* PlayerListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerListCell.swift; sourceTree = "<group>"; };
 		CC4FBC642BEEF68800B23124 /* MatchInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfo.swift; sourceTree = "<group>"; };
 		CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoDetailView.swift; sourceTree = "<group>"; };
+		CCCB55322C3DB1E2001EEDDD /* DevilsDingDong.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevilsDingDong.entitlements; sourceTree = "<group>"; };
 		CCD931002C183395009A6D42 /* TodayMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayMatchView.swift; sourceTree = "<group>"; };
 		CCD931022C1833A6009A6D42 /* TotalRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRecordView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -196,6 +197,7 @@
 		CC3780772BE9E95A009313EA /* DevilsDingDong */ = {
 			isa = PBXGroup;
 			children = (
+				CCCB55322C3DB1E2001EEDDD /* DevilsDingDong.entitlements */,
 				CC27E4402BF0A82000DC8ACF /* App */,
 				CC3B8EA22C07749A005A48D6 /* Manager */,
 				CC27E4442BF0D3E000DC8ACF /* Extension */,
@@ -531,6 +533,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DevilsDingDong/DevilsDingDong.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GKWM8Q6TMS;
@@ -562,6 +565,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DevilsDingDong/DevilsDingDong.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GKWM8Q6TMS;

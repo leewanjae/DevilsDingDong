@@ -81,7 +81,6 @@ class MatchInfoViewModel {
                         self?.matches = matches
                         self?.setFilterMatchData()
                         self?.setTodayMatch()
-                        print("Fetched matches: \(matches)")
                     case .failure(let error):
                         print("Error fetching matches: \(error)")
                     }
@@ -94,8 +93,6 @@ class MatchInfoViewModel {
             match.date.contains("\(formattedCurrentYearMonth)")
         }
         viewUpdateCloser?()
-        print("현재 포메팅 년월: \(formattedCurrentYearMonth)")
-        print("필터된 경기 데이터: \(filteredMatches.count)")
     }
     
     func setTodayMatch() {
@@ -104,7 +101,6 @@ class MatchInfoViewModel {
         formatted.dateFormat = "yy년 MM월 dd일"
         formatted.locale = Locale(identifier: "ko_KR")
         let formattedDate = formatted.string(from: date)
-        print("formattedDate: \(formattedDate)")
         
         todayMatch = matches.filter { match in
             match.date.contains(formattedDate)

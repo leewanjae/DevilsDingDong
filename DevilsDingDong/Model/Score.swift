@@ -20,4 +20,5 @@ struct Score: Codable {
     let draw: Int
     let loss: Int
     let gd: Int
+    let image: String?
 }

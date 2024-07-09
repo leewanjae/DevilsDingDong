@@ -24,7 +24,6 @@ class TotalRecordViewModel {
                    case .success(let scoreList):
                        self?.scores = scoreList.scores
                        self?.sortScores()
-                       print("Fetched scores: \(scoreList.scores)")
                    case .failure(let error):
                        print("Error fetching scores: \(error)")
                    }
