@@ -18,12 +18,22 @@ class NotificationManger {
         content.subtitle = "맨유 vs \(enemy)"
         content.body = "\(date) \(time)시"
         content.sound = .default
-
-        var dateCompoents = DateComponents()
-        dateCompoents.hour = 00
-        dateCompoents.minute = 00
         
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateCompoents, repeats: true)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yy년 MM월 dd일 (E) HH:mm"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        guard let matchDate = dateFormatter.date(from: "\(date) \(time)") else {
+            print("Invalid date format")
+            return
+        }
+        
+        guard let notificationDate = Calendar.current.date(byAdding: .hour, value: -5, to: matchDate) else {
+            print("Error calculating notification date")
+            return
+        }
+        
+        let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: notificationDate)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
         let request = UNNotificationRequest(identifier: "matchNoti", content: content, trigger: trigger)
         center.add(request) { error in
             if let error = error {
