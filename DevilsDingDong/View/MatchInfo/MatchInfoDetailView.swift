@@ -189,7 +189,7 @@ class MatchInfoDetailView: UIViewController {
         webView.layer.shadowOpacity = 0.2
         return webView
     }()
-    
+
     init(matchInfo: MatchInfo) {
         self.matchInfo = matchInfo
         super.init(nibName: nil, bundle: nil)
