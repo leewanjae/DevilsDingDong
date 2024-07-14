@@ -29,12 +29,20 @@ class TotalRecordCell: UICollectionViewCell {
         ])
         stackView.axis = .horizontal
         stackView.alignment = .fill
-        stackView.distribution = .fillEqually
+        stackView.distribution = .equalSpacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
 
-    private lazy var horizontalDivider: UIView = {
+    private lazy var topDivider: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .lightGray
+        view.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        return view
+    }()
+
+    private lazy var bottomDivider: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .lightGray
@@ -59,8 +67,9 @@ extension TotalRecordCell {
     }
 
     private func addView() {
+        contentView.addSubview(topDivider)
         contentView.addSubview(scoreDBStackView)
-        contentView.addSubview(horizontalDivider)
+        contentView.addSubview(bottomDivider)
         
         teamView.addSubview(logoImage)
         teamView.addSubview(teamLabel)
@@ -68,22 +77,29 @@ extension TotalRecordCell {
 
     private func setAutoLayout() {
         NSLayoutConstraint.activate([
-            scoreDBStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            scoreDBStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            scoreDBStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            scoreDBStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-
-            horizontalDivider.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            horizontalDivider.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            horizontalDivider.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-
+            topDivider.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            topDivider.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            topDivider.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+            
+            scoreDBStackView.topAnchor.constraint(equalTo: topDivider.bottomAnchor, constant: 10),
+            scoreDBStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            scoreDBStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            scoreDBStackView.bottomAnchor.constraint(equalTo: bottomDivider.topAnchor, constant: -10),
+            
+            bottomDivider.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            bottomDivider.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            bottomDivider.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            
             logoImage.widthAnchor.constraint(equalToConstant: 30),
             logoImage.heightAnchor.constraint(equalToConstant: 30),
             logoImage.centerXAnchor.constraint(equalTo: teamView.centerXAnchor),
-            logoImage.topAnchor.constraint(equalTo: teamView.topAnchor, constant: 10),
-            teamLabel.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: -5),
+            logoImage.topAnchor.constraint(equalTo: teamView.topAnchor),
+            
+            teamLabel.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 5),
             teamLabel.centerXAnchor.constraint(equalTo: teamView.centerXAnchor),
             teamLabel.bottomAnchor.constraint(equalTo: teamView.bottomAnchor),
+            
+            teamView.centerYAnchor.constraint(equalTo: scoreDBStackView.centerYAnchor)
         ])
     }
 }
@@ -110,6 +126,7 @@ extension TotalRecordCell {
         self.gdLabel.text = gdLabel
         self.logoImage.image = UIImage(named: teamLabel)
      
+        self.rankLabel.font = .systemFont(ofSize: 16, weight: .bold)
         switch rankLabel {
         case "1", "2", "3", "4":
             self.rankLabel.textColor = .rank14
