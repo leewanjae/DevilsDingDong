@@ -18,7 +18,7 @@ class TotalRecordView: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = .white
-        collectionView.layer.cornerRadius = 20
+        collectionView.layer.cornerRadius = 12
         collectionView.showsVerticalScrollIndicator = false
         collectionView.layer.shadowOpacity = 0.1
         return collectionView
