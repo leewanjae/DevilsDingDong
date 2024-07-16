@@ -110,6 +110,8 @@ extension TotalRecordView: UICollectionViewDataSource, UICollectionViewDelegateF
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TotalRecordCell.id, for: indexPath) as? TotalRecordCell else { return UICollectionViewCell() }
         let score = viewModel.scores[indexPath.row]
+        let isFirstCell = indexPath.item == 0
+        let isLastCell = indexPath.item == collectionView.numberOfItems(inSection: indexPath.section) - 1
         cell.configure(
             rankLabel: "\(score.rank)",
             teamLabel: score.team,
@@ -119,7 +121,10 @@ extension TotalRecordView: UICollectionViewDataSource, UICollectionViewDelegateF
             lossLabel: "\(score.loss)",
             pointLabel: "\(score.point)",
             gdLabel: "\(score.gd )",
-            logoURL: score.team
+            logoURL: score.team, 
+            isFirstCell: isFirstCell,
+            isLastCell: isLastCell
+            
         )
         return cell
     }
