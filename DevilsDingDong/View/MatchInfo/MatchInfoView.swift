@@ -26,6 +26,7 @@ class MatchInfoView: UIViewController {
         let image = UIImageView()
         image.image = UIImage(named: "ch")
         image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleAspectFit
         return image
     }()
     private lazy var emptyStateLabel: UILabel = {
@@ -84,9 +85,9 @@ extension MatchInfoView {
             
             emptyCharacter.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             emptyCharacter.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            emptyCharacter.widthAnchor.constraint(equalToConstant: 300),
-            emptyCharacter.heightAnchor.constraint(equalToConstant: 300),
-            emptyStateLabel.topAnchor.constraint(equalTo: emptyCharacter.bottomAnchor),
+            emptyCharacter.widthAnchor.constraint(equalToConstant: 200),
+            emptyCharacter.heightAnchor.constraint(equalToConstant: 200),
+            emptyStateLabel.topAnchor.constraint(equalTo: emptyCharacter.bottomAnchor, constant: 50),
             emptyStateLabel.centerXAnchor.constraint(equalTo: emptyCharacter.centerXAnchor)
         ])
     }
