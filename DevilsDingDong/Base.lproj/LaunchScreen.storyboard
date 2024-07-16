@@ -18,11 +18,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ch" translatesAutoresizingMaskIntoConstraints="NO" id="e0f-HI-TZU">
-                                <rect key="frame" x="0.0" y="355.33333333333331" width="393" height="166.66666666666669"/>
+                                <rect key="frame" x="0.0" y="328" width="393" height="221"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="딩 동" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lA9-wF-X5i">
-                                <rect key="frame" x="163.33333333333334" y="335.33333333333331" width="66.333333333333343" height="40.666666666666686"/>
+                                <rect key="frame" x="163.33333333333334" y="278" width="66.333333333333343" height="40.666666666666686"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="34"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -34,7 +34,7 @@
                             <constraint firstItem="e0f-HI-TZU" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Gta-YO-jHp"/>
                             <constraint firstItem="e0f-HI-TZU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="OZc-XE-zPQ"/>
                             <constraint firstItem="e0f-HI-TZU" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="Qua-Nf-3Gn"/>
-                            <constraint firstItem="lA9-wF-X5i" firstAttribute="top" secondItem="e0f-HI-TZU" secondAttribute="top" constant="-20" id="b4I-PM-w8A"/>
+                            <constraint firstItem="lA9-wF-X5i" firstAttribute="top" secondItem="e0f-HI-TZU" secondAttribute="top" constant="-50" id="b4I-PM-w8A"/>
                             <constraint firstItem="lA9-wF-X5i" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="dz6-DQ-jdD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="e0f-HI-TZU" secondAttribute="trailing" id="xpM-BF-BOx"/>
                         </constraints>
@@ -46,7 +46,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ch" width="166.66667175292969" height="166.66667175292969"/>
+        <image name="ch" width="201.83000183105469" height="221.21000671386719"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

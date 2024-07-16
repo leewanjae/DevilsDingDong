@@ -29,7 +29,7 @@ class TotalRecordCell: UICollectionViewCell {
         ])
         stackView.axis = .horizontal
         stackView.alignment = .fill
-        stackView.distribution = .equalSpacing
+        stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -39,6 +39,7 @@ class TotalRecordCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .lightGray
         view.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        view.isHidden = false
         return view
     }()
 
@@ -47,6 +48,7 @@ class TotalRecordCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .lightGray
         view.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        view.isHidden = false
         return view
     }()
 
@@ -82,8 +84,8 @@ extension TotalRecordCell {
             topDivider.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
             
             scoreDBStackView.topAnchor.constraint(equalTo: topDivider.bottomAnchor, constant: 10),
-            scoreDBStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            scoreDBStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            scoreDBStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            scoreDBStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             scoreDBStackView.bottomAnchor.constraint(equalTo: bottomDivider.topAnchor, constant: -10),
             
             bottomDivider.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -115,7 +117,7 @@ extension TotalRecordCell {
         return label
     }
 
-    func configure(rankLabel: String, teamLabel: String, roundLabel: String, winLabel: String, drawLabel: String, lossLabel: String, pointLabel: String, gdLabel: String, logoURL: String) {
+    func configure(rankLabel: String, teamLabel: String, roundLabel: String, winLabel: String, drawLabel: String, lossLabel: String, pointLabel: String, gdLabel: String, logoURL: String, isFirstCell: Bool, isLastCell: Bool) {
         self.rankLabel.text = rankLabel
         self.teamLabel.text = teamLabel
         self.roundLabel.text = roundLabel
@@ -126,6 +128,9 @@ extension TotalRecordCell {
         self.gdLabel.text = gdLabel
         self.logoImage.image = UIImage(named: teamLabel)
      
+        self.topDivider.isHidden = isFirstCell
+        self.bottomDivider.isHidden = isLastCell
+        
         self.rankLabel.font = .systemFont(ofSize: 16, weight: .bold)
         switch rankLabel {
         case "1", "2", "3", "4":
@@ -137,5 +142,6 @@ extension TotalRecordCell {
         default:
             self.rankLabel.textColor = .black
         }
+        
     }
 }

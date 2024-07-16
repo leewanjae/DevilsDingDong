@@ -15,7 +15,12 @@ class TodayMatchView: UIViewController {
     private let viewModel = MatchInfoViewModel()
     private lazy var character: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "ch")
+        if viewModel.todayMatch.first?.enemy != nil {
+            image.image = UIImage(named: "todayMatchCH")
+        } else {
+            image.image = UIImage(named: "ch")
+        }
+        image.contentMode = .scaleAspectFit
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -180,9 +185,9 @@ extension TodayMatchView {
         NSLayoutConstraint.activate([
             character.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             character.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            character.widthAnchor.constraint(equalToConstant: 300),
-            character.heightAnchor.constraint(equalToConstant: 300),
-            noMatchLabel.topAnchor.constraint(equalTo: character.bottomAnchor),
+            character.widthAnchor.constraint(equalToConstant: 200),
+            character.heightAnchor.constraint(equalToConstant: 200),
+            noMatchLabel.topAnchor.constraint(equalTo: character.bottomAnchor, constant: 50),
             noMatchLabel.centerXAnchor.constraint(equalTo: character.centerXAnchor)
         ])
     }
@@ -217,9 +222,9 @@ extension TodayMatchView {
             matchStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             character.topAnchor.constraint(equalTo: matchStackView.topAnchor),
-            character.trailingAnchor.constraint(equalTo: matchStackView.leadingAnchor, constant: -20),
             character.widthAnchor.constraint(equalToConstant: 100),
             character.heightAnchor.constraint(equalToConstant: 100),
+            character.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             
             matchTypeStackView.topAnchor.constraint(equalTo: matchStackView.bottomAnchor, constant: 10),
             matchTypeStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
