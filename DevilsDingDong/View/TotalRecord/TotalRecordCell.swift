@@ -50,12 +50,11 @@ class TotalRecordCell: UICollectionViewCell {
 // MARK: - UI Methods
 extension TotalRecordCell {
     private func setUI() {
-        contentView.addSubview(topDivider)
-        contentView.addSubview(scoreDBStackView)
-        contentView.addSubview(bottomDivider)
-        
-        teamView.addSubview(logoImage)
-        teamView.addSubview(teamLabel)
+        let contentViewItems = [topDivider, scoreDBStackView, bottomDivider]
+        contentViewItems.forEach { contentView.addSubview($0) }
+       
+        let teamViewItems = [logoImage, teamLabel]
+        teamViewItems.forEach { teamView.addSubview($0) }
     }
     
     private func setAutoLayout() {

@@ -50,8 +50,8 @@ extension TotalRecordView {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        view.addSubview(scoreTitleStackView)
-        view.addSubview(collectionView)
+        let viewItems = [scoreTitleStackView, collectionView]
+        viewItems.forEach { view.addSubview($0) }
     }
     
     private func setAutoLayout() {
