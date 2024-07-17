@@ -42,7 +42,7 @@ class TotalRecordView: UIViewController {
     }
 }
 
-// MARK: - UI Method
+// MARK: - UI Methods
 extension TotalRecordView {
     private func setUI() {
         view.backgroundColor = .bgColor

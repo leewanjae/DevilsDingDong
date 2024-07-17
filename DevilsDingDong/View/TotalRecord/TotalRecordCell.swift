@@ -1,7 +1,11 @@
 import UIKit
+import SnapKit
 
 class TotalRecordCell: UICollectionViewCell {
     static let id = "TotalRecordCell"
+    private lazy var topDivider = createDivider()
+    private lazy var bottomDivider = createDivider()
+    
     private lazy var rankLabel = createScoreDBLabel()
     private lazy var teamLabel = createScoreDBLabel()
     private lazy var roundLabel = createScoreDBLabel()
@@ -10,16 +14,15 @@ class TotalRecordCell: UICollectionViewCell {
     private lazy var drawLabel = createScoreDBLabel()
     private lazy var lossLabel = createScoreDBLabel()
     private lazy var gdLabel = createScoreDBLabel()
+    
     private lazy var logoImage: UIImageView = {
         let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFit
         return image
     }()
     
     private lazy var teamView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -30,45 +33,23 @@ class TotalRecordCell: UICollectionViewCell {
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
-
-    private lazy var topDivider: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .lightGray
-        view.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        view.isHidden = false
-        return view
-    }()
-
-    private lazy var bottomDivider: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .lightGray
-        view.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        view.isHidden = false
-        return view
-    }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
+        setAutoLayout()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
+// MARK: - UI Methods
 extension TotalRecordCell {
     private func setUI() {
-        addView()
-        setAutoLayout()
-    }
-
-    private func addView() {
         contentView.addSubview(topDivider)
         contentView.addSubview(scoreDBStackView)
         contentView.addSubview(bottomDivider)
@@ -76,37 +57,41 @@ extension TotalRecordCell {
         teamView.addSubview(logoImage)
         teamView.addSubview(teamLabel)
     }
-
+    
     private func setAutoLayout() {
-        NSLayoutConstraint.activate([
-            topDivider.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            topDivider.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            topDivider.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            
-            scoreDBStackView.topAnchor.constraint(equalTo: topDivider.bottomAnchor, constant: 10),
-            scoreDBStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            scoreDBStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            scoreDBStackView.bottomAnchor.constraint(equalTo: bottomDivider.topAnchor, constant: -10),
-            
-            bottomDivider.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            bottomDivider.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            bottomDivider.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-            
-            logoImage.widthAnchor.constraint(equalToConstant: 30),
-            logoImage.heightAnchor.constraint(equalToConstant: 30),
-            logoImage.centerXAnchor.constraint(equalTo: teamView.centerXAnchor),
-            logoImage.topAnchor.constraint(equalTo: teamView.topAnchor),
-            
-            teamLabel.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 5),
-            teamLabel.centerXAnchor.constraint(equalTo: teamView.centerXAnchor),
-            teamLabel.bottomAnchor.constraint(equalTo: teamView.bottomAnchor),
-            
-            teamView.centerYAnchor.constraint(equalTo: scoreDBStackView.centerYAnchor)
-        ])
+        topDivider.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(contentView.snp.top).offset(5)
+        }
+        
+        scoreDBStackView.snp.makeConstraints {
+            $0.top.equalTo(topDivider.snp.bottom).offset(10)
+            $0.bottom.equalTo(bottomDivider.snp.top).offset(-10)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        bottomDivider.snp.makeConstraints {
+            $0.bottom.equalTo(contentView.snp.bottom).offset(-5)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        logoImage.snp.makeConstraints {
+            $0.width.height.equalTo(30)
+            $0.centerX.equalTo(teamView.snp.centerX)
+            $0.top.equalTo(teamView.snp.top)
+        }
+        
+        teamLabel.snp.makeConstraints {
+            $0.top.equalTo(logoImage.snp.bottom).offset(5)
+            $0.bottom.equalTo(teamView.snp.bottom)
+            $0.centerX.equalTo(teamView.snp.centerX)
+        }
+        
+        teamView.snp.makeConstraints {
+            $0.centerY.equalTo(scoreDBStackView.snp.centerY)
+        }
     }
-}
-
-extension TotalRecordCell {
+    
     private func createScoreDBLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -116,7 +101,16 @@ extension TotalRecordCell {
         label.minimumScaleFactor = 0.5
         return label
     }
-
+    
+    private func createDivider() -> UIView {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .lightGray
+        view.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        view.isHidden = false
+        return view
+    }
+    
     func configure(rankLabel: String, teamLabel: String, roundLabel: String, winLabel: String, drawLabel: String, lossLabel: String, pointLabel: String, gdLabel: String, logoURL: String, isFirstCell: Bool, isLastCell: Bool) {
         self.rankLabel.text = rankLabel
         self.teamLabel.text = teamLabel
@@ -127,7 +121,7 @@ extension TotalRecordCell {
         self.pointLabel.text = pointLabel
         self.gdLabel.text = gdLabel
         self.logoImage.image = UIImage(named: teamLabel)
-     
+        
         self.topDivider.isHidden = isFirstCell
         self.bottomDivider.isHidden = isLastCell
         
@@ -142,6 +136,5 @@ extension TotalRecordCell {
         default:
             self.rankLabel.textColor = .black
         }
-        
     }
 }
