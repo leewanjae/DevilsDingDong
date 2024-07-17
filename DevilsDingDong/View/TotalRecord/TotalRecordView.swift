@@ -6,84 +6,76 @@
 //
 
 import UIKit
+import SnapKit
 
 class TotalRecordView: UIViewController {
     private let viewModel = TotalRecordViewModel()
+    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(TotalRecordCell.self, forCellWithReuseIdentifier: TotalRecordCell.id)
-        collectionView.dataSource = self
-        collectionView.delegate = self
         collectionView.backgroundColor = .white
         collectionView.layer.cornerRadius = 12
         collectionView.showsVerticalScrollIndicator = false
         collectionView.layer.shadowOpacity = 0.1
+        collectionView.dataSource = self
+        collectionView.delegate = self
         return collectionView
     }()
-    private lazy var titleLabel: [UILabel] = {
-        var labels = [UILabel()]
-        let rankTitle = createTitleLabel(text: "순위")
-        let teamLabel = createTitleLabel(text: "팀")
-        let roundLabel = createTitleLabel(text: "경기")
-        let winLabel = createTitleLabel(text: "승")
-        let drawLabel = createTitleLabel(text: "무")
-        let lossLabel = createTitleLabel(text: "패")
-        let pointLabel = createTitleLabel(text: "승점")
-        let gdLabel = createTitleLabel(text: "득실")
-        return [rankTitle, teamLabel, roundLabel, winLabel, drawLabel, lossLabel, pointLabel, gdLabel]
-    }()
+
     private lazy var scoreTitleStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: titleLabel)
+        let titles = ["순위", "팀", "경기", "승", "무", "패", "승점", "득실"]
+        let labels = titles.map { createTitleLabel(text: $0) }
+        let stackView = UIStackView(arrangedSubviews: labels)
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        viewModel.fetchScoreData()
-        viewModel.viewUpdateCloser = { [ weak self] in
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-            }
-        }
+        setAutoLayout()
+        bindViewModel()
     }
 }
 
+// MARK: - UI Method
 extension TotalRecordView {
     private func setUI() {
         view.backgroundColor = .bgColor
         navigationItem.title = "리그 순위"
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
-        addView()
-        setAutoLayout()
-    }
-    
-    private func addView() {
+        
         view.addSubview(scoreTitleStackView)
         view.addSubview(collectionView)
     }
     
     private func setAutoLayout() {
         let safeArea = view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([
-            scoreTitleStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
-            scoreTitleStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            scoreTitleStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            
-            collectionView.topAnchor.constraint(equalTo: scoreTitleStackView.bottomAnchor, constant: 10),
-            collectionView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: scoreTitleStackView.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: scoreTitleStackView.trailingAnchor),
-            collectionView.centerXAnchor.constraint(equalTo: scoreTitleStackView.centerXAnchor),
-        ])
+        scoreTitleStackView.snp.makeConstraints {
+            $0.top.equalTo(safeArea.snp.top).offset(20)
+            $0.leading.equalToSuperview().offset(10)
+            $0.trailing.equalToSuperview().offset(-10)
+        }
+        
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(scoreTitleStackView.snp.bottom).offset(10)
+            $0.bottom.equalTo(safeArea.snp.bottom)
+            $0.leading.trailing.equalTo(scoreTitleStackView)
+        }
+    }
+    
+    private func bindViewModel() {
+        viewModel.fetchScoreData()
+        viewModel.viewUpdateCloser = { [ weak self] in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
     }
     
     private func createTitleLabel(text: String) -> UILabel {
@@ -98,6 +90,7 @@ extension TotalRecordView {
     }
 }
 
+// MARK: - Delegate
 extension TotalRecordView: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1

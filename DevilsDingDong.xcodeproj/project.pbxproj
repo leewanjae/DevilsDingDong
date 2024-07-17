@@ -55,6 +55,7 @@
 		CC42EEF32C2A787B0048D978 /* PlayerListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC42EEF22C2A787B0048D978 /* PlayerListCell.swift */; };
 		CC4FBC652BEEF68800B23124 /* MatchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4FBC642BEEF68800B23124 /* MatchInfo.swift */; };
 		CC84E0CF2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */; };
+		CC88763B2C477189007CE4FA /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CC88763A2C477189007CE4FA /* SnapKit */; };
 		CCD931012C183395009A6D42 /* TodayMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD931002C183395009A6D42 /* TodayMatchView.swift */; };
 		CCD931032C1833A6009A6D42 /* TotalRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD931022C1833A6009A6D42 /* TotalRecordView.swift */; };
 /* End PBXBuildFile section */
@@ -93,6 +94,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC3620FC2C1035D7005ECE60 /* FirebaseDatabase in Frameworks */,
+				CC88763B2C477189007CE4FA /* SnapKit in Frameworks */,
 				CC36210A2C1035D7005ECE60 /* FirebaseFunctionsCombine-Community in Frameworks */,
 				CC3621022C1035D7005ECE60 /* FirebaseFirestore in Frameworks */,
 				CC3620EE2C1035D7005ECE60 /* FirebaseAnalyticsSwift in Frameworks */,
@@ -314,6 +316,7 @@
 				CC36211B2C1035D7005ECE60 /* FirebaseStorage */,
 				CC36211D2C1035D7005ECE60 /* FirebaseStorageCombine-Community */,
 				CC36211F2C1035D7005ECE60 /* FirebaseVertexAI-Preview */,
+				CC88763A2C477189007CE4FA /* SnapKit */,
 			);
 			productName = DevilsDingDong;
 			productReference = CC3780752BE9E95A009313EA /* DevilsDingDong.app */;
@@ -345,6 +348,7 @@
 			mainGroup = CC37806C2BE9E95A009313EA;
 			packageReferences = (
 				CC3620E82C1035D7005ECE60 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				CC8876392C477189007CE4FA /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = CC3780762BE9E95A009313EA /* Products */;
 			projectDirPath = "";
@@ -630,6 +634,14 @@
 				minimumVersion = 10.27.0;
 			};
 		};
+		CC8876392C477189007CE4FA /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -772,6 +784,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CC3620E82C1035D7005ECE60 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseVertexAI-Preview";
+		};
+		CC88763A2C477189007CE4FA /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC8876392C477189007CE4FA /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
