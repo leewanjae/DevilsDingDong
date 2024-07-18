@@ -96,15 +96,6 @@ extension MatchInfoView {
         }
     }
     
-    private func createMonthBtn(title: String, action: Selector) -> UIButton {
-        let button = UIButton()
-        button.setTitle(title, for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: action, for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }
-    
     private func updateEmptyState() {
         emptyCharacter.isHidden = viewModel.filteredMatches.count != 0
         emptyStateLabel.isHidden = viewModel.filteredMatches.count != 0
