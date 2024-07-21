@@ -6,34 +6,20 @@
 //
 
 import UIKit
+import SnapKit
 
 class MonthNavigationView: UIView {
     private var viewModel: MatchInfoViewModel
     
-    private lazy var prevButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(previousMonthTapped), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+    private lazy var prevButton = createButton(image: "chevron.left", action: #selector(previousMonthTapped))
+    private lazy var nextButton = createButton(image: "chevron.right", action: #selector(nextMonthTapped))
     private lazy var monthLabel: UILabel = {
         let label = UILabel()
         label.text = "\(viewModel.formattedCurrentYearMonth)"
         label.textColor = .black
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 28)
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }()
-    private lazy var nextButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(nextMonthTapped), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
     }()
     
     init(viewModel: MatchInfoViewModel) {
@@ -51,23 +37,26 @@ class MonthNavigationView: UIView {
     }
     
     private func setUI() {
-        addSubview(monthLabel)
-        addSubview(prevButton)
-        addSubview(nextButton)
+        [monthLabel, prevButton, nextButton].forEach { addSubview($0)}
     }
     
     private func setAutoLayout() {
-        NSLayoutConstraint.activate([
-            prevButton.trailingAnchor.constraint(equalTo: monthLabel.leadingAnchor, constant: -20),
-            prevButton.widthAnchor.constraint(equalToConstant: 50),
-            prevButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-            monthLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            monthLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            monthLabel.widthAnchor.constraint(equalToConstant: 150),
-            nextButton.leadingAnchor.constraint(equalTo: monthLabel.trailingAnchor, constant: 20),
-            nextButton.widthAnchor.constraint(equalToConstant: 50),
-            nextButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-        ])
+        monthLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+            $0.width.equalTo(150)
+        }
+        
+        prevButton.snp.makeConstraints {
+            $0.trailing.equalTo(monthLabel.snp.leading).offset(-20)
+            $0.centerY.equalToSuperview()
+            $0.width.equalTo(50)
+        }
+        
+        nextButton.snp.makeConstraints {
+            $0.leading.equalTo(monthLabel.snp.trailing).offset(20)
+            $0.centerY.equalToSuperview()
+            $0.width.equalTo(50)
+        }
     }
 }
 
@@ -78,5 +67,13 @@ extension MonthNavigationView {
     
     @objc private func nextMonthTapped() {
         viewModel.nextMonthTapped()
+    }
+    
+    private func createButton(image: String, action: Selector) -> UIButton {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: image), for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: action, for: .touchUpInside)
+        return button
     }
 }

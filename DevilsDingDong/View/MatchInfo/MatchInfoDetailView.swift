@@ -1,195 +1,29 @@
-//
-//  MatchInfoDetailView.swift
-//  DevilsDingDong
-//
-//  Created by LeeWanJae on 5/8/24.
-//
-
 import UIKit
 import WebKit
+import SnapKit
 
 class MatchInfoDetailView: UIViewController {
     private var matchInfo: MatchInfo?
-    private lazy var scrollView: UIScrollView = {
-        let view = UIScrollView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    private lazy var resultTitleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "경기결과"
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        return label
-    }()
-    private lazy var resultContainer: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .resultbg
-        view.layer.cornerRadius = 20
-        view.layer.borderColor = CGColor(red: 0.765, green: 0.2, blue: 0.18, alpha: 0)
-        view.layer.shadowOpacity = 0.1
-        return view
-    }()
-    private lazy var matchType: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = matchInfo?.matchType
-        label.textColor = .white
-        return label
-    }()
-    private lazy var matchDate: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = matchInfo?.date
-        label.textColor = .white
-        return label
-    }()
-    private lazy var scoreBox: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    private lazy var manUtdLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "맨유"
-        label.font = UIFont.systemFont(ofSize: 20)
-        label.textColor = .white
-        label.textAlignment = .right
-        return label
-    }()
-    private lazy var score: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = matchInfo?.score
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .white
-        return label
-    }()
-    private lazy var enemy: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    private lazy var enemyLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = matchInfo?.enemy
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 20)
-        return label
-    }()
-    private lazy var separatorHBar: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .lightGray
-        view.layer.borderWidth = 1
-        return view
-    }()
-    private lazy var separatorVBar: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .darkGray.withAlphaComponent(0)
-        return view
-    }()
-    private lazy var manUtdGoalsView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        if let goals = matchInfo?.manUtdGoal?.filter({ !$0.isEmpty }) {
-            var previousLabel: UILabel?
-            for goal in goals {
-                let label = UILabel()
-                label.translatesAutoresizingMaskIntoConstraints = false
-                label.text = goal
-                label.textColor = .white
-                label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-                label.textAlignment = .right
-                view.addSubview(label)
-                NSLayoutConstraint.activate([
-                    label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                    label.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                    label.heightAnchor.constraint(equalToConstant: 20)
-                ])
-                if let previousLabel = previousLabel {
-                    NSLayoutConstraint.activate([
-                        label.topAnchor.constraint(equalTo: previousLabel.bottomAnchor)
-                    ])
-                } else {
-                    NSLayoutConstraint.activate([
-                        label.topAnchor.constraint(equalTo: view.topAnchor)
-                    ])
-                }
-                previousLabel = label
-            }
-            if let previousLabel = previousLabel {
-                previousLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            }
-        }
-        return view
-    }()
-    private lazy var enemyGoalsView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        if let goals = matchInfo?.enemyGoal?.filter({ !$0.isEmpty }) {
-            var previousLabel: UILabel?
-            for goal in goals {
-                let label = UILabel()
-                label.translatesAutoresizingMaskIntoConstraints = false
-                label.text = goal
-                label.textColor = .white
-                label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-                view.addSubview(label)
-                NSLayoutConstraint.activate([
-                    label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                    label.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                    label.heightAnchor.constraint(equalToConstant: 20)
-                ])
-                if let previousLabel = previousLabel {
-                    NSLayoutConstraint.activate([
-                        label.topAnchor.constraint(equalTo: previousLabel.bottomAnchor)
-                    ])
-                } else {
-                    NSLayoutConstraint.activate([
-                        label.topAnchor.constraint(equalTo: view.topAnchor)
-                    ])
-                }
-                previousLabel = label
-            }
-            if let previousLabel = previousLabel {
-                previousLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            }
-        }
-        return view
-    }()
-    private lazy var enemyGoal: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 8, weight: .semibold)
-        return label
-    }()
-    private lazy var highlightTitleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "하이라이트"
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        return label
-    }()
-    private lazy var highlightContainerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 20
-        view.clipsToBounds = true
-        return view
-    }()
-    private lazy var highlightView: WKWebView = {
-        let webView = WKWebView()
-        webView.load(URLRequest(url: URL(string: matchInfo?.highlight ?? "")!))
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        webView.layer.shadowOpacity = 0.2
-        return webView
-    }()
+    
+    private lazy var scrollView: UIScrollView = createScrollView()
+    private lazy var resultTitleLabel: UILabel = createLabel(text: "경기결과", fontSize: 20, fontWeight: .bold)
+    private lazy var resultContainer: UIView = createContainerView()
+    private lazy var matchType: UILabel = createLabel(text: matchInfo?.matchType ?? "")
+    private lazy var matchDate: UILabel = createLabel(text: matchInfo?.date ?? "")
+    //
+    private lazy var scoreBox = createContainerView()
+    private lazy var score: UILabel = createLabel(text: matchInfo?.score ?? "", fontSize: 30, fontWeight: .bold)
+    private lazy var manUtdStack = createTeamStackView(teamName: "맨유", logoName: "맨유", fontSize: 24)
+    private lazy var enemyStack = createTeamStackView(teamName: matchInfo?.enemy ?? "", logoName: matchInfo?.enemy ?? "", fontSize: 24)
 
+    private lazy var separatorHBar: UIView = createSeparatorView(color: .darkGray.withAlphaComponent(0.5), borderWidth: 1)
+    private lazy var separatorVBar: UIView = createSeparatorView(color: .darkGray.withAlphaComponent(0.3), borderWidth: 1)
+    private lazy var manUtdGoalsView = createGoalsView(goals: matchInfo?.manUtdGoal, textAlign: .right)
+    private lazy var enemyGoalsView = createGoalsView(goals: matchInfo?.enemyGoal, textAlign: .left)
+    private lazy var highlightTitleLabel: UILabel = createLabel(text: "하이라이트", fontSize: 20, fontWeight: .bold)
+    private lazy var highlightContainerView: UIView = createContainerView(cornerRadius: 20)
+    private lazy var highlightView: WKWebView = createWebView(urlString: matchInfo?.highlight)
+ 
     init(matchInfo: MatchInfo) {
         self.matchInfo = matchInfo
         super.init(nibName: nil, bundle: nil)
@@ -202,101 +36,209 @@ class MatchInfoDetailView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        setAutoLayout()
     }
 }
 
+// MARK: - UI Methods
 extension MatchInfoDetailView {
     private func setUI() {
         view.backgroundColor = UIColor.bg
-        addView()
-        setAutoLayout()
-    }
-    
-    private func addView() {
+        
         view.addSubview(scrollView)
-        scrollView.addSubview(resultTitleLabel)
-        scrollView.addSubview(resultContainer)
-        scrollView.addSubview(highlightTitleLabel)
-        scrollView.addSubview(highlightContainerView)
         
-        resultContainer.addSubview(matchType)
-        resultContainer.addSubview(matchDate)
-        resultContainer.addSubview(scoreBox)
-        resultContainer.addSubview(separatorHBar)
-        resultContainer.addSubview(separatorVBar)
-        resultContainer.addSubview(manUtdGoalsView)
-        resultContainer.addSubview(enemyGoalsView)
+        let scrollViewItems = [resultTitleLabel, resultContainer, highlightTitleLabel, highlightContainerView]
+        scrollViewItems.forEach { scrollView.addSubview($0) }
         
-        scoreBox.addSubview(manUtdLabel)
-        scoreBox.addSubview(score)
-        scoreBox.addSubview(enemyLabel)
+        let resultContainerItems = [matchType, matchDate, scoreBox, separatorHBar, separatorVBar, manUtdGoalsView, enemyGoalsView]
+        resultContainerItems.forEach { resultContainer.addSubview($0) }
+        
+        let scoreBoxItems = [manUtdStack, score, enemyStack]
+        scoreBoxItems.forEach { scoreBox.addSubview($0) }
         
         highlightContainerView.addSubview(highlightView)
     }
     
     private func setAutoLayout() {
         let safeArea = view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            resultTitleLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 30),
-            resultTitleLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
-            
-            resultContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            resultContainer.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30),
-            resultContainer.topAnchor.constraint(equalTo: resultTitleLabel.bottomAnchor, constant: 20),
-            
-            matchType.centerXAnchor.constraint(equalTo: resultContainer.centerXAnchor),
-            matchType.topAnchor.constraint(equalTo: resultContainer.topAnchor, constant: 10),
-            
-            matchDate.centerXAnchor.constraint(equalTo: resultContainer.centerXAnchor),
-            matchDate.topAnchor.constraint(equalTo: matchType.bottomAnchor, constant: 10),
-            
-            scoreBox.centerXAnchor.constraint(equalTo: resultContainer.centerXAnchor),
-            scoreBox.topAnchor.constraint(equalTo: matchDate.bottomAnchor, constant: 25),
-            scoreBox.heightAnchor.constraint(equalToConstant: 30),
-            
-            manUtdLabel.trailingAnchor.constraint(equalTo: score.leadingAnchor, constant: -30),
-            manUtdLabel.widthAnchor.constraint(equalToConstant: 100),
-            enemyLabel.leadingAnchor.constraint(equalTo: score.trailingAnchor, constant: 30),
-            enemyLabel.widthAnchor.constraint(equalToConstant: 100),
-            score.centerXAnchor.constraint(equalTo: resultContainer.centerXAnchor),
-            
-            separatorHBar.topAnchor.constraint(equalTo: scoreBox.bottomAnchor , constant: 20),
-            separatorHBar.leadingAnchor.constraint(equalTo: resultContainer.leadingAnchor),
-            separatorHBar.trailingAnchor.constraint(equalTo: resultContainer.trailingAnchor),
-            separatorHBar.heightAnchor.constraint(equalToConstant: 1),
-            
-            separatorVBar.topAnchor.constraint(equalTo: separatorHBar.bottomAnchor),
-            separatorVBar.centerXAnchor.constraint(equalTo: resultContainer.centerXAnchor),
-            separatorVBar.widthAnchor.constraint(equalToConstant: 1),
-            separatorVBar.bottomAnchor.constraint(equalTo: resultContainer.bottomAnchor, constant: -10),
-            
-            manUtdGoalsView.topAnchor.constraint(equalTo: separatorHBar.bottomAnchor, constant: 5),
-            manUtdGoalsView.trailingAnchor.constraint(equalTo: separatorVBar.leadingAnchor, constant: -15),
-            manUtdGoalsView.bottomAnchor.constraint(equalTo: resultContainer.bottomAnchor, constant: -10),
-            manUtdGoalsView.widthAnchor.constraint(equalTo: resultContainer.widthAnchor, multiplier: 0.5, constant: -20),
-            
-            enemyGoalsView.topAnchor.constraint(equalTo: separatorHBar.bottomAnchor, constant: 5),
-            enemyGoalsView.leadingAnchor.constraint(equalTo: separatorVBar.trailingAnchor, constant: 15),
-            enemyGoalsView.bottomAnchor.constraint(equalTo: manUtdGoalsView.bottomAnchor),
-            enemyGoalsView.widthAnchor.constraint(equalTo: resultContainer.widthAnchor, multiplier: 0.5, constant: -20),
-            
-            highlightTitleLabel.topAnchor.constraint(equalTo: resultContainer.bottomAnchor, constant: 30),
-            highlightTitleLabel.leadingAnchor.constraint(equalTo: resultTitleLabel.leadingAnchor),
-            
-            highlightContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            highlightContainerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.26),
-            highlightContainerView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30),
-            highlightContainerView.topAnchor.constraint(equalTo: highlightTitleLabel.bottomAnchor, constant: 20),
-            
-            highlightView.topAnchor.constraint(equalTo: highlightContainerView.topAnchor),
-            highlightView.leadingAnchor.constraint(equalTo: highlightContainerView.leadingAnchor),
-            highlightView.trailingAnchor.constraint(equalTo: highlightContainerView.trailingAnchor),
-            highlightView.bottomAnchor.constraint(equalTo: highlightContainerView.bottomAnchor),
-        ])
+        
+        scrollView.snp.makeConstraints {
+            $0.edges.equalTo(safeArea)
+        }
+        
+        resultTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(scrollView.snp.top).offset(30)
+            $0.leading.equalTo(scrollView.snp.leading).offset(20)
+        }
+        
+        resultContainer.snp.makeConstraints {
+            $0.centerX.equalTo(view.snp.centerX)
+            $0.width.equalTo(view.snp.width).offset(-30)
+            $0.top.equalTo(resultTitleLabel.snp.bottom).offset(20)
+        }
+        
+        matchType.snp.makeConstraints {
+            $0.centerX.equalTo(resultContainer.snp.centerX)
+            $0.top.equalTo(resultContainer.snp.top).offset(10)
+        }
+        
+        matchDate.snp.makeConstraints {
+            $0.centerX.equalTo(resultContainer.snp.centerX)
+            $0.top.equalTo(matchType.snp.bottom).offset(10)
+        }
+        
+        scoreBox.snp.makeConstraints {
+            $0.centerX.equalTo(resultContainer.snp.centerX)
+            $0.top.equalTo(matchDate.snp.bottom).offset(25)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(60)
+        }
+        
+        manUtdStack.snp.makeConstraints {
+            $0.trailing.equalTo(score.snp.leading).offset(-30)
+            $0.bottom.equalTo(separatorHBar.snp.top).offset(-20)
+            $0.top.equalTo(matchDate.snp.bottom).offset(5)
+        }
+        
+        enemyStack.snp.makeConstraints {
+            $0.leading.equalTo(score.snp.trailing).offset(30)
+            $0.bottom.equalTo(separatorHBar.snp.top).offset(-20)
+            $0.top.equalTo(matchDate.snp.bottom).offset(5)
+        }
+        
+        score.snp.makeConstraints {
+            $0.centerX.equalTo(resultContainer.snp.centerX)
+            $0.centerY.equalTo(scoreBox.snp.centerY)
+        }
+        
+        separatorHBar.snp.makeConstraints {
+            $0.top.equalTo(scoreBox.snp.bottom).offset(50)
+            $0.leading.trailing.equalTo(resultContainer)
+            $0.height.equalTo(1)
+        }
+        
+        separatorVBar.snp.makeConstraints {
+            $0.top.equalTo(separatorHBar.snp.bottom)
+            $0.centerX.equalTo(resultContainer.snp.centerX)
+            $0.width.equalTo(1)
+            $0.bottom.equalTo(resultContainer.snp.bottom).offset(-10)
+        }
+        
+        manUtdGoalsView.snp.makeConstraints {
+            $0.top.equalTo(separatorHBar.snp.bottom).offset(5)
+            $0.trailing.equalTo(separatorVBar.snp.leading).offset(-10)
+            $0.width.equalTo(resultContainer.snp.width).multipliedBy(0.5).offset(-20)
+        }
+        
+        enemyGoalsView.snp.makeConstraints {
+            $0.top.equalTo(separatorHBar.snp.bottom).offset(5)
+            $0.leading.equalTo(separatorVBar.snp.trailing).offset(10)
+            $0.width.equalTo(resultContainer.snp.width).multipliedBy(0.5).offset(-20)
+        }
+        
+        highlightTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(separatorVBar.snp.bottom).offset(100)
+            $0.leading.equalTo(resultTitleLabel.snp.leading)
+        }
+        
+        highlightContainerView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(view.snp.height).multipliedBy(0.26)
+            $0.width.equalToSuperview().offset(-30)
+            $0.top.equalTo(highlightTitleLabel.snp.bottom).offset(20)
+        }
+        
+        highlightView.snp.makeConstraints {
+            $0.edges.equalTo(highlightContainerView)
+        }
+    }
+    
+    private func createLabel(text: String, fontSize: CGFloat = 14, fontWeight: UIFont.Weight = .regular, textColor: UIColor = .black, textAlign: NSTextAlignment = .left) -> UILabel {
+        let label = UILabel()
+        label.text = text
+        label.font = UIFont.systemFont(ofSize: fontSize, weight: fontWeight)
+        label.textColor = textColor
+        label.textAlignment = textAlign
+        return label
+    }
+    
+    private func createContainerView(backgroundColor: UIColor = .clear, cornerRadius: CGFloat = 0) -> UIView {
+        let view = UIView()
+        view.backgroundColor = backgroundColor
+        view.layer.cornerRadius = cornerRadius
+        return view
+    }
+    
+    private func createSeparatorView(color: UIColor, borderWidth: CGFloat = 0) -> UIView {
+        let view = UIView()
+        view.backgroundColor = color
+        view.layer.borderWidth = borderWidth
+        return view
+    }
+    
+    private func createGoalsView(goals: [String]?, textAlign: NSTextAlignment = .left ) -> UIView {
+        let view = UIView()
+        if let goals = goals?.filter({ !$0.isEmpty }) {
+            var previousLabel: UILabel?
+            for goal in goals {
+                let label = createLabel(text: goal, fontWeight: .semibold, textAlign: textAlign)
+                view.addSubview(label)
+                label.snp.makeConstraints {
+                    $0.leading.trailing.equalTo(view)
+                    $0.height.equalTo(20)
+                    if let previousLabel = previousLabel {
+                        $0.top.equalTo(previousLabel.snp.bottom)
+                    } else {
+                        $0.top.equalTo(view.snp.top)
+                    }
+                }
+                previousLabel = label
+            }
+            if let previousLabel = previousLabel {
+                previousLabel.snp.makeConstraints {
+                    $0.bottom.equalTo(view.snp.bottom)
+                }
+            }
+        }
+        return view
+    }
+    
+    private func createScrollView() -> UIScrollView {
+        let scrollView = UIScrollView()
+        return scrollView
+    }
+    
+    private func createWebView(urlString: String?) -> WKWebView {
+        let webView = WKWebView()
+        if let urlString = urlString, let url = URL(string: urlString) {
+            webView.load(URLRequest(url: url))
+        }
+        webView.layer.shadowOpacity = 0.2
+        return webView
+    }
+    
+    private func createLogoImage(url: String) -> UIImageView {
+        let image = UIImageView()
+        image.image = UIImage(named: url)
+        image.contentMode = .scaleAspectFit
+        return image
+    }
+    
+    private func createTeamStackView(teamName: String, logoName: String, fontSize: CGFloat) -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 10
+        let logoImageView = createLogoImage(url: logoName)
+        let teamLabel = createLabel(text: teamName, fontSize: fontSize)
+        
+        logoImageView.snp.makeConstraints {
+            $0.width.height.equalTo(70)
+        }
+        
+        stackView.addArrangedSubview(logoImageView)
+        stackView.addArrangedSubview(teamLabel)
+        
+        return stackView
     }
 }

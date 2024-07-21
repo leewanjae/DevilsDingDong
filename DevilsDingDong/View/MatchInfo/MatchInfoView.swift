@@ -6,32 +6,33 @@
 //
 
 import UIKit
+import SnapKit
 
 // TODO: - 경기의 일정 임박에 따른 위계부여 회색, 파랑, 빨강
 class MatchInfoView: UIViewController {
     private let viewModel = MatchInfoViewModel()
     private lazy var monthNavigationView: MonthNavigationView = {
         let view = MonthNavigationView(viewModel: viewModel)
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.showsVerticalScrollIndicator = false
         tableView.backgroundColor = .bgColor
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        tableView.register(MatchInfoCell.self, forCellReuseIdentifier: MatchInfoCell.id)
         return tableView
     }()
     private lazy var emptyCharacter: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "ch")
-        image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFit
         return image
     }()
     private lazy var emptyStateLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "경기 일정이 없습니다"
         label.textColor = .gray
         label.textAlignment = .center
@@ -42,63 +43,57 @@ class MatchInfoView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .none
-        tableView.register(MatchInfoCell.self, forCellReuseIdentifier: MatchInfoCell.id)
+        setAutoLayout()
+        bindViewModel()
+    }
+}
+
+// MARK: - UI Methods
+extension MatchInfoView {
+    private func setUI() {
+        view.backgroundColor = .bgColor
+        
+        self.navigationItem.title = "경기 일정"
+        navigationItem.largeTitleDisplayMode = .never
+        
+        let viewItems = [monthNavigationView, tableView, emptyStateLabel, emptyCharacter]
+        viewItems.forEach { view.addSubview($0) }
+    }
+    
+    private func bindViewModel() {
         viewModel.viewUpdateCloser = { [weak self] in
             self?.tableView.reloadData()
             self?.updateEmptyState()
         }
     }
-}
-
-extension MatchInfoView {
-    private func setUI() {
-        view.backgroundColor = .bgColor
-        
-        self.navigationItem.title = PageElement.matchInfoNavTitle
-        navigationItem.largeTitleDisplayMode = .never
-        
-        view.addSubview(monthNavigationView)
-        view.addSubview(tableView)
-        view.addSubview(emptyStateLabel)
-        view.addSubview(emptyCharacter)
-        
-        setAutoLayout()
-        updateEmptyState()
-    }
     
     private func setAutoLayout() {
         let safeArea = view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([
-            monthNavigationView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: -20),
-            monthNavigationView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            monthNavigationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            monthNavigationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            monthNavigationView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
-            
-            tableView.topAnchor.constraint(equalTo: monthNavigationView.bottomAnchor),
-            tableView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor), // 변경된 부분
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            
-            emptyCharacter.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            emptyCharacter.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            emptyCharacter.widthAnchor.constraint(equalToConstant: 200),
-            emptyCharacter.heightAnchor.constraint(equalToConstant: 200),
-            emptyStateLabel.topAnchor.constraint(equalTo: emptyCharacter.bottomAnchor, constant: 50),
-            emptyStateLabel.centerXAnchor.constraint(equalTo: emptyCharacter.centerXAnchor)
-        ])
-    }
-    
-    private func createMonthBtn(title: String, action: Selector) -> UIButton {
-        let button = UIButton()
-        button.setTitle(title, for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: action, for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+        
+        monthNavigationView.snp.makeConstraints {
+            $0.top.equalTo(safeArea.snp.top).offset(-20)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.height.equalToSuperview().multipliedBy(0.1)
+            $0.centerX.equalToSuperview()
+        }
+        
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(monthNavigationView.snp.bottom)
+            $0.bottom.equalTo(safeArea.snp.bottom)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+        }
+        
+        emptyCharacter.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+            $0.width.height.equalTo(200)
+        }
+        
+        emptyStateLabel.snp.makeConstraints {
+            $0.top.equalTo(emptyCharacter.snp.bottom).offset(50)
+            $0.centerX.equalTo(emptyCharacter.snp.centerX)
+        }
     }
     
     private func updateEmptyState() {
@@ -107,6 +102,7 @@ extension MatchInfoView {
     }
 }
 
+// MARK: - Delegate Methods
 extension MatchInfoView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.filteredMatches.count
@@ -121,7 +117,7 @@ extension MatchInfoView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 170
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
