@@ -20,9 +20,9 @@ class TodayMatchView: UIViewController {
     private lazy var enemyPlayerCollectionView = createCollectionView()
     private lazy var noMatchLabel = createLabel(size: 17, weight: .regular, text: "경기 일정이 없습니다")
     private lazy var matchStackView = createStackView()
-    private lazy var manUtdLabel = createLabel(size: 24, weight: .semibold, text: "맨유")
+    private lazy var manLogoStackView = createTeamStackView(teamName: "맨유")
     private lazy var vsLabel = createLabel(size: 17, weight: .regular, text: "VS")
-    private lazy var enemyLabel = createLabel(size: 24, weight: .semibold, text: viewModel.todayMatch.first?.enemy ?? "미정")
+    private lazy var enemyLogoStackView = createTeamStackView(teamName: viewModel.todayMatch.first?.enemy ?? "미정")
     private lazy var dateStackView = createStackView()
     private lazy var matchDate = createLabel(size: 20, weight: .regular, text: viewModel.todayMatch.first?.date ?? "00년 00월 00일 (E)")
     private lazy var matchTime = createLabel(size: 20, weight: .regular, text: viewModel.todayMatch.first?.time ?? "00:00")
@@ -66,7 +66,7 @@ extension TodayMatchView {
         let viewItems = [matchStackView, stadium, dateStackView, matchTypeStackView, playerTitle, playerCollectionView, manUtdPlayerLabel, enemyPlayerLabel, enemyPlayerCollectionView, character]
         viewItems.forEach { view.addSubview($0) }
         
-        let matchStackItems = [manUtdLabel, vsLabel, enemyLabel]
+        let matchStackItems = [manLogoStackView, vsLabel, enemyLogoStackView]
         matchStackItems.forEach { matchStackView.addArrangedSubview($0) }
         
         let matchTypeStackViewItems = [matchType, round]
@@ -85,12 +85,6 @@ extension TodayMatchView {
             matchStackView.snp.makeConstraints {
                 $0.top.equalTo(safeArea.snp.top).offset(20)
                 $0.centerX.equalTo(view.snp.centerX)
-            }
-            
-            character.snp.makeConstraints {
-                $0.top.equalTo(matchStackView.snp.top)
-                $0.width.height.equalTo(100)
-                $0.leading.equalToSuperview().offset(10)
             }
             
             matchTypeStackView.snp.makeConstraints {
@@ -164,7 +158,7 @@ extension TodayMatchView {
     private func createStackView() -> UIStackView {
         let view = UIStackView()
         view.axis = .horizontal
-        view.spacing = 10
+        view.spacing = 20
         return view
     }
     
@@ -178,11 +172,33 @@ extension TodayMatchView {
         let image = UIImageView()
         if viewModel.todayMatch.first?.enemy != nil {
             image.image = UIImage(named: "todayMatchCH")
-        } else {
-            image.image = UIImage(named: "ch")
         }
         image.contentMode = .scaleAspectFit
         return image
+    }
+    
+    private func createLogoImage(url: String) -> UIImageView {
+        let image = UIImageView()
+        image.image = UIImage(named: url)
+        image.contentMode = .scaleAspectFit
+        return image
+    }
+    
+    private func createTeamStackView(teamName: String) -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 10
+        let logoImageView = createLogoImage(url: teamName)
+        let teamLabel = createLabel(size: 24, weight: .semibold, text: teamName)
+        logoImageView.snp.makeConstraints {
+            $0.width.height.equalTo(70)
+        }
+        
+        stackView.addArrangedSubview(logoImageView)
+        stackView.addArrangedSubview(teamLabel)
+        
+        return stackView
     }
 }
 
