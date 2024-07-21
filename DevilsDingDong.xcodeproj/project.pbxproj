@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		CC02487D2C39846C00F0E8E1 /* SeedDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC02487C2C39846C00F0E8E1 /* SeedDB.swift */; };
-		CC27E43F2BF0A81200DC8ACF /* AppStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC27E43E2BF0A81200DC8ACF /* AppStrings.swift */; };
 		CC27E4462BF0D3EC00DC8ACF /* Color + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC27E4452BF0D3EC00DC8ACF /* Color + Extension.swift */; };
 		CC27E4482BF0DDA200DC8ACF /* MatchInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC27E4472BF0DDA200DC8ACF /* MatchInfoCell.swift */; };
 		CC2EDA3B2C38400A00FDBD08 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2EDA3A2C38400A00FDBD08 /* Score.swift */; };
@@ -62,7 +61,6 @@
 
 /* Begin PBXFileReference section */
 		CC02487C2C39846C00F0E8E1 /* SeedDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedDB.swift; sourceTree = "<group>"; };
-		CC27E43E2BF0A81200DC8ACF /* AppStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStrings.swift; sourceTree = "<group>"; };
 		CC27E4452BF0D3EC00DC8ACF /* Color + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color + Extension.swift"; sourceTree = "<group>"; };
 		CC27E4472BF0DDA200DC8ACF /* MatchInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoCell.swift; sourceTree = "<group>"; };
 		CC2EDA3A2C38400A00FDBD08 /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
@@ -131,7 +129,6 @@
 		CC27E43C2BF0A77F00DC8ACF /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				CC27E43E2BF0A81200DC8ACF /* AppStrings.swift */,
 				CC3780812BE9E95B009313EA /* Assets.xcassets */,
 			);
 			path = Resource;
@@ -378,7 +375,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCD931012C183395009A6D42 /* TodayMatchView.swift in Sources */,
-				CC27E43F2BF0A81200DC8ACF /* AppStrings.swift in Sources */,
 				CC2EDA3B2C38400A00FDBD08 /* Score.swift in Sources */,
 				CC2EDA402C38584C00FDBD08 /* TotalRecordCell.swift in Sources */,
 				CC27E4462BF0D3EC00DC8ACF /* Color + Extension.swift in Sources */,

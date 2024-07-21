@@ -6,101 +6,40 @@
 //
 
 import UIKit
+import SnapKit
 
 class MatchInfoCell: UITableViewCell {
     static let id = "MatchInfoCell"
     
     private lazy var container: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 10
         view.layer.shadowOpacity = 0.1
         return view
     }()
-    
     // matchDateContainer에 MatchDate, matchTime 넣기
-    private lazy var matchDateContainer: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .accentColor
-        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        view.layer.cornerRadius = 10
-        return view
-    }()
-    
-    private lazy var matchDate: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-        label.textColor = .white
-        return label
-    }()
-    
-    private lazy var matchTime: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        label.textColor = .white
-        return label
-    }()
+    private lazy var matchDateContainer = createContainer(color: .accentColor!, corner:  [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+    private lazy var matchDate = createLabel(font: 15, weight: .semibold, color: .white)
+    private lazy var matchTime = createLabel(font: 15, weight: .medium, color: .white)
     
     // matchInfoContainer에 stadium, manutd, enemy, round 들어가기
-    private lazy var matchInfoContainer: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        view.layer.cornerRadius = 10
-        
-        return view
-    }()
-    
-    
-    private lazy var stadium: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        label.textColor = UIColor.subTextColor
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    private lazy var manutd: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-        label.text = Teams.manUtd
-        return label
-    }()
-    
-    private lazy var state: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        label.textColor = UIColor.subTextColor
-        return label
-    }()
-    
-    private lazy var enemy: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-        return label
-    }()
-    
-    private lazy var round: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.textColor = UIColor.subTextColor
-        return label
-    }()
+    private lazy var matchInfoContainer = createContainer(color: .white, corner: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
+    private lazy var stadium = createDynamicLabel(size: 10, weight: .regular, color: .subTextColor!)
+    private lazy var manuStackView = createStackView()
+    private lazy var manuLogo = createImage()
+    private lazy var manutd = createLabel(font: 16, weight: .medium, text: "맨유")
+    private lazy var state = createLabel(font: 13, weight: .regular, color: .subTextColor ?? .black)
+    private lazy var enemyStackView = createStackView()
+    private lazy var enemyLogo = createImage()
+    private lazy var enemy: UILabel = createDynamicLabel(size: 16, weight: .medium)
+    private lazy var round = createLabel(font: 12, weight: .medium, color: .subTextColor ?? .black)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
         self.backgroundColor = .bgColor
         setUI()
+        setAutoLayout()
     }
     
     override func layoutSubviews() {
@@ -113,64 +52,88 @@ class MatchInfoCell: UITableViewCell {
     }
 }
 
+// MARK: - UI Methods
 extension MatchInfoCell {
     private func setUI() {
-        addView()
-        setAutoLayout()
-    }
-    
-    private func addView() {
         contentView.addSubview(container)
-        container.addSubview(matchDateContainer)
-        container.addSubview(matchInfoContainer)
+        let containerItems = [matchDateContainer, matchInfoContainer]
+        containerItems.forEach { container.addSubview($0) }
+            
+        let matchDateContainerItems = [matchDate, matchTime]
+        matchDateContainerItems.forEach { matchDateContainer.addSubview($0) }
         
-        matchDateContainer.addSubview(matchDate)
-        matchDateContainer.addSubview(matchTime)
+        let matchInfoContainerItems = [stadium, manuStackView, state, enemyStackView, round]
+        matchInfoContainerItems.forEach { matchInfoContainer.addSubview($0) }
+
+        let manuStackViewItems = [manuLogo, manutd]
+        manuStackViewItems.forEach { manuStackView.addArrangedSubview($0) }
+        manuStackView.addArrangedSubview(manuLogo)
+        manuStackView.addArrangedSubview(manutd)
         
-        matchInfoContainer.addSubview(stadium)
-        matchInfoContainer.addSubview(manutd)
-        matchInfoContainer.addSubview(state)
-        matchInfoContainer.addSubview(enemy)
-        matchInfoContainer.addSubview(round)
+        let enemyStackViewItems = [enemyLogo, enemy]
+        enemyStackViewItems.forEach { enemyStackView.addArrangedSubview($0) }
     }
     
     private func setAutoLayout() {
-        NSLayoutConstraint.activate([
-            
-            container.topAnchor.constraint(equalTo: contentView.topAnchor),
-            container.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            container.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            container.heightAnchor.constraint(equalTo: contentView.heightAnchor),
-            
-            matchDateContainer.topAnchor.constraint(equalTo: container.topAnchor),
-            matchDateContainer.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            matchDateContainer.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            matchDateContainer.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 0.3),
-            
-            matchDate.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            matchDate.centerYAnchor.constraint(equalTo: matchDateContainer.centerYAnchor),
-            matchTime.leadingAnchor.constraint(equalTo: matchDate.trailingAnchor, constant: 10),
-            matchTime.centerYAnchor.constraint(equalTo: matchDateContainer.centerYAnchor),
-            
-            matchInfoContainer.topAnchor.constraint(equalTo: matchDateContainer.bottomAnchor),
-            matchInfoContainer.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            matchInfoContainer.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            matchInfoContainer.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-            matchInfoContainer.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 0.7),
-            
-            // matchInfoContainer에 matchTime, stadium, manutd, enemy, round 들어가기
-            stadium.leadingAnchor.constraint(equalTo: matchDate.leadingAnchor),
-            stadium.widthAnchor.constraint(equalToConstant: 70),
-            stadium.centerYAnchor.constraint(equalTo: matchInfoContainer.centerYAnchor),
-            state.centerXAnchor.constraint(equalTo: matchInfoContainer.centerXAnchor),
-            state.centerYAnchor.constraint(equalTo: matchInfoContainer.centerYAnchor),
-            manutd.trailingAnchor.constraint(equalTo: state.leadingAnchor, constant: -20),
-            manutd.centerYAnchor.constraint(equalTo: matchInfoContainer.centerYAnchor),
-            enemy.leadingAnchor.constraint(equalTo: state.trailingAnchor, constant: 20),
-            enemy.centerYAnchor.constraint(equalTo: matchInfoContainer.centerYAnchor),
-            round.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
-            round.centerYAnchor.constraint(equalTo: matchInfoContainer.centerYAnchor),
-        ])
+        container.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+
+        matchDateContainer.snp.makeConstraints {
+            $0.top.equalTo(container.snp.top)
+            $0.leading.equalTo(container.snp.leading)
+            $0.trailing.equalTo(container.snp.trailing)
+            $0.height.equalTo(container.snp.height).multipliedBy(0.25)
+        }
+
+        matchDate.snp.makeConstraints {
+            $0.leading.equalTo(contentView.snp.leading).offset(15)
+            $0.centerY.equalTo(matchDateContainer.snp.centerY)
+        }
+
+        matchTime.snp.makeConstraints {
+            $0.leading.equalTo(matchDate.snp.trailing).offset(10)
+            $0.centerY.equalTo(matchDateContainer.snp.centerY)
+        }
+
+        matchInfoContainer.snp.makeConstraints {
+            $0.top.equalTo(matchDateContainer.snp.bottom)
+            $0.leading.equalTo(container.snp.leading)
+            $0.trailing.equalTo(container.snp.trailing)
+            $0.bottom.equalTo(container.snp.bottom)
+            $0.height.equalTo(container.snp.height).multipliedBy(0.75)
+        }
+
+        stadium.snp.makeConstraints {
+            $0.leading.equalTo(matchDate.snp.leading)
+            $0.width.equalTo(65)
+            $0.centerY.equalTo(matchInfoContainer.snp.centerY)
+        }
+
+        state.snp.makeConstraints {
+            $0.centerX.equalTo(matchInfoContainer.snp.centerX)
+            $0.centerY.equalTo(matchInfoContainer.snp.centerY)
+        }
+
+        manuStackView.snp.makeConstraints {
+            $0.trailing.equalTo(state.snp.leading).offset(-20)
+            $0.leading.equalTo(stadium.snp.trailing).offset(10)
+            $0.width.equalTo(50)
+            $0.bottom.equalTo(matchInfoContainer.snp.bottom).offset(-20)
+            $0.top.equalTo(matchDateContainer.snp.bottom).offset(20)
+        }
+
+        enemyStackView.snp.makeConstraints {
+            $0.leading.equalTo(state.snp.trailing).offset(20)
+            $0.width.equalTo(50)
+            $0.top.equalTo(manuStackView.snp.top)
+            $0.bottom.equalTo(manuStackView.snp.bottom)
+        }
+
+        round.snp.makeConstraints {
+            $0.trailing.equalTo(contentView.snp.trailing).offset(-15)
+            $0.centerY.equalTo(state.snp.centerY)
+        }
     }
     
     func configure(matchDate: String, matchTime:String, stadium: String, state:String, enemy: String, round: String) {
@@ -180,7 +143,7 @@ extension MatchInfoCell {
         self.state.text = state
         self.enemy.text = enemy
         self.round.text = round
-        
+        self.enemyLogo.image = UIImage(named: enemy)
         if state == "종료" {
             self.state.textColor = .subTextColor?.withAlphaComponent(0.7)
         } else if state == "예정" {
@@ -207,5 +170,46 @@ extension MatchInfoCell {
         } else {
             matchDateContainer.backgroundColor = .lightGray
         }
+    }
+    
+    private func createStackView() -> UIStackView {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.spacing = 0
+        view.alignment = .center
+        view.distribution = .fillEqually
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }
+    
+    private func createLabel(font: CGFloat, weight: UIFont.Weight, color: UIColor = .black, text: String = "" ) -> UILabel {
+        let label = UILabel()
+        label.text = text
+        label.textColor = color
+        return label
+    }
+    
+    private func createImage(url: String = "맨유") -> UIImageView {
+        let image = UIImageView()
+        image.contentMode = .scaleAspectFit
+        image.image = UIImage(named: url)
+        return image
+    }
+    
+    private func createDynamicLabel(size: CGFloat, weight: UIFont.Weight, color: UIColor = .black) -> UILabel {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.numberOfLines = 4
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+        label.textColor = color
+        return label
+    }
+    private func createContainer(color: UIColor, corner: CACornerMask) -> UIView {
+        let view = UIView()
+        view.backgroundColor = color
+        view.layer.maskedCorners = corner
+        view.layer.cornerRadius = 10
+        return view
     }
 }
