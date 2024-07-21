@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 struct Section: Hashable {
     let id: String
@@ -13,12 +14,12 @@ struct Section: Hashable {
 
 class TodayMatchView: UIViewController {
     private let viewModel = MatchInfoViewModel()
-    private lazy var character = createCharacterImage()
+    private lazy var character = createImage(url: "ch")
     private var playerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
     private var enemyPlayerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
     private lazy var playerCollectionView = createCollectionView()
     private lazy var enemyPlayerCollectionView = createCollectionView()
-    private lazy var noMatchLabel = createLabel(size: 17, weight: .regular, text: "경기 일정이 없습니다")
+    private lazy var noMatchLabel = createLabel(size: 17, weight: .regular, text: "경기 일정이 없습니다", color: .gray)
     private lazy var matchStackView = createStackView()
     private lazy var manLogoStackView = createTeamStackView(teamName: "맨유")
     private lazy var vsLabel = createLabel(size: 17, weight: .regular, text: "VS")
@@ -63,24 +64,40 @@ class TodayMatchView: UIViewController {
 // MARK: - UI Methods
 extension TodayMatchView {
     private func setUI() {
-        let viewItems = [matchStackView, stadium, dateStackView, matchTypeStackView, playerTitle, playerCollectionView, manUtdPlayerLabel, enemyPlayerLabel, enemyPlayerCollectionView, character]
-        viewItems.forEach { view.addSubview($0) }
-        
-        let matchStackItems = [manLogoStackView, vsLabel, enemyLogoStackView]
-        matchStackItems.forEach { matchStackView.addArrangedSubview($0) }
-        
-        let matchTypeStackViewItems = [matchType, round]
-        matchTypeStackViewItems.forEach { matchTypeStackView.addArrangedSubview($0) }
-        
-        let dateStackViewItems = [matchDate, matchTime]
-        dateStackViewItems.forEach { dateStackView.addArrangedSubview($0) }
-        
-        [noMatchLabel, matchType, round, stadium].forEach { $0.textColor = .gray }
-        noMatchLabel.textAlignment = .center
+        if viewModel.todayMatch.isEmpty {
+            let viewItems = [character, noMatchLabel]
+            viewItems.forEach { view.addSubview($0) }
+        } else {
+            let viewItems = [matchStackView, stadium, dateStackView, matchTypeStackView, playerTitle, playerCollectionView, manUtdPlayerLabel, enemyPlayerLabel, enemyPlayerCollectionView]
+            viewItems.forEach { view.addSubview($0) }
+            
+            let matchStackItems = [manLogoStackView, vsLabel, enemyLogoStackView]
+            matchStackItems.forEach { matchStackView.addArrangedSubview($0) }
+            
+            let matchTypeStackViewItems = [matchType, round]
+            matchTypeStackViewItems.forEach { matchTypeStackView.addArrangedSubview($0) }
+            
+            let dateStackViewItems = [matchDate, matchTime]
+            dateStackViewItems.forEach { dateStackView.addArrangedSubview($0) }
+            
+            [noMatchLabel, matchType, round, stadium].forEach { $0.textColor = .gray }
+            noMatchLabel.textAlignment = .center
+        }
     }
     
     private func setAutoLayout() {
-        if viewModel.todayMatch.first?.enemy != nil {
+        if viewModel.todayMatch.isEmpty {
+            character.snp.makeConstraints {
+                $0.centerX.equalTo(view.snp.centerX)
+                $0.centerY.equalTo(view.snp.centerY)
+                $0.width.height.equalTo(200)
+            }
+            
+            noMatchLabel.snp.makeConstraints {
+                $0.top.equalTo(character.snp.bottom).offset(50)
+                $0.centerX.equalTo(character.snp.centerX)
+            }
+        } else {
             let safeArea = view.safeAreaLayoutGuide
             matchStackView.snp.makeConstraints {
                 $0.top.equalTo(safeArea.snp.top).offset(20)
@@ -131,27 +148,14 @@ extension TodayMatchView {
                 $0.trailing.equalToSuperview()
                 $0.height.equalToSuperview().multipliedBy(0.1)
             }
-        } else {
-            let viewItems = [character, noMatchLabel]
-            viewItems.forEach { view.addSubview($0) }
-            
-            character.snp.makeConstraints {
-                $0.centerX.equalTo(view.snp.centerX)
-                $0.centerY.equalTo(view.snp.centerY)
-                $0.width.height.equalTo(200)
-            }
-            
-            noMatchLabel.snp.makeConstraints {
-                $0.top.equalTo(character.snp.bottom).offset(50)
-                $0.centerX.equalTo(character.snp.centerX)
-            }
         }
     }
     
-    private func createLabel(size: CGFloat, weight: UIFont.Weight, text: String ) -> UILabel {
+    private func createLabel(size: CGFloat, weight: UIFont.Weight, text: String, color: UIColor = UIColor.black ) -> UILabel {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: size, weight: weight)
         label.text = text
+        label.textColor = color
         return label
     }
     
@@ -168,16 +172,7 @@ extension TodayMatchView {
         return collectionView
     }
     
-    private func createCharacterImage() -> UIImageView {
-        let image = UIImageView()
-        if viewModel.todayMatch.first?.enemy != nil {
-            image.image = UIImage(named: "todayMatchCH")
-        }
-        image.contentMode = .scaleAspectFit
-        return image
-    }
-    
-    private func createLogoImage(url: String) -> UIImageView {
+    private func createImage(url: String) -> UIImageView {
         let image = UIImageView()
         image.image = UIImage(named: url)
         image.contentMode = .scaleAspectFit
@@ -189,7 +184,8 @@ extension TodayMatchView {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 10
-        let logoImageView = createLogoImage(url: teamName)
+        
+        let logoImageView = createImage(url: teamName)
         let teamLabel = createLabel(size: 24, weight: .semibold, text: teamName)
         logoImageView.snp.makeConstraints {
             $0.width.height.equalTo(70)
@@ -208,14 +204,14 @@ extension TodayMatchView {
         let config = UICollectionViewCompositionalLayoutConfiguration()
         config.interSectionSpacing = 20
         
-        return UICollectionViewCompositionalLayout(sectionProvider: {[weak self] sectionIndex, _ in
+        return UICollectionViewCompositionalLayout(sectionProvider: { sectionIndex, _ in
             switch sectionIndex {
             case 0:
-                self?.createPlayerListSection()
+                return self.createPlayerListSection()
             case 1:
-                self?.createPlayerListSection()
+                return self.createPlayerListSection()
             default:
-                nil
+                return nil
             }
         }, configuration: config)
     }
