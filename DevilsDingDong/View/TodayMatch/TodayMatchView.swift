@@ -147,6 +147,7 @@ extension TodayMatchView {
                 $0.leading.equalTo(enemyPlayerLabel.snp.leading)
                 $0.trailing.equalToSuperview()
                 $0.height.equalToSuperview().multipliedBy(0.1)
+                $0.bottom.equalTo(safeArea.snp.bottom)
             }
         }
     }
@@ -221,7 +222,7 @@ extension TodayMatchView {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = .init(top: 5, leading: 5, bottom: 5, trailing: 5)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/2), heightDimension: .fractionalHeight(1))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/2.2), heightDimension: .fractionalHeight(1))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
