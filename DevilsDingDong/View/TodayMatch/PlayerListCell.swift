@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class PlayerListCell: UICollectionViewCell {
     static let id = "PlayerListCell"
@@ -17,23 +18,15 @@ class PlayerListCell: UICollectionViewCell {
         view.spacing = 10
         return view
     }()
-    private lazy var playerPosition: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 14)
-        return label
-    }()
-    private lazy var playerName: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 14)
-        return label
-    }()
+    private lazy var playerPosition = createLabel()
+    private lazy var playerName = createLabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
+        setAutoLayout()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -45,17 +38,23 @@ extension PlayerListCell {
         
         playerStackView.addArrangedSubview(playerPosition)
         playerStackView.addArrangedSubview(playerName)
-        
-        setAutoLayout()
     }
     
     private func setAutoLayout() {
-        NSLayoutConstraint.activate([
-            playerName.widthAnchor.constraint(equalToConstant: 100),
-            playerStackView.topAnchor.constraint(equalTo: topAnchor),
-            playerStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            playerStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        playerName.snp.makeConstraints {
+            $0.width.equalTo(100)
+        }
+        
+        playerStackView.snp.makeConstraints {
+            $0.top.leading.bottom.equalToSuperview()
+        }
+    }
+    
+    private func createLabel() -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
     }
     
     func configure(position: String, name: String) {

@@ -1,18 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 48 41" version="1.1">
+<svg width="2300" height="2000" viewBox="0 0 2300 2000" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_290_1730)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0 1002.72L577.442 2.71875H1722.79L2300 998.245L1727.21 2002.72H575.116L0 1002.72Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M595.814 48.8672H1711.86L2260 1004.37L1705.81 1962.92H603.488L46.2791 1004.37L595.814 48.8672Z" fill="#F89836"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1022.33 1888.99L859.07 1357.56L354.186 1056.64L886.744 128.69L1040.7 564.998H1326.98L1465.58 125.629L1967.44 1087.25L1445.58 1357.56L1293.26 1890.64L1022.33 1888.99Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M816.744 1170.13V929.727L1038.37 1170.13H816.744Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1499.77 1168.48V928.078L1278.14 1168.48H1499.77Z" fill="white"/>
+</g>
 <defs>
-<clipPath id="clip1">
-  <path d="M 0 0 L 48 0 L 48 40.976562 L 0 40.976562 Z M 0 0 "/>
+<clipPath id="clip0_290_1730">
+<rect width="2300" height="2000" fill="white"/>
 </clipPath>
 </defs>
-<g id="surface1">
-<g clip-path="url(#clip1)" clip-rule="nonzero">
-<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 11.945312 40.976562 L 35.992188 40.976562 L 48.015625 20.488281 L 35.992188 0.078125 L 12.023438 0 L 0 20.488281 L 11.945312 40.976562 "/>
-</g>
-<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,100%,100%);fill-opacity:1;" d="M 4.652344 20.488281 L 14.351562 3.898438 L 33.589844 3.898438 L 43.285156 20.414062 L 33.664062 37.078125 L 14.3125 37.078125 L 4.652344 20.488281 "/>
-<path style=" stroke:none;fill-rule:evenodd;fill:rgb(97.254902%,59.607843%,21.176471%);fill-opacity:1;" d="M 14.660156 4.664062 L 33.40625 4.664062 L 42.613281 20.515625 L 33.304688 36.417969 L 14.789062 36.417969 L 5.429688 20.515625 L 14.660156 4.664062 "/>
-<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 21.824219 35.191406 L 19.082031 26.375 L 10.601562 21.382812 L 19.546875 5.988281 L 22.132812 13.226562 L 26.941406 13.226562 L 29.269531 5.9375 L 37.699219 21.890625 L 28.933594 26.375 L 26.375 35.21875 L 21.824219 35.191406 "/>
-<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,100%,100%);fill-opacity:1;" d="M 18.371094 23.265625 L 18.371094 19.277344 L 22.09375 23.265625 L 18.371094 23.265625 "/>
-<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,100%,100%);fill-opacity:1;" d="M 29.84375 23.238281 L 29.84375 19.25 L 26.121094 23.238281 L 29.84375 23.238281 "/>
-</g>
 </svg>
