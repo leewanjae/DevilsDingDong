@@ -86,6 +86,9 @@ extension TodayMatchView {
     }
     
     private func setAutoLayout() {
+        let isIPhoneSE1 = UIScreen.main.bounds.size == CGSize(width: 320, height: 568)
+        let isIPhoneSE2 = UIScreen.main.bounds.size == CGSize(width: 375, height: 667)
+        
         if viewModel.todayMatch.isEmpty {
             character.snp.makeConstraints {
                 $0.centerX.equalTo(view.snp.centerX)
@@ -147,6 +150,9 @@ extension TodayMatchView {
                 $0.leading.equalTo(enemyPlayerLabel.snp.leading)
                 $0.trailing.equalToSuperview()
                 $0.height.equalToSuperview().multipliedBy(0.1)
+                if isIPhoneSE1 || isIPhoneSE2 {
+                    $0.bottom.equalTo(safeArea.snp.bottom)
+                }
             }
         }
     }
