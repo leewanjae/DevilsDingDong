@@ -147,7 +147,6 @@ extension TodayMatchView {
                 $0.leading.equalTo(enemyPlayerLabel.snp.leading)
                 $0.trailing.equalToSuperview()
                 $0.height.equalToSuperview().multipliedBy(0.1)
-                $0.bottom.equalTo(safeArea.snp.bottom)
             }
         }
     }

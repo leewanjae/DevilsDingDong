@@ -114,20 +114,36 @@ extension MatchInfoCell {
             $0.centerX.equalTo(matchInfoContainer.snp.centerX)
             $0.centerY.equalTo(matchInfoContainer.snp.centerY)
         }
-
-        manuStackView.snp.makeConstraints {
-            $0.trailing.equalTo(state.snp.leading).offset(-20)
-            $0.leading.equalTo(stadium.snp.trailing).offset(10)
-            $0.width.equalTo(50)
-            $0.bottom.equalTo(matchInfoContainer.snp.bottom).offset(-20)
-            $0.top.equalTo(matchDateContainer.snp.bottom).offset(20)
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            manuStackView.snp.makeConstraints {
+                $0.trailing.equalTo(state.snp.leading).offset(-20)
+                $0.width.equalTo(50)
+                $0.bottom.equalTo(matchInfoContainer.snp.bottom).offset(-20)
+                $0.top.equalTo(matchDateContainer.snp.bottom).offset(20)
+            }
+        } else {
+            manuStackView.snp.makeConstraints {
+                $0.trailing.equalTo(state.snp.leading).offset(-50)
+                $0.width.equalTo(80)
+                $0.bottom.equalTo(matchInfoContainer.snp.bottom).offset(-20)
+                $0.top.equalTo(matchDateContainer.snp.bottom).offset(20)
+            }
         }
-
-        enemyStackView.snp.makeConstraints {
-            $0.leading.equalTo(state.snp.trailing).offset(20)
-            $0.width.equalTo(50)
-            $0.top.equalTo(manuStackView.snp.top)
-            $0.bottom.equalTo(manuStackView.snp.bottom)
+        
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            enemyStackView.snp.makeConstraints {
+                $0.leading.equalTo(state.snp.trailing).offset(50)
+                $0.width.equalTo(50)
+                $0.top.equalTo(manuStackView.snp.top)
+                $0.bottom.equalTo(manuStackView.snp.bottom)
+            }
+        } else {
+            enemyStackView.snp.makeConstraints {
+                $0.leading.equalTo(state.snp.trailing).offset(50)
+                $0.width.equalTo(80)
+                $0.top.equalTo(manuStackView.snp.top)
+                $0.bottom.equalTo(manuStackView.snp.bottom)
+            }
         }
 
         round.snp.makeConstraints {

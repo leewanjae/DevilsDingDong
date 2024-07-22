@@ -117,7 +117,11 @@ extension MatchInfoView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 170
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return 170
+        } else {
+            return 250
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
