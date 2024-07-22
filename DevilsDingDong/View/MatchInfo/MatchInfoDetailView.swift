@@ -141,18 +141,31 @@ extension MatchInfoDetailView {
             $0.leading.equalTo(resultTitleLabel.snp.leading)
         }
         
-        highlightContainerView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.height.equalTo(view.snp.height).multipliedBy(0.26)
-            $0.width.equalToSuperview().offset(-30)
-            $0.top.equalTo(highlightTitleLabel.snp.bottom).offset(20)
-        }
-        
-        highlightView.snp.makeConstraints {
-            $0.edges.equalTo(highlightContainerView)
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            highlightContainerView.snp.makeConstraints {
+                $0.centerX.equalToSuperview()
+                $0.height.equalTo(view.snp.height).multipliedBy(0.26)
+                $0.width.equalToSuperview().offset(-30)
+                $0.top.equalTo(highlightTitleLabel.snp.bottom).offset(20)
+            }
+            
+            highlightView.snp.makeConstraints {
+                $0.edges.equalTo(highlightContainerView)
+            }
+        } else {
+            highlightContainerView.snp.makeConstraints {
+                $0.centerX.equalToSuperview()
+                $0.width.equalToSuperview().offset(-30)
+                $0.height.equalToSuperview().multipliedBy(0.4) // 부모 뷰 높이의 50%
+                $0.top.equalTo(highlightTitleLabel.snp.bottom).offset(20)
+            }
+            
+            highlightView.snp.makeConstraints {
+                $0.edges.equalTo(highlightContainerView)
+            }
         }
     }
-    
+
     private func createLabel(text: String, fontSize: CGFloat = 14, fontWeight: UIFont.Weight = .regular, textColor: UIColor = .black, textAlign: NSTextAlignment = .left) -> UILabel {
         let label = UILabel()
         label.text = text
