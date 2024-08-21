@@ -53,6 +53,9 @@
 		CC42EEF32C2A787B0048D978 /* PlayerListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC42EEF22C2A787B0048D978 /* PlayerListCell.swift */; };
 		CC4D32292C75BDEE00A52D51 /* TotalRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D32282C75BDEE00A52D51 /* TotalRecordViewController.swift */; };
 		CC4D322C2C75FEFB00A52D51 /* TodayMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D322B2C75FEFB00A52D51 /* TodayMatchViewController.swift */; };
+		CC4D322E2C76047000A52D51 /* NoMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D322D2C76047000A52D51 /* NoMatchView.swift */; };
+		CC4D32302C7605C700A52D51 /* MatchStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D322F2C7605C700A52D51 /* MatchStackView.swift */; };
+		CC4D32342C76099700A52D51 /* TodayMatchInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D32332C76099700A52D51 /* TodayMatchInfoView.swift */; };
 		CC4FBC652BEEF68800B23124 /* MatchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4FBC642BEEF68800B23124 /* MatchInfo.swift */; };
 		CC80EE052C4D22E500AF1274 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC80EE042C4D22E500AF1274 /* GoogleService-Info.plist */; };
 		CC84E0CF2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */; };
@@ -82,6 +85,9 @@
 		CC42EEF22C2A787B0048D978 /* PlayerListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerListCell.swift; sourceTree = "<group>"; };
 		CC4D32282C75BDEE00A52D51 /* TotalRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRecordViewController.swift; sourceTree = "<group>"; };
 		CC4D322B2C75FEFB00A52D51 /* TodayMatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayMatchViewController.swift; sourceTree = "<group>"; };
+		CC4D322D2C76047000A52D51 /* NoMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoMatchView.swift; sourceTree = "<group>"; };
+		CC4D322F2C7605C700A52D51 /* MatchStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchStackView.swift; sourceTree = "<group>"; };
+		CC4D32332C76099700A52D51 /* TodayMatchInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayMatchInfoView.swift; sourceTree = "<group>"; };
 		CC4FBC642BEEF68800B23124 /* MatchInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfo.swift; sourceTree = "<group>"; };
 		CC80EE042C4D22E500AF1274 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoDetailView.swift; sourceTree = "<group>"; };
@@ -236,6 +242,9 @@
 		CC4D322A2C75FE9100A52D51 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				CC4D322D2C76047000A52D51 /* NoMatchView.swift */,
+				CC4D322F2C7605C700A52D51 /* MatchStackView.swift */,
+				CC4D32332C76099700A52D51 /* TodayMatchInfoView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -388,6 +397,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC4D32342C76099700A52D51 /* TodayMatchInfoView.swift in Sources */,
 				CCD931012C183395009A6D42 /* TodayMatchView.swift in Sources */,
 				CC2EDA3B2C38400A00FDBD08 /* Score.swift in Sources */,
 				CC2EDA402C38584C00FDBD08 /* TotalRecordCell.swift in Sources */,
@@ -401,9 +411,11 @@
 				CC4FBC652BEEF68800B23124 /* MatchInfo.swift in Sources */,
 				CC84E0CF2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift in Sources */,
 				CC42EEF32C2A787B0048D978 /* PlayerListCell.swift in Sources */,
+				CC4D32302C7605C700A52D51 /* MatchStackView.swift in Sources */,
 				CC2EDA3E2C3844DD00FDBD08 /* TotalRecordViewModel.swift in Sources */,
 				CCD931032C1833A6009A6D42 /* TotalRecordView.swift in Sources */,
 				CC27E4482BF0DDA200DC8ACF /* MatchInfoCell.swift in Sources */,
+				CC4D322E2C76047000A52D51 /* NoMatchView.swift in Sources */,
 				CC3B8EA62C0982F9005A48D6 /* MonthNavigationView.swift in Sources */,
 				CC02487D2C39846C00F0E8E1 /* SeedDB.swift in Sources */,
 				CC4D32292C75BDEE00A52D51 /* TotalRecordViewController.swift in Sources */,

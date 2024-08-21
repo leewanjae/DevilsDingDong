@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let vc1 = UINavigationController(rootViewController: MatchInfoView())
-        let vc2 = UINavigationController(rootViewController: TodayMatchView())
+        let vc2 = UINavigationController(rootViewController: TodayMatchViewController())
         let vc3 = UINavigationController(rootViewController: TotalRecordViewController())
         
         vc1.tabBarItem = UITabBarItem(title: "경기일정", image: UIImage(systemName: "calendar.circle"), selectedImage: UIImage(systemName: "calendar.circle.fill"))
