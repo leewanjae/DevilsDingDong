@@ -18,6 +18,7 @@ class TotalRecordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        registerCell()
         bindViewModel()
     }
 }
@@ -30,6 +31,10 @@ extension TotalRecordViewController {
         
         totalRecordView.collectionView.dataSource = self
         totalRecordView.collectionView.delegate = self
+    }
+    
+    private func registerCell() {
+        totalRecordView.collectionView.register(TotalRecordCell.self, forCellWithReuseIdentifier: TotalRecordCell.id)
     }
     
     private func bindViewModel() {

@@ -28,7 +28,6 @@ extension TotalRecordView {
     private func setUI() {
         backgroundColor = .bgColor
         
-        collectionView.register(TotalRecordCell.self, forCellWithReuseIdentifier: TotalRecordCell.id)
         collectionView.backgroundColor = .white
         collectionView.layer.cornerRadius = 12
         collectionView.showsVerticalScrollIndicator = false
