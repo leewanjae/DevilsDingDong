@@ -35,9 +35,6 @@ class TodayMatchView: UIView {
     lazy var playerCollectionView = createCollectionView()
     lazy var enemyPlayerCollectionView = createCollectionView()
 
-    var playerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
-    var enemyPlayerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
-
     init(viewModel: MatchInfoViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)

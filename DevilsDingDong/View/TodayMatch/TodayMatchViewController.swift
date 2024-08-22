@@ -10,7 +10,9 @@ import UIKit
 class TodayMatchViewController: UIViewController {
     private let viewModel = MatchInfoViewModel()
     private var todayMatchView: TodayMatchView?
-
+    var playerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
+    var enemyPlayerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
+    
     override func loadView() {
         todayMatchView = TodayMatchView(viewModel: viewModel)
         self.view = todayMatchView
@@ -43,7 +45,7 @@ class TodayMatchViewController: UIViewController {
     private func setDataSource() {
         guard let todayMatchView = todayMatchView else { return }
 
-        todayMatchView.playerDataSource = UICollectionViewDiffableDataSource<Section, Player>(collectionView: todayMatchView.playerCollectionView) { collectionView, indexPath, player in
+        playerDataSource = UICollectionViewDiffableDataSource<Section, Player>(collectionView: todayMatchView.playerCollectionView) { collectionView, indexPath, player in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlayerListCell.id, for: indexPath) as? PlayerListCell else {
                 return UICollectionViewCell()
             }
@@ -51,7 +53,7 @@ class TodayMatchViewController: UIViewController {
             return cell
         }
 
-        todayMatchView.enemyPlayerDataSource = UICollectionViewDiffableDataSource<Section, Player>(collectionView: todayMatchView.enemyPlayerCollectionView) { collectionView, indexPath, player in
+        enemyPlayerDataSource = UICollectionViewDiffableDataSource<Section, Player>(collectionView: todayMatchView.enemyPlayerCollectionView) { collectionView, indexPath, player in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlayerListCell.id, for: indexPath) as? PlayerListCell else {
                 return UICollectionViewCell()
             }
@@ -69,7 +71,7 @@ class TodayMatchViewController: UIViewController {
         if let players = viewModel.todayMatch.first?.player {
             snapshot.appendItems(players, toSection: playerListSection)
         }
-        todayMatchView.playerDataSource?.apply(snapshot, animatingDifferences: true)
+        playerDataSource?.apply(snapshot, animatingDifferences: true)
 
         var enemySnapshot = NSDiffableDataSourceSnapshot<Section, Player>()
         let enemyPlayerListSection = Section(id: "EnemyPlayerList")
@@ -77,6 +79,6 @@ class TodayMatchViewController: UIViewController {
         if let players = viewModel.todayMatch.first?.enemyPlayer {
             enemySnapshot.appendItems(players, toSection: enemyPlayerListSection)
         }
-        todayMatchView.enemyPlayerDataSource?.apply(enemySnapshot, animatingDifferences: true)
+        enemyPlayerDataSource?.apply(enemySnapshot, animatingDifferences: true)
     }
 }
