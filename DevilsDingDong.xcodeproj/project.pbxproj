@@ -56,6 +56,7 @@
 		CC4D322E2C76047000A52D51 /* NoMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D322D2C76047000A52D51 /* NoMatchView.swift */; };
 		CC4D32302C7605C700A52D51 /* MatchStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D322F2C7605C700A52D51 /* MatchStackView.swift */; };
 		CC4D32342C76099700A52D51 /* TodayMatchInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D32332C76099700A52D51 /* TodayMatchInfoView.swift */; };
+		CC4D32372C761E4100A52D51 /* MatchInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D32362C761E4100A52D51 /* MatchInfoViewController.swift */; };
 		CC4FBC652BEEF68800B23124 /* MatchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4FBC642BEEF68800B23124 /* MatchInfo.swift */; };
 		CC80EE052C4D22E500AF1274 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC80EE042C4D22E500AF1274 /* GoogleService-Info.plist */; };
 		CC84E0CF2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */; };
@@ -88,6 +89,7 @@
 		CC4D322D2C76047000A52D51 /* NoMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoMatchView.swift; sourceTree = "<group>"; };
 		CC4D322F2C7605C700A52D51 /* MatchStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchStackView.swift; sourceTree = "<group>"; };
 		CC4D32332C76099700A52D51 /* TodayMatchInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayMatchInfoView.swift; sourceTree = "<group>"; };
+		CC4D32362C761E4100A52D51 /* MatchInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoViewController.swift; sourceTree = "<group>"; };
 		CC4FBC642BEEF68800B23124 /* MatchInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfo.swift; sourceTree = "<group>"; };
 		CC80EE042C4D22E500AF1274 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoDetailView.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				CCD930FF2C18333F009A6D42 /* TotalRecord */,
 				CCD930FE2C18331E009A6D42 /* TodayMatch */,
 				CCD930FD2C183296009A6D42 /* MatchInfo */,
+				CC4D32352C761BCE00A52D51 /* MatchInfoDetail */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -249,6 +252,14 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
+		CC4D32352C761BCE00A52D51 /* MatchInfoDetail */ = {
+			isa = PBXGroup;
+			children = (
+				CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */,
+			);
+			path = MatchInfoDetail;
+			sourceTree = "<group>";
+		};
 		CC4FBC632BEEF67800B23124 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,8 +275,8 @@
 			children = (
 				CC3620E12C0D7A0F005ECE60 /* Component */,
 				CC37807C2BE9E95A009313EA /* MatchInfoView.swift */,
-				CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */,
 				CC27E4472BF0DDA200DC8ACF /* MatchInfoCell.swift */,
+				CC4D32362C761E4100A52D51 /* MatchInfoViewController.swift */,
 			);
 			path = MatchInfo;
 			sourceTree = "<group>";
@@ -413,6 +424,7 @@
 				CC42EEF32C2A787B0048D978 /* PlayerListCell.swift in Sources */,
 				CC4D32302C7605C700A52D51 /* MatchStackView.swift in Sources */,
 				CC2EDA3E2C3844DD00FDBD08 /* TotalRecordViewModel.swift in Sources */,
+				CC4D32372C761E4100A52D51 /* MatchInfoViewController.swift in Sources */,
 				CCD931032C1833A6009A6D42 /* TotalRecordView.swift in Sources */,
 				CC27E4482BF0DDA200DC8ACF /* MatchInfoCell.swift in Sources */,
 				CC4D322E2C76047000A52D51 /* NoMatchView.swift in Sources */,

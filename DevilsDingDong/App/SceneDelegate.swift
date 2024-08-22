@@ -14,7 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let vc1 = UINavigationController(rootViewController: MatchInfoView())
+        let vc1 = UINavigationController(rootViewController: MatchInfoViewController())
         let vc2 = UINavigationController(rootViewController: TodayMatchViewController())
         let vc3 = UINavigationController(rootViewController: TotalRecordViewController())
         
