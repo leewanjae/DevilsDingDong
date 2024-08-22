@@ -32,11 +32,11 @@ class TodayMatchView: UIView {
     private lazy var manUtdPlayerLabel = UILabel()
     private lazy var enemyPlayerLabel = UILabel()
 
-    private lazy var playerCollectionView = createCollectionView()
-    private lazy var enemyPlayerCollectionView = createCollectionView()
+    lazy var playerCollectionView = createCollectionView()
+    lazy var enemyPlayerCollectionView = createCollectionView()
 
-    private var playerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
-    private var enemyPlayerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
+    var playerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
+    var enemyPlayerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
 
     init(viewModel: MatchInfoViewModel) {
         self.viewModel = viewModel
@@ -118,54 +118,9 @@ class TodayMatchView: UIView {
             }
         }
     }
-}
-
-extension TodayMatchView {
-    func setupCollectionViews() {
-        playerCollectionView.register(PlayerListCell.self, forCellWithReuseIdentifier: PlayerListCell.id)
-        enemyPlayerCollectionView.register(PlayerListCell.self, forCellWithReuseIdentifier: PlayerListCell.id)
-        playerCollectionView.setCollectionViewLayout(createLayout(), animated: true)
-        enemyPlayerCollectionView.setCollectionViewLayout(createLayout(), animated: true)
-    }
-
-    func setDataSource() {
-        playerDataSource = UICollectionViewDiffableDataSource<Section, Player>(collectionView: playerCollectionView) { collectionView, indexPath, player in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlayerListCell.id, for: indexPath) as? PlayerListCell else {
-                return UICollectionViewCell()
-            }
-            cell.configure(position: player.position, name: player.name)
-            return cell
-        }
-
-        enemyPlayerDataSource = UICollectionViewDiffableDataSource<Section, Player>(collectionView: enemyPlayerCollectionView) { collectionView, indexPath, player in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlayerListCell.id, for: indexPath) as? PlayerListCell else {
-                return UICollectionViewCell()
-            }
-            cell.configure(position: player.position, name: player.name)
-            return cell
-        }
-    }
-
-    func setSnapShot() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Player>()
-        let playerListSection = Section(id: "PlayerList")
-        snapshot.appendSections([playerListSection])
-        if let players = viewModel.todayMatch.first?.player {
-            snapshot.appendItems(players, toSection: playerListSection)
-        }
-        playerDataSource?.apply(snapshot, animatingDifferences: true)
-
-        var enemySnapshot = NSDiffableDataSourceSnapshot<Section, Player>()
-        let enemyPlayerListSection = Section(id: "EnemyPlayerList")
-        enemySnapshot.appendSections([enemyPlayerListSection])
-        if let players = viewModel.todayMatch.first?.enemyPlayer {
-            enemySnapshot.appendItems(players, toSection: enemyPlayerListSection)
-        }
-        enemyPlayerDataSource?.apply(enemySnapshot, animatingDifferences: true)
-    }
-
-    private func createCollectionView() -> UICollectionView {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+    
+    func createCollectionView() -> UICollectionView {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.backgroundColor = .clear
         return collectionView
     }
@@ -198,9 +153,7 @@ extension TodayMatchView {
         section.orthogonalScrollingBehavior = .groupPaging
         return section
     }
-}
-
-extension TodayMatchView {
+    
     private func createLabel(size: CGFloat, weight: UIFont.Weight, text: String) -> UILabel {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: size, weight: weight)

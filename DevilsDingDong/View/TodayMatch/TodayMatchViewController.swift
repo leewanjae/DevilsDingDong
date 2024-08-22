@@ -20,9 +20,9 @@ class TodayMatchViewController: UIViewController {
         super.viewDidLoad()
 
         setupNavigationBar()
-        todayMatchView?.setupCollectionViews()
-        todayMatchView?.setDataSource()
-        todayMatchView?.setSnapShot()
+        setupCollectionViews()
+        setDataSource()
+        setSnapShot()
 
         if let notiData = viewModel.todayMatch.first {
             NotificationManger.shared.setNotification(enemy: notiData.enemy, date: notiData.date, time: notiData.time)
@@ -33,5 +33,50 @@ class TodayMatchViewController: UIViewController {
         navigationItem.title = "오늘의 경기"
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
+    }
+
+    private func setupCollectionViews() {
+        todayMatchView?.playerCollectionView.register(PlayerListCell.self, forCellWithReuseIdentifier: PlayerListCell.id)
+        todayMatchView?.enemyPlayerCollectionView.register(PlayerListCell.self, forCellWithReuseIdentifier: PlayerListCell.id)
+    }
+
+    private func setDataSource() {
+        guard let todayMatchView = todayMatchView else { return }
+
+        todayMatchView.playerDataSource = UICollectionViewDiffableDataSource<Section, Player>(collectionView: todayMatchView.playerCollectionView) { collectionView, indexPath, player in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlayerListCell.id, for: indexPath) as? PlayerListCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(position: player.position, name: player.name)
+            return cell
+        }
+
+        todayMatchView.enemyPlayerDataSource = UICollectionViewDiffableDataSource<Section, Player>(collectionView: todayMatchView.enemyPlayerCollectionView) { collectionView, indexPath, player in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlayerListCell.id, for: indexPath) as? PlayerListCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(position: player.position, name: player.name)
+            return cell
+        }
+    }
+
+    private func setSnapShot() {
+        guard let todayMatchView = todayMatchView else { return }
+
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Player>()
+        let playerListSection = Section(id: "PlayerList")
+        snapshot.appendSections([playerListSection])
+        if let players = viewModel.todayMatch.first?.player {
+            snapshot.appendItems(players, toSection: playerListSection)
+        }
+        todayMatchView.playerDataSource?.apply(snapshot, animatingDifferences: true)
+
+        var enemySnapshot = NSDiffableDataSourceSnapshot<Section, Player>()
+        let enemyPlayerListSection = Section(id: "EnemyPlayerList")
+        enemySnapshot.appendSections([enemyPlayerListSection])
+        if let players = viewModel.todayMatch.first?.enemyPlayer {
+            enemySnapshot.appendItems(players, toSection: enemyPlayerListSection)
+        }
+        todayMatchView.enemyPlayerDataSource?.apply(enemySnapshot, animatingDifferences: true)
     }
 }
