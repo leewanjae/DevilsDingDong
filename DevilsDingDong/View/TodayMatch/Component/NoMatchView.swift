@@ -31,13 +31,13 @@ class NoMatchView: UIView {
     
     private func setAutoLayout() {
         characterImageView.snp.makeConstraints {
-            $0.center.equalToSuperview()
+            $0.centerX.centerY.equalToSuperview()
             $0.width.height.equalTo(200)
         }
         
         noMatchLabel.snp.makeConstraints {
             $0.top.equalTo(characterImageView.snp.bottom).offset(50)
-            $0.centerX.equalToSuperview()
+            $0.centerX.equalTo(characterImageView.snp.centerX)
         }
     }
 }

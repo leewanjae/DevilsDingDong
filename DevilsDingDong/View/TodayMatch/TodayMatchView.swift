@@ -75,7 +75,8 @@ class TodayMatchView: UIView {
 
         if viewModel.todayMatch.isEmpty {
             noMatchView.snp.makeConstraints {
-                $0.edges.equalTo(safeArea)
+                $0.centerX.centerY.equalToSuperview()
+                $0.width.height.equalTo(200)
             }
         } else {
             matchStackView.snp.makeConstraints {
