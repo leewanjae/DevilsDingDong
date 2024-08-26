@@ -69,7 +69,7 @@ extension MatchInfoViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let matchInfo = viewModel.filteredMatches[indexPath.row]
         if matchInfo.finished {
-            navigationController?.pushViewController(MatchInfoDetailView(matchInfo: matchInfo), animated: true)
+            navigationController?.pushViewController(MatchInfoDetailViewController(matchInfo: matchInfo), animated: true)
         }
     }
 }
