@@ -9,26 +9,24 @@ import UIKit
 import SnapKit
 
 class MatchResultView: UIView {
-    private var matchInfo: MatchInfo
-    private lazy var scrollView = UIScrollView()
-    private lazy var resultTitleLabel = UILabel()
-    private lazy var resultContainer = UIView()
-    private lazy var matchType = UILabel()
-    private lazy var matchDate = UILabel()
+    private var scrollView = UIScrollView()
+    private var resultTitleLabel = UILabel()
+    private var resultContainer = UIView()
+    var matchType = UILabel()
+    var matchDate = UILabel()
     
-    private lazy var scoreBox = UIView()
-    private lazy var score = UILabel()
+    private var scoreBox = UIView()
+    var score = UILabel()
     
-    private lazy var manUtdStack = UIStackView()
-    private lazy var enemyStack = UIStackView()
+    var manUtdStack = UIStackView()
+    var enemyStack = UIStackView()
 
-    private lazy var separatorHBar = UIView()
-    private lazy var separatorVBar = UIView()
-    private lazy var manUtdGoalsView = UIView()
-    private lazy var enemyGoalsView = UIView()
+    private var separatorHBar = UIView()
+    private var separatorVBar = UIView()
+    var manUtdGoalsView = UIView()
+    var enemyGoalsView = UIView()
     
-    init(matchInfo: MatchInfo) {
-        self.matchInfo = matchInfo
+    init() {
         super.init(frame: .zero)
         setUI()
         setAutoLayout()
@@ -42,16 +40,16 @@ class MatchResultView: UIView {
         scrollView = createScrollView()
         resultTitleLabel = createLabel(text: "경기결과", fontSize: 20, fontWeight: .bold)
         resultContainer = createContainerView()
-        matchType = createLabel(text: matchInfo.matchType)
-        matchDate = createLabel(text: matchInfo.date)
+        matchType = createLabel(text: "")
+        matchDate = createLabel(text: "")
         scoreBox = createContainerView()
-        score = createLabel(text: matchInfo.score ?? "", fontSize: 30, fontWeight: .bold)
+        score = createLabel(text: "", fontSize: 30, fontWeight: .bold)
         manUtdStack = createTeamStackView(teamName: "맨유", logoName: "맨유", fontSize: 24)
-        enemyStack = createTeamStackView(teamName: matchInfo.enemy, logoName: matchInfo.enemy, fontSize: 24)
+        enemyStack = createTeamStackView(teamName: "", logoName: "", fontSize: 24)
         separatorHBar = createSeparatorView(color: .darkGray.withAlphaComponent(0.5), borderWidth: 1)
         separatorVBar = createSeparatorView(color: .darkGray.withAlphaComponent(0.3), borderWidth: 1)
-        manUtdGoalsView = createGoalsView(goals: matchInfo.manUtdGoal, textAlign: .right)
-        enemyGoalsView = createGoalsView(goals: matchInfo.enemyGoal, textAlign: .left)
+        manUtdGoalsView = createGoalsView(goals: nil, textAlign: .right)
+        enemyGoalsView = createGoalsView(goals: nil, textAlign: .left)
         
         
         addSubview(scrollView)
@@ -180,7 +178,7 @@ extension MatchResultView {
         return view
     }
     
-    private func createGoalsView(goals: [String]?, textAlign: NSTextAlignment = .left ) -> UIView {
+    func createGoalsView(goals: [String]?, textAlign: NSTextAlignment = .left ) -> UIView {
         let view = UIView()
         if let goals = goals?.filter({ !$0.isEmpty }) {
             var previousLabel: UILabel?
@@ -214,7 +212,7 @@ extension MatchResultView {
         return image
     }
     
-    private func createTeamStackView(teamName: String, logoName: String, fontSize: CGFloat) -> UIStackView {
+    func createTeamStackView(teamName: String, logoName: String, fontSize: CGFloat) -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center

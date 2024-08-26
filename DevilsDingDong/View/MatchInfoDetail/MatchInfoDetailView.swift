@@ -10,15 +10,12 @@ import WebKit
 import SnapKit
 
 class MatchInfoDetailView: UIView {
-    private var matchInfo: MatchInfo
-    private let matchResultView: MatchResultView
-    private lazy var highlightContainerView = UIView()
-    private lazy var highlightTitleLabel = UILabel()
-    private lazy var highlightView = WKWebView()
+    var matchResultView = MatchResultView()
+    var highlightContainerView = UIView()
+    var highlightTitleLabel = UILabel()
+    var highlightView = WKWebView()
  
-    init(matchInfo: MatchInfo) {
-        self.matchInfo = matchInfo
-        self.matchResultView = MatchResultView(matchInfo: matchInfo)
+    init() {
         super.init(frame: .zero)
         setUI()
         setAutoLayout()
@@ -36,7 +33,7 @@ extension MatchInfoDetailView {
         
         highlightContainerView = createContainerView(cornerRadius: 20)
         highlightTitleLabel = createLabel(text: "하이라이트", fontSize: 20, fontWeight: .bold)
-        highlightView = createWebView(urlString: matchInfo.highlight)
+        highlightView = createWebView(urlString: nil)
         
         addSubview(matchResultView)
         addSubview(highlightTitleLabel)
