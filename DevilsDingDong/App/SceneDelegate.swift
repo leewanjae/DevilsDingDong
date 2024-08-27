@@ -14,9 +14,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let vc1 = UINavigationController(rootViewController: MatchInfoView())
-        let vc2 = UINavigationController(rootViewController: TodayMatchView())
-        let vc3 = UINavigationController(rootViewController: TotalRecordView())
+        let vc1 = UINavigationController(rootViewController: MatchInfoViewController())
+        let vc2 = UINavigationController(rootViewController: TodayMatchViewController())
+        let vc3 = UINavigationController(rootViewController: TotalRecordViewController())
         
         vc1.tabBarItem = UITabBarItem(title: "경기일정", image: UIImage(systemName: "calendar.circle"), selectedImage: UIImage(systemName: "calendar.circle.fill"))
         vc2.tabBarItem = UITabBarItem(title: "오늘의 경기", image: UIImage(systemName: "figure.basketball") , selectedImage: UIImage(systemName: "figure.australian.football"))

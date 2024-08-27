@@ -51,6 +51,14 @@
 		CC3B8EA42C0774AB005A48D6 /* NotificationManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3B8EA32C0774AB005A48D6 /* NotificationManger.swift */; };
 		CC3B8EA62C0982F9005A48D6 /* MonthNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3B8EA52C0982F9005A48D6 /* MonthNavigationView.swift */; };
 		CC42EEF32C2A787B0048D978 /* PlayerListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC42EEF22C2A787B0048D978 /* PlayerListCell.swift */; };
+		CC4D32292C75BDEE00A52D51 /* TotalRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D32282C75BDEE00A52D51 /* TotalRecordViewController.swift */; };
+		CC4D322C2C75FEFB00A52D51 /* TodayMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D322B2C75FEFB00A52D51 /* TodayMatchViewController.swift */; };
+		CC4D322E2C76047000A52D51 /* NoMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D322D2C76047000A52D51 /* NoMatchView.swift */; };
+		CC4D32302C7605C700A52D51 /* MatchStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D322F2C7605C700A52D51 /* MatchStackView.swift */; };
+		CC4D32342C76099700A52D51 /* TodayMatchInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D32332C76099700A52D51 /* TodayMatchInfoView.swift */; };
+		CC4D32372C761E4100A52D51 /* MatchInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D32362C761E4100A52D51 /* MatchInfoViewController.swift */; };
+		CC4D323A2C77098D00A52D51 /* MatchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D32392C77098D00A52D51 /* MatchResultView.swift */; };
+		CC4D323C2C77119400A52D51 /* MatchInfoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4D323B2C77119400A52D51 /* MatchInfoDetailViewController.swift */; };
 		CC4FBC652BEEF68800B23124 /* MatchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4FBC642BEEF68800B23124 /* MatchInfo.swift */; };
 		CC80EE052C4D22E500AF1274 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC80EE042C4D22E500AF1274 /* GoogleService-Info.plist */; };
 		CC84E0CF2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */; };
@@ -78,6 +86,14 @@
 		CC3B8EA32C0774AB005A48D6 /* NotificationManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManger.swift; sourceTree = "<group>"; };
 		CC3B8EA52C0982F9005A48D6 /* MonthNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthNavigationView.swift; sourceTree = "<group>"; };
 		CC42EEF22C2A787B0048D978 /* PlayerListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerListCell.swift; sourceTree = "<group>"; };
+		CC4D32282C75BDEE00A52D51 /* TotalRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRecordViewController.swift; sourceTree = "<group>"; };
+		CC4D322B2C75FEFB00A52D51 /* TodayMatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayMatchViewController.swift; sourceTree = "<group>"; };
+		CC4D322D2C76047000A52D51 /* NoMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoMatchView.swift; sourceTree = "<group>"; };
+		CC4D322F2C7605C700A52D51 /* MatchStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchStackView.swift; sourceTree = "<group>"; };
+		CC4D32332C76099700A52D51 /* TodayMatchInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayMatchInfoView.swift; sourceTree = "<group>"; };
+		CC4D32362C761E4100A52D51 /* MatchInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoViewController.swift; sourceTree = "<group>"; };
+		CC4D32392C77098D00A52D51 /* MatchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchResultView.swift; sourceTree = "<group>"; };
+		CC4D323B2C77119400A52D51 /* MatchInfoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoDetailViewController.swift; sourceTree = "<group>"; };
 		CC4FBC642BEEF68800B23124 /* MatchInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfo.swift; sourceTree = "<group>"; };
 		CC80EE042C4D22E500AF1274 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoDetailView.swift; sourceTree = "<group>"; };
@@ -140,6 +156,7 @@
 				CCD930FF2C18333F009A6D42 /* TotalRecord */,
 				CCD930FE2C18331E009A6D42 /* TodayMatch */,
 				CCD930FD2C183296009A6D42 /* MatchInfo */,
+				CC4D32352C761BCE00A52D51 /* MatchInfoDetail */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -229,6 +246,34 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+		CC4D322A2C75FE9100A52D51 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				CC4D322D2C76047000A52D51 /* NoMatchView.swift */,
+				CC4D322F2C7605C700A52D51 /* MatchStackView.swift */,
+				CC4D32332C76099700A52D51 /* TodayMatchInfoView.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		CC4D32352C761BCE00A52D51 /* MatchInfoDetail */ = {
+			isa = PBXGroup;
+			children = (
+				CC4D32382C76F9BE00A52D51 /* Component */,
+				CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */,
+				CC4D323B2C77119400A52D51 /* MatchInfoDetailViewController.swift */,
+			);
+			path = MatchInfoDetail;
+			sourceTree = "<group>";
+		};
+		CC4D32382C76F9BE00A52D51 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				CC4D32392C77098D00A52D51 /* MatchResultView.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
 		CC4FBC632BEEF67800B23124 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,8 +289,8 @@
 			children = (
 				CC3620E12C0D7A0F005ECE60 /* Component */,
 				CC37807C2BE9E95A009313EA /* MatchInfoView.swift */,
-				CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */,
 				CC27E4472BF0DDA200DC8ACF /* MatchInfoCell.swift */,
+				CC4D32362C761E4100A52D51 /* MatchInfoViewController.swift */,
 			);
 			path = MatchInfo;
 			sourceTree = "<group>";
@@ -253,8 +298,10 @@
 		CCD930FE2C18331E009A6D42 /* TodayMatch */ = {
 			isa = PBXGroup;
 			children = (
+				CC4D322A2C75FE9100A52D51 /* Component */,
 				CCD931002C183395009A6D42 /* TodayMatchView.swift */,
 				CC42EEF22C2A787B0048D978 /* PlayerListCell.swift */,
+				CC4D322B2C75FEFB00A52D51 /* TodayMatchViewController.swift */,
 			);
 			path = TodayMatch;
 			sourceTree = "<group>";
@@ -264,6 +311,7 @@
 			children = (
 				CCD931022C1833A6009A6D42 /* TotalRecordView.swift */,
 				CC2EDA3F2C38584C00FDBD08 /* TotalRecordCell.swift */,
+				CC4D32282C75BDEE00A52D51 /* TotalRecordViewController.swift */,
 			);
 			path = TotalRecord;
 			sourceTree = "<group>";
@@ -374,23 +422,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC4D32342C76099700A52D51 /* TodayMatchInfoView.swift in Sources */,
 				CCD931012C183395009A6D42 /* TodayMatchView.swift in Sources */,
 				CC2EDA3B2C38400A00FDBD08 /* Score.swift in Sources */,
 				CC2EDA402C38584C00FDBD08 /* TotalRecordCell.swift in Sources */,
 				CC27E4462BF0D3EC00DC8ACF /* Color + Extension.swift in Sources */,
 				CC3B8EA42C0774AB005A48D6 /* NotificationManger.swift in Sources */,
 				CC3621232C10AC40005ECE60 /* FirebaseStoreManager.swift in Sources */,
+				CC4D322C2C75FEFB00A52D51 /* TodayMatchViewController.swift in Sources */,
 				CC37807D2BE9E95A009313EA /* MatchInfoView.swift in Sources */,
 				CC3780792BE9E95A009313EA /* AppDelegate.swift in Sources */,
 				CC37807B2BE9E95A009313EA /* SceneDelegate.swift in Sources */,
 				CC4FBC652BEEF68800B23124 /* MatchInfo.swift in Sources */,
+				CC4D323A2C77098D00A52D51 /* MatchResultView.swift in Sources */,
 				CC84E0CF2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift in Sources */,
 				CC42EEF32C2A787B0048D978 /* PlayerListCell.swift in Sources */,
+				CC4D32302C7605C700A52D51 /* MatchStackView.swift in Sources */,
 				CC2EDA3E2C3844DD00FDBD08 /* TotalRecordViewModel.swift in Sources */,
+				CC4D32372C761E4100A52D51 /* MatchInfoViewController.swift in Sources */,
 				CCD931032C1833A6009A6D42 /* TotalRecordView.swift in Sources */,
 				CC27E4482BF0DDA200DC8ACF /* MatchInfoCell.swift in Sources */,
+				CC4D322E2C76047000A52D51 /* NoMatchView.swift in Sources */,
 				CC3B8EA62C0982F9005A48D6 /* MonthNavigationView.swift in Sources */,
 				CC02487D2C39846C00F0E8E1 /* SeedDB.swift in Sources */,
+				CC4D32292C75BDEE00A52D51 /* TotalRecordViewController.swift in Sources */,
+				CC4D323C2C77119400A52D51 /* MatchInfoDetailViewController.swift in Sources */,
 				CC3B8EA12C073524005A48D6 /* MatchInfoViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
