@@ -63,8 +63,6 @@ class TodayMatchViewController: UIViewController {
     }
 
     private func setSnapShot() {
-        guard let todayMatchView = todayMatchView else { return }
-
         var snapshot = NSDiffableDataSourceSnapshot<Section, Player>()
         let playerListSection = Section(id: "PlayerList")
         snapshot.appendSections([playerListSection])
