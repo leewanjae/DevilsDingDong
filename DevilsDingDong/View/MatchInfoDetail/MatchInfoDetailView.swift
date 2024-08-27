@@ -45,7 +45,7 @@ extension MatchInfoDetailView {
         matchResultView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalToSuperview().multipliedBy(0.5)
+            $0.height.equalToSuperview().multipliedBy(0.4)
         }
         
         highlightTitleLabel.snp.makeConstraints {
