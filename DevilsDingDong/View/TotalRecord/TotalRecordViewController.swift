@@ -19,7 +19,12 @@ class TotalRecordViewController: UIViewController {
         super.viewDidLoad()
         setUI()
         registerCell()
-        bindViewModel()
+        
+        viewModel.viewUpdateCloser = { [weak self] in
+            DispatchQueue.main.async {
+                self?.totalRecordView.collectionView.reloadData()
+            }
+        }
     }
 }
 
@@ -35,15 +40,6 @@ extension TotalRecordViewController {
     
     private func registerCell() {
         totalRecordView.collectionView.register(TotalRecordCell.self, forCellWithReuseIdentifier: TotalRecordCell.id)
-    }
-    
-    private func bindViewModel() {
-        viewModel.fetchScoreData()
-        viewModel.viewUpdateCloser = { [weak self] in
-            DispatchQueue.main.async {
-                self?.totalRecordView.collectionView.reloadData()
-            }
-        }
     }
 }
 
