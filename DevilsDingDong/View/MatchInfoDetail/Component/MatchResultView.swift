@@ -1,66 +1,75 @@
+//
+//  MatchResultView.swift
+//  DevilsDingDong
+//
+//  Created by LeeWanJae on 8/22/24.
+//
+
 import UIKit
-import WebKit
 import SnapKit
 
-class MatchInfoDetailView: UIViewController {
-    private var matchInfo: MatchInfo?
+class MatchResultView: UIView {
+    private var scrollView = UIScrollView()
+    private var resultTitleLabel = UILabel()
+    private var resultContainer = UIView()
+    var matchType = UILabel()
+    var matchDate = UILabel()
     
-    private lazy var scrollView: UIScrollView = createScrollView()
-    private lazy var resultTitleLabel: UILabel = createLabel(text: "경기결과", fontSize: 20, fontWeight: .bold)
-    private lazy var resultContainer: UIView = createContainerView()
-    private lazy var matchType: UILabel = createLabel(text: matchInfo?.matchType ?? "")
-    private lazy var matchDate: UILabel = createLabel(text: matchInfo?.date ?? "")
-    //
-    private lazy var scoreBox = createContainerView()
-    private lazy var score: UILabel = createLabel(text: matchInfo?.score ?? "", fontSize: 30, fontWeight: .bold)
-    private lazy var manUtdStack = createTeamStackView(teamName: "맨유", logoName: "맨유", fontSize: 24)
-    private lazy var enemyStack = createTeamStackView(teamName: matchInfo?.enemy ?? "", logoName: matchInfo?.enemy ?? "", fontSize: 24)
+    private var scoreBox = UIView()
+    var score = UILabel()
+    
+    var manUtdStack = UIStackView()
+    var enemyStack = UIStackView()
 
-    private lazy var separatorHBar: UIView = createSeparatorView(color: .darkGray.withAlphaComponent(0.5), borderWidth: 1)
-    private lazy var separatorVBar: UIView = createSeparatorView(color: .darkGray.withAlphaComponent(0.3), borderWidth: 1)
-    private lazy var manUtdGoalsView = createGoalsView(goals: matchInfo?.manUtdGoal, textAlign: .right)
-    private lazy var enemyGoalsView = createGoalsView(goals: matchInfo?.enemyGoal, textAlign: .left)
-    private lazy var highlightTitleLabel: UILabel = createLabel(text: "하이라이트", fontSize: 20, fontWeight: .bold)
-    private lazy var highlightContainerView: UIView = createContainerView(cornerRadius: 20)
-    private lazy var highlightView: WKWebView = createWebView(urlString: matchInfo?.highlight)
- 
-    init(matchInfo: MatchInfo) {
-        self.matchInfo = matchInfo
-        super.init(nibName: nil, bundle: nil)
+    private var separatorHBar = UIView()
+    private var separatorVBar = UIView()
+    var manUtdGoalsView = UIView()
+    var enemyGoalsView = UIView()
+    
+    init() {
+        super.init(frame: .zero)
+        setUI()
+        setAutoLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setUI()
-        setAutoLayout()
-    }
-}
-
-// MARK: - UI Methods
-extension MatchInfoDetailView {
     private func setUI() {
-        view.backgroundColor = UIColor.bg
+        scrollView = createScrollView()
+        resultTitleLabel = createLabel(text: "경기결과", fontSize: 20, fontWeight: .bold)
+        resultContainer = createContainerView()
+        matchType = createLabel(text: "")
+        matchDate = createLabel(text: "")
+        scoreBox = createContainerView()
+        score = createLabel(text: "", fontSize: 30, fontWeight: .bold)
+        manUtdStack = createTeamStackView(teamName: "맨유", logoName: "맨유", fontSize: 24)
+        enemyStack = createTeamStackView(teamName: "", logoName: "", fontSize: 24)
+        separatorHBar = createSeparatorView(color: .darkGray.withAlphaComponent(0.5), borderWidth: 1)
+        separatorVBar = createSeparatorView(color: .darkGray.withAlphaComponent(0.3), borderWidth: 1)
+        manUtdGoalsView = createGoalsView(goals: nil, textAlign: .right)
+        enemyGoalsView = createGoalsView(goals: nil, textAlign: .left)
         
-        view.addSubview(scrollView)
         
-        let scrollViewItems = [resultTitleLabel, resultContainer, highlightTitleLabel, highlightContainerView]
-        scrollViewItems.forEach { scrollView.addSubview($0) }
-        
-        let resultContainerItems = [matchType, matchDate, scoreBox, separatorHBar, separatorVBar, manUtdGoalsView, enemyGoalsView]
-        resultContainerItems.forEach { resultContainer.addSubview($0) }
+        addSubview(scrollView)
+
+        scrollView.addSubview(resultContainer)
+
+        resultContainer.addSubview(resultTitleLabel)
+        resultContainer.addSubview(matchType)
+        resultContainer.addSubview(matchDate)
+        resultContainer.addSubview(scoreBox)
         
         let scoreBoxItems = [manUtdStack, score, enemyStack]
         scoreBoxItems.forEach { scoreBox.addSubview($0) }
         
-        highlightContainerView.addSubview(highlightView)
+        let resultContainerItems = [separatorHBar, separatorVBar, manUtdGoalsView, enemyGoalsView]
+        resultContainerItems.forEach { resultContainer.addSubview($0) }
     }
     
     private func setAutoLayout() {
-        let safeArea = view.safeAreaLayoutGuide
+        let safeArea = safeAreaLayoutGuide
         
         scrollView.snp.makeConstraints {
             $0.edges.equalTo(safeArea)
@@ -72,8 +81,8 @@ extension MatchInfoDetailView {
         }
         
         resultContainer.snp.makeConstraints {
-            $0.centerX.equalTo(view.snp.centerX)
-            $0.width.equalTo(view.snp.width).offset(-30)
+            $0.centerX.equalTo(snp.centerX)
+            $0.width.equalTo(snp.width).offset(-30)
             $0.top.equalTo(resultTitleLabel.snp.bottom).offset(20)
         }
         
@@ -136,36 +145,16 @@ extension MatchInfoDetailView {
             $0.width.equalTo(resultContainer.snp.width).multipliedBy(0.5).offset(-20)
         }
         
-        highlightTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(separatorVBar.snp.bottom).offset(100)
-            $0.leading.equalTo(resultTitleLabel.snp.leading)
-        }
-        
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            highlightContainerView.snp.makeConstraints {
-                $0.centerX.equalToSuperview()
-                $0.height.equalTo(view.snp.height).multipliedBy(0.26)
-                $0.width.equalToSuperview().offset(-30)
-                $0.top.equalTo(highlightTitleLabel.snp.bottom).offset(20)
-            }
-            
-            highlightView.snp.makeConstraints {
-                $0.edges.equalTo(highlightContainerView)
-            }
-        } else {
-            highlightContainerView.snp.makeConstraints {
-                $0.centerX.equalToSuperview()
-                $0.width.equalToSuperview().offset(-30)
-                $0.height.equalToSuperview().multipliedBy(0.4) // 부모 뷰 높이의 50%
-                $0.top.equalTo(highlightTitleLabel.snp.bottom).offset(20)
-            }
-            
-            highlightView.snp.makeConstraints {
-                $0.edges.equalTo(highlightContainerView)
-            }
-        }
     }
+    
+}
 
+extension MatchResultView {
+    private func createScrollView() -> UIScrollView {
+        let scrollView = UIScrollView()
+        return scrollView
+    }
+    
     private func createLabel(text: String, fontSize: CGFloat = 14, fontWeight: UIFont.Weight = .regular, textColor: UIColor = .black, textAlign: NSTextAlignment = .left) -> UILabel {
         let label = UILabel()
         label.text = text
@@ -189,7 +178,7 @@ extension MatchInfoDetailView {
         return view
     }
     
-    private func createGoalsView(goals: [String]?, textAlign: NSTextAlignment = .left ) -> UIView {
+    func createGoalsView(goals: [String]?, textAlign: NSTextAlignment = .left ) -> UIView {
         let view = UIView()
         if let goals = goals?.filter({ !$0.isEmpty }) {
             var previousLabel: UILabel?
@@ -216,20 +205,6 @@ extension MatchInfoDetailView {
         return view
     }
     
-    private func createScrollView() -> UIScrollView {
-        let scrollView = UIScrollView()
-        return scrollView
-    }
-    
-    private func createWebView(urlString: String?) -> WKWebView {
-        let webView = WKWebView()
-        if let urlString = urlString, let url = URL(string: urlString) {
-            webView.load(URLRequest(url: url))
-        }
-        webView.layer.shadowOpacity = 0.2
-        return webView
-    }
-    
     private func createLogoImage(url: String) -> UIImageView {
         let image = UIImageView()
         image.image = UIImage(named: url)
@@ -237,7 +212,7 @@ extension MatchInfoDetailView {
         return image
     }
     
-    private func createTeamStackView(teamName: String, logoName: String, fontSize: CGFloat) -> UIStackView {
+    func createTeamStackView(teamName: String, logoName: String, fontSize: CGFloat) -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
