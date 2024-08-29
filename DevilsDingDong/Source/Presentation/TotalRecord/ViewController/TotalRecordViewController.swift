@@ -9,10 +9,18 @@ import UIKit
 import RxSwift
 
 class TotalRecordViewController: UIViewController {
-    private let viewModel = TotalRecordViewModel()
-    private let totalRecordView = TotalRecordView()
-    private let disposeBag = DisposeBag()
     
+    // MARK: - Properties
+    
+    private let viewModel = TotalRecordViewModel()
+    private let disposeBag = DisposeBag()
+
+    // MARK: - Componets
+    
+    private let totalRecordView = TotalRecordView()
+    
+    //MARK: - Life Cycle
+
     override func loadView() {
         view = totalRecordView
     }
@@ -21,9 +29,25 @@ class TotalRecordViewController: UIViewController {
         super.viewDidLoad()
         setUI()
         registerCell()
-        
         bindViewModel()
     }
+
+    // MARK: - UI
+    
+    private func setUI() {
+        navigationItem.title = "리그 순위"
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        totalRecordView.collectionView.dataSource = self
+        totalRecordView.collectionView.delegate = self
+    }
+    
+    private func registerCell() {
+        totalRecordView.collectionView.register(TotalRecordCell.self, forCellWithReuseIdentifier: TotalRecordCell.id)
+    }
+    
+    // MARK: - Bind
     
     private func bindViewModel() {
         // ViewModel의 Input과 Output을 정의하고, transform 메서드를 호출합니다.
@@ -47,21 +71,6 @@ class TotalRecordViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
-    }
-}
-
-extension TotalRecordViewController {
-    private func setUI() {
-        navigationItem.title = "리그 순위"
-        navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
-        totalRecordView.collectionView.dataSource = self
-        totalRecordView.collectionView.delegate = self
-    }
-    
-    private func registerCell() {
-        totalRecordView.collectionView.register(TotalRecordCell.self, forCellWithReuseIdentifier: TotalRecordCell.id)
     }
 }
 

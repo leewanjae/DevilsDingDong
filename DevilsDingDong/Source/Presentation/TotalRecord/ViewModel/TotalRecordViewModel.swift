@@ -9,24 +9,30 @@ import Foundation
 import RxSwift
 
 class TotalRecordViewModel: ViewModelType {
-    //MARK: Properties
+    
+    //MARK: - Properties
+    
     private let firebaseStoreManager = FirebaseStoreManager()
     var scores: [Score] = []
     var viewUpdateCloser: (() -> Void)?
     private var isDataLoaded = false
     private let disposeBag = DisposeBag()
     
-    //MARK: Input
+    //MARK: - Input
+    
     struct Input {
         let fetchTrigger: Observable<Void>
     }
     
-    //MARK: Output
+    //MARK: - Output
+    
     struct Output {
         let scores: Observable<[Score]>
         let error: Observable<Error?>
     }
-    
+}
+
+extension TotalRecordViewModel {
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let errorSubject = PublishSubject<Error?>()
         let scoresSubject = BehaviorSubject<[Score]>(value: [])
