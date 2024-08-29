@@ -14,6 +14,7 @@ class TotalRecordViewController: UIViewController {
     
     private let viewModel = TotalRecordViewModel()
     private let disposeBag = DisposeBag()
+    private var currentScores: [Score] = []
 
     // MARK: - Componets
     
@@ -50,19 +51,17 @@ class TotalRecordViewController: UIViewController {
     // MARK: - Bind
     
     private func bindViewModel() {
-        // ViewModel의 Input과 Output을 정의하고, transform 메서드를 호출합니다.
         let input = TotalRecordViewModel.Input(fetchTrigger: Observable.just(()))
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
         
-        // ViewModel의 scores Observable을 구독하여 UICollectionView를 업데이트합니다.
         output.scores
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
+            .subscribe(onNext: { [weak self] scores in
+                self?.currentScores = scores
                 self?.totalRecordView.collectionView.reloadData()
             })
             .disposed(by: disposeBag)
         
-        // 에러 처리
         output.error
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { error in
@@ -75,18 +74,19 @@ class TotalRecordViewController: UIViewController {
 }
 
 // MARK: - Delegate
+
 extension TotalRecordViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.scores.count
+        return currentScores.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TotalRecordCell.id, for: indexPath) as? TotalRecordCell else { return UICollectionViewCell() }
-        let score = viewModel.scores[indexPath.row]
+        let score = currentScores[indexPath.row]
         let isFirstCell = indexPath.item == 0
         let isLastCell = indexPath.item == collectionView.numberOfItems(inSection: indexPath.section) - 1
         cell.configure(

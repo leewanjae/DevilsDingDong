@@ -13,10 +13,9 @@ class TotalRecordViewModel: ViewModelType {
     //MARK: - Properties
     
     private let firebaseStoreManager = FirebaseStoreManager()
-    var scores: [Score] = []
-    var viewUpdateCloser: (() -> Void)?
-    private var isDataLoaded = false
     private let disposeBag = DisposeBag()
+    private var isDataLoaded = false
+    private let scoreSubject = BehaviorSubject<[Score]>(value: [])
     
     //MARK: - Input
     
@@ -42,10 +41,8 @@ extension TotalRecordViewModel {
                 return self?.fetchScoreData() ?? .just([])
             }
             .subscribe(onNext: { [weak self] scores in
-                self?.scores = scores
-                self?.sortScores()
-                scoresSubject.onNext(scores)
-                self?.viewUpdateCloser?()
+                let sortedScores = self?.sortScores(scores) ?? []
+                scoresSubject.onNext(sortedScores)
             }, onError: { error in
                 errorSubject.onNext(error)
             })
@@ -57,7 +54,7 @@ extension TotalRecordViewModel {
     func fetchScoreData() -> Observable<[Score]> {
         return Observable.create { [weak self] observer in
             guard let self = self, !self.isDataLoaded else {
-                observer.onNext(self?.scores ?? [])
+                observer.onNext((try? self?.scoreSubject.value()) ?? [])
                 observer.onCompleted()
                 return Disposables.create()
             }
@@ -65,7 +62,6 @@ extension TotalRecordViewModel {
             self.firebaseStoreManager.fetchScoreFirestore(collection: "24-25_Score") { (result: Result<ScoreList, Error>) in
                 switch result {
                 case .success(let scoreList):
-                    self.scores = scoreList.scores
                     self.isDataLoaded = true
                     observer.onNext(scoreList.scores)
                     observer.onCompleted()
@@ -78,7 +74,12 @@ extension TotalRecordViewModel {
         }
     }
     
-    func sortScores() {
-        scores.sort { $0.rank < $1.rank }
+    func sortScores(_ scores: [Score]) -> [Score] {
+        return scores.sorted {
+            if $0.rank == $1.rank {
+                return $0.gd > $1.gd
+            }
+            return $0.rank < $1.rank
+        }
     }
 }
