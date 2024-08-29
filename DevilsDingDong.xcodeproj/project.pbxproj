@@ -162,8 +162,6 @@
 				CC3780782BE9E95A009313EA /* AppDelegate.swift */,
 				CC37807A2BE9E95A009313EA /* SceneDelegate.swift */,
 				CC3780832BE9E95B009313EA /* LaunchScreen.storyboard */,
-				CC3780862BE9E95B009313EA /* Info.plist */,
-				CC6B4B5E2C80380600618A38 /* GoogleService-Info.plist */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -214,6 +212,8 @@
 				CCCB55322C3DB1E2001EEDDD /* DevilsDingDong.entitlements */,
 				CC27E4402BF0A82000DC8ACF /* App */,
 				CC6B4B602C80393B00618A38 /* Source */,
+				CC3780862BE9E95B009313EA /* Info.plist */,
+				CC6B4B5E2C80380600618A38 /* GoogleService-Info.plist */,
 				CC27E43C2BF0A77F00DC8ACF /* Resource */,
 			);
 			path = DevilsDingDong;
@@ -243,6 +243,7 @@
 			children = (
 				CC4D32382C76F9BE00A52D51 /* Component */,
 				CC6B4B662C8039E400618A38 /* View */,
+				CC6B4B6E2C80415E00618A38 /* ViewController */,
 			);
 			path = MatchInfoDetail;
 			sourceTree = "<group>";
@@ -293,7 +294,6 @@
 			children = (
 				CCD931022C1833A6009A6D42 /* TotalRecordView.swift */,
 				CC2EDA3F2C38584C00FDBD08 /* TotalRecordCell.swift */,
-				CC4D32282C75BDEE00A52D51 /* TotalRecordViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -311,7 +311,6 @@
 			children = (
 				CCD931002C183395009A6D42 /* TodayMatchView.swift */,
 				CC42EEF22C2A787B0048D978 /* PlayerListCell.swift */,
-				CC4D322B2C75FEFB00A52D51 /* TodayMatchViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -321,7 +320,6 @@
 			children = (
 				CC37807C2BE9E95A009313EA /* MatchInfoView.swift */,
 				CC27E4472BF0DDA200DC8ACF /* MatchInfoCell.swift */,
-				CC4D32362C761E4100A52D51 /* MatchInfoViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -330,7 +328,6 @@
 			isa = PBXGroup;
 			children = (
 				CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */,
-				CC4D323B2C77119400A52D51 /* MatchInfoDetailViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -351,11 +348,44 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		CC6B4B6B2C80412200618A38 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CC4D32282C75BDEE00A52D51 /* TotalRecordViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CC6B4B6C2C80413D00618A38 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CC4D322B2C75FEFB00A52D51 /* TodayMatchViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CC6B4B6D2C80415000618A38 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CC4D32362C761E4100A52D51 /* MatchInfoViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CC6B4B6E2C80415E00618A38 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CC4D323B2C77119400A52D51 /* MatchInfoDetailViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		CCD930FD2C183296009A6D42 /* MatchInfo */ = {
 			isa = PBXGroup;
 			children = (
 				CC3620E12C0D7A0F005ECE60 /* Component */,
 				CC6B4B652C8039CA00618A38 /* View */,
+				CC6B4B6D2C80415000618A38 /* ViewController */,
 				CC6B4B672C803A0D00618A38 /* ViewModel */,
 			);
 			path = MatchInfo;
@@ -366,6 +396,7 @@
 			children = (
 				CC4D322A2C75FE9100A52D51 /* Component */,
 				CC6B4B642C8039BB00618A38 /* View */,
+				CC6B4B6C2C80413D00618A38 /* ViewController */,
 			);
 			path = TodayMatch;
 			sourceTree = "<group>";
@@ -374,6 +405,7 @@
 			isa = PBXGroup;
 			children = (
 				CC6B4B622C80397800618A38 /* View */,
+				CC6B4B6B2C80412200618A38 /* ViewController */,
 				CC6B4B632C80398800618A38 /* ViewModel */,
 			);
 			path = TotalRecord;
