@@ -14,8 +14,6 @@ class TotalRecordViewModel: ViewModelType {
     
     private let firebaseStoreManager = FirebaseStoreManager()
     private let disposeBag = DisposeBag()
-    private var isDataLoaded = false
-    private let scoreSubject = BehaviorSubject<[Score]>(value: [])
     
     //MARK: - Input
     
@@ -26,35 +24,34 @@ class TotalRecordViewModel: ViewModelType {
     //MARK: - Output
     
     struct Output {
-        let scores: Observable<[Score]>
-        let error: Observable<Error?>
+        let scores = BehaviorSubject<[Score]>(value: [])
     }
 }
 
 extension TotalRecordViewModel {
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
-        let errorSubject = PublishSubject<Error?>()
-        let scoresSubject = BehaviorSubject<[Score]>(value: [])
+        let output = Output()
         
         input.fetchTrigger
-            .flatMapLatest { [weak self] in
-                return self?.fetchScoreData() ?? .just([])
+            .flatMapLatest { [weak self] _ in
+                self?.fetchScoreData() ?? .just([])
             }
-            .subscribe(onNext: { [weak self] scores in
-                let sortedScores = self?.sortScores(scores) ?? []
-                scoresSubject.onNext(sortedScores)
-            }, onError: { error in
-                errorSubject.onNext(error)
-            })
+            .subscribe(
+                onNext: { scores in
+                    output.scores.onNext(scores)
+                },
+                onError: { error in
+                    print(error)
+                })
             .disposed(by: disposeBag)
         
-        return Output(scores: scoresSubject.asObservable(), error: errorSubject.asObservable())
+        return output
     }
     
     func fetchScoreData() -> Observable<[Score]> {
         return Observable.create { [weak self] observer in
-            guard let self = self, !self.isDataLoaded else {
-                observer.onNext((try? self?.scoreSubject.value()) ?? [])
+            guard let self = self else {
+                observer.onNext([])
                 observer.onCompleted()
                 return Disposables.create()
             }
@@ -62,8 +59,8 @@ extension TotalRecordViewModel {
             self.firebaseStoreManager.fetchScoreFirestore(collection: "24-25_Score") { (result: Result<ScoreList, Error>) in
                 switch result {
                 case .success(let scoreList):
-                    self.isDataLoaded = true
-                    observer.onNext(scoreList.scores)
+                    let sortedScores = self.sortScores(scoreList.scores)
+                    observer.onNext(sortedScores)
                     observer.onCompleted()
                 case .failure(let error):
                     observer.onError(error)

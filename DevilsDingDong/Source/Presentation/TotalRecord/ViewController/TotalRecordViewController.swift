@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 class TotalRecordViewController: UIViewController {
     
@@ -14,7 +15,6 @@ class TotalRecordViewController: UIViewController {
     
     private let viewModel = TotalRecordViewModel()
     private let disposeBag = DisposeBag()
-    private var currentScores: [Score] = []
 
     // MARK: - Componets
     
@@ -40,7 +40,6 @@ class TotalRecordViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        totalRecordView.collectionView.dataSource = self
         totalRecordView.collectionView.delegate = self
     }
     
@@ -56,55 +55,30 @@ class TotalRecordViewController: UIViewController {
         
         output.scores
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] scores in
-                self?.currentScores = scores
-                self?.totalRecordView.collectionView.reloadData()
-            })
-            .disposed(by: disposeBag)
-        
-        output.error
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { error in
-                if let error = error {
-                    print("Error: \(error)")
-                }
-            })
+            .bind(to: totalRecordView.collectionView.rx.items(cellIdentifier: TotalRecordCell.id, cellType: TotalRecordCell.self)) { index, score, cell in
+                let isFirstCell = index == 0
+                let isLastCell = index == (try! output.scores.value().count) - 1
+                cell.configure(
+                    rankLabel: "\(score.rank)",
+                    teamLabel: score.team,
+                    roundLabel: "\(score.round)",
+                    winLabel: "\(score.win)",
+                    drawLabel: "\(score.draw)",
+                    lossLabel: "\(score.loss)",
+                    pointLabel: "\(score.point)",
+                    gdLabel: "\(score.gd )",
+                    logoURL: score.team,
+                    isFirstCell: isFirstCell,
+                    isLastCell: isLastCell
+                )
+            }
             .disposed(by: disposeBag)
     }
 }
 
 // MARK: - Delegate
 
-extension TotalRecordViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return currentScores.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TotalRecordCell.id, for: indexPath) as? TotalRecordCell else { return UICollectionViewCell() }
-        let score = currentScores[indexPath.row]
-        let isFirstCell = indexPath.item == 0
-        let isLastCell = indexPath.item == collectionView.numberOfItems(inSection: indexPath.section) - 1
-        cell.configure(
-            rankLabel: "\(score.rank)",
-            teamLabel: score.team,
-            roundLabel: "\(score.round)",
-            winLabel: "\(score.win)",
-            drawLabel: "\(score.draw)",
-            lossLabel: "\(score.loss)",
-            pointLabel: "\(score.point)",
-            gdLabel: "\(score.gd )",
-            logoURL: score.team,
-            isFirstCell: isFirstCell,
-            isLastCell: isLastCell
-            
-        )
-        return cell
-    }
+extension TotalRecordViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .zero
     }
