@@ -13,19 +13,19 @@ struct Section: Hashable {
 }
 
 class TodayMatchView: UIView {
-    private let viewModel: MatchInfoViewModel
+    private let viewModel: TodayMatchViewModel
 
     private let noMatchView = NoMatchView()
     private lazy var matchStackView = MatchStackView(
         teamName: "맨유",
-        enemyName: viewModel.todayMatch.first?.enemy ?? "미정"
+        enemyName: viewModel.todayMatch?.enemy ?? "미정"
     )
     private lazy var todayMatchInfoView = TodayMatchInfoView(
-        date: viewModel.todayMatch.first?.date ?? "00년 00월 00일 (E)",
-        time: viewModel.todayMatch.first?.time ?? "00:00",
-        matchType: viewModel.todayMatch.first?.matchType ?? "프리미어리그",
-        round: viewModel.todayMatch.first?.round ?? "0R",
-        stadium: viewModel.todayMatch.first?.stadium ?? "Old Trafford"
+        date: viewModel.todayMatch?.date ?? "00년 00월 00일 (E)",
+        time: viewModel.todayMatch?.time ?? "00:00",
+        matchType: viewModel.todayMatch?.matchType ?? "프리미어리그",
+        round: viewModel.todayMatch?.round ?? "0R",
+        stadium: viewModel.todayMatch?.stadium ?? "Old Trafford"
     )
     
     private lazy var playerTitle = UILabel()
@@ -35,7 +35,7 @@ class TodayMatchView: UIView {
     lazy var playerCollectionView = createCollectionView()
     lazy var enemyPlayerCollectionView = createCollectionView()
 
-    init(viewModel: MatchInfoViewModel) {
+    init(viewModel: TodayMatchViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
         setUI()
@@ -50,9 +50,9 @@ class TodayMatchView: UIView {
         backgroundColor = .bgColor
         playerTitle = createLabel(size: 20, weight: .bold, text:"선수 명단")
         manUtdPlayerLabel = createLabel(size: 16, weight: .semibold, text:"맨유")
-        enemyPlayerLabel = createLabel(size: 16, weight: .semibold, text:viewModel.todayMatch.first?.enemy ?? "상대편")
+        enemyPlayerLabel = createLabel(size: 16, weight: .semibold, text:viewModel.todayMatch?.enemy ?? "상대편")
         
-        if viewModel.todayMatch.isEmpty {
+        if viewModel.todayMatch == nil {
             addSubview(noMatchView)
         } else {
             addSubview(matchStackView)
@@ -70,7 +70,7 @@ class TodayMatchView: UIView {
     private func setAutoLayout() {
         let safeArea = self.safeAreaLayoutGuide
 
-        if viewModel.todayMatch.isEmpty {
+        if viewModel.todayMatch == nil {
             noMatchView.snp.makeConstraints {
                 $0.centerX.centerY.equalToSuperview()
                 $0.width.height.equalTo(200)

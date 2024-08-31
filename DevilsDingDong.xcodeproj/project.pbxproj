@@ -64,6 +64,7 @@
 		CC4FBC652BEEF68800B23124 /* MatchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4FBC642BEEF68800B23124 /* MatchInfo.swift */; };
 		CC6B4B5F2C80380600618A38 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC6B4B5E2C80380600618A38 /* GoogleService-Info.plist */; };
 		CC6B4B6A2C803AE300618A38 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6B4B692C803AE300618A38 /* ViewModelType.swift */; };
+		CC6B4B712C81B66300618A38 /* TodayMatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6B4B702C81B66300618A38 /* TodayMatchViewModel.swift */; };
 		CC84E0CF2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */; };
 		CC88763B2C477189007CE4FA /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CC88763A2C477189007CE4FA /* SnapKit */; };
 		CCD931012C183395009A6D42 /* TodayMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD931002C183395009A6D42 /* TodayMatchView.swift */; };
@@ -100,6 +101,7 @@
 		CC4FBC642BEEF68800B23124 /* MatchInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfo.swift; sourceTree = "<group>"; };
 		CC6B4B5E2C80380600618A38 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CC6B4B692C803AE300618A38 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		CC6B4B702C81B66300618A38 /* TodayMatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayMatchViewModel.swift; sourceTree = "<group>"; };
 		CC84E0CE2BEB0B1A00BC3FEE /* MatchInfoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfoDetailView.swift; sourceTree = "<group>"; };
 		CCCB55322C3DB1E2001EEDDD /* DevilsDingDong.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevilsDingDong.entitlements; sourceTree = "<group>"; };
 		CCD931002C183395009A6D42 /* TodayMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayMatchView.swift; sourceTree = "<group>"; };
@@ -380,6 +382,14 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		CC6B4B6F2C81B63400618A38 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CC6B4B702C81B66300618A38 /* TodayMatchViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		CCD930FD2C183296009A6D42 /* MatchInfo */ = {
 			isa = PBXGroup;
 			children = (
@@ -397,6 +407,7 @@
 				CC4D322A2C75FE9100A52D51 /* Component */,
 				CC6B4B642C8039BB00618A38 /* View */,
 				CC6B4B6C2C80413D00618A38 /* ViewController */,
+				CC6B4B6F2C81B63400618A38 /* ViewModel */,
 			);
 			path = TodayMatch;
 			sourceTree = "<group>";
@@ -522,6 +533,7 @@
 			files = (
 				CC4D32342C76099700A52D51 /* TodayMatchInfoView.swift in Sources */,
 				CCD931012C183395009A6D42 /* TodayMatchView.swift in Sources */,
+				CC6B4B712C81B66300618A38 /* TodayMatchViewModel.swift in Sources */,
 				CC2EDA3B2C38400A00FDBD08 /* Score.swift in Sources */,
 				CC2EDA402C38584C00FDBD08 /* TotalRecordCell.swift in Sources */,
 				CC27E4462BF0D3EC00DC8ACF /* Color + Extension.swift in Sources */,

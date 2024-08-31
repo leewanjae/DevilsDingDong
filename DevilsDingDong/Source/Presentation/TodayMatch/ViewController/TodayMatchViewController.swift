@@ -8,7 +8,7 @@
 import UIKit
 
 class TodayMatchViewController: UIViewController {
-    private let viewModel = MatchInfoViewModel()
+    private let viewModel = TodayMatchViewModel()
     private var todayMatchView: TodayMatchView?
     var playerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
     var enemyPlayerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
@@ -25,10 +25,6 @@ class TodayMatchViewController: UIViewController {
         setupCollectionViews()
         setDataSource()
         setSnapShot()
-
-        if let notiData = viewModel.todayMatch.first {
-            NotificationManger.shared.setNotification(enemy: notiData.enemy, date: notiData.date, time: notiData.time)
-        }
     }
 
     private func setupNavigationBar() {
@@ -66,7 +62,7 @@ class TodayMatchViewController: UIViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Player>()
         let playerListSection = Section(id: "PlayerList")
         snapshot.appendSections([playerListSection])
-        if let players = viewModel.todayMatch.first?.player {
+        if let players = viewModel.todayMatch?.player {
             snapshot.appendItems(players, toSection: playerListSection)
         }
         playerDataSource?.apply(snapshot, animatingDifferences: true)
@@ -74,7 +70,7 @@ class TodayMatchViewController: UIViewController {
         var enemySnapshot = NSDiffableDataSourceSnapshot<Section, Player>()
         let enemyPlayerListSection = Section(id: "EnemyPlayerList")
         enemySnapshot.appendSections([enemyPlayerListSection])
-        if let players = viewModel.todayMatch.first?.enemyPlayer {
+        if let players = viewModel.todayMatch?.enemyPlayer {
             enemySnapshot.appendItems(players, toSection: enemyPlayerListSection)
         }
         enemyPlayerDataSource?.apply(enemySnapshot, animatingDifferences: true)
