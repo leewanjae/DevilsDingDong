@@ -13,106 +13,101 @@ struct Section: Hashable {
 }
 
 class TodayMatchView: UIView {
-    private let viewModel: TodayMatchViewModel
-
-    private let noMatchView = NoMatchView()
-    private lazy var matchStackView = MatchStackView(
-        teamName: "맨유",
-        enemyName: viewModel.todayMatch?.enemy ?? "미정"
+    let noMatchView = NoMatchView()
+    let matchStackView = MatchStackView(
+        teamName: "N/A",
+        enemyName: "N/A"
     )
-    private lazy var todayMatchInfoView = TodayMatchInfoView(
-        date: viewModel.todayMatch?.date ?? "00년 00월 00일 (E)",
-        time: viewModel.todayMatch?.time ?? "00:00",
-        matchType: viewModel.todayMatch?.matchType ?? "프리미어리그",
-        round: viewModel.todayMatch?.round ?? "0R",
-        stadium: viewModel.todayMatch?.stadium ?? "Old Trafford"
+    let todayMatchInfoView = TodayMatchInfoView(
+        date: "00년 00월 00일 (E)",
+        time: "00:00",
+        matchType: "프리미어리그",
+        round: "0R",
+        stadium: "N/A"
     )
     
-    private lazy var playerTitle = UILabel()
-    private lazy var manUtdPlayerLabel = UILabel()
-    private lazy var enemyPlayerLabel = UILabel()
-
+    let playerTitle = UILabel()
+    let manUtdPlayerLabel = UILabel()
+    let enemyPlayerLabel = UILabel()
+    
     lazy var playerCollectionView = createCollectionView()
     lazy var enemyPlayerCollectionView = createCollectionView()
-
-    init(viewModel: TodayMatchViewModel) {
-        self.viewModel = viewModel
+    
+    init() {
         super.init(frame: .zero)
         setUI()
         setAutoLayout()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setUI() {
         backgroundColor = .bgColor
-        playerTitle = createLabel(size: 20, weight: .bold, text:"선수 명단")
-        manUtdPlayerLabel = createLabel(size: 16, weight: .semibold, text:"맨유")
-        enemyPlayerLabel = createLabel(size: 16, weight: .semibold, text:viewModel.todayMatch?.enemy ?? "상대편")
+        playerTitle.text = "선수 명단"
+        playerTitle.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        manUtdPlayerLabel.text = "맨유"
+        manUtdPlayerLabel.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         
-        if viewModel.todayMatch == nil {
-            addSubview(noMatchView)
-        } else {
-            addSubview(matchStackView)
-            addSubview(todayMatchInfoView)
-            
-            addSubview(playerTitle)
-            addSubview(manUtdPlayerLabel)
-            addSubview(enemyPlayerLabel)
-            
-            addSubview(playerCollectionView)
-            addSubview(enemyPlayerCollectionView)
-        }
+        enemyPlayerLabel.text = "N/A"
+        enemyPlayerLabel.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        
+        addSubview(noMatchView)
+        addSubview(matchStackView)
+        addSubview(todayMatchInfoView)
+        
+        addSubview(playerTitle)
+        addSubview(manUtdPlayerLabel)
+        addSubview(enemyPlayerLabel)
+        
+        addSubview(playerCollectionView)
+        addSubview(enemyPlayerCollectionView)
     }
-
+    
     private func setAutoLayout() {
         let safeArea = self.safeAreaLayoutGuide
-
-        if viewModel.todayMatch == nil {
-            noMatchView.snp.makeConstraints {
-                $0.centerX.centerY.equalToSuperview()
-                $0.width.height.equalTo(200)
-            }
-        } else {
-            matchStackView.snp.makeConstraints {
-                $0.top.equalTo(safeArea).offset(10)
-                $0.centerX.equalToSuperview()
-            }
-
-            todayMatchInfoView.snp.makeConstraints {
-                $0.top.equalTo(matchStackView.snp.bottom).offset(10)
-                $0.centerX.equalToSuperview()
-            }
-            
-            playerTitle.snp.makeConstraints {
-                $0.top.equalTo(todayMatchInfoView.snp.bottom).offset(20)
-                $0.leading.trailing.equalToSuperview().offset(14)
-            }
-            
-            manUtdPlayerLabel.snp.makeConstraints {
-                $0.top.equalTo(playerTitle.snp.bottom).offset(20)
-                $0.leading.trailing.equalToSuperview().offset(14)
-            }
-            
-            playerCollectionView.snp.makeConstraints {
-                $0.top.equalTo(manUtdPlayerLabel.snp.bottom).offset(20)
-                $0.leading.trailing.equalToSuperview().offset(14)
-                $0.height.equalToSuperview().multipliedBy(0.1)
-            }
-
-            enemyPlayerLabel.snp.makeConstraints {
-                $0.top.equalTo(playerCollectionView.snp.bottom).offset(20)
-                $0.leading.trailing.equalToSuperview().offset(14)
-            }
-            
-            enemyPlayerCollectionView.snp.makeConstraints {
-                $0.top.equalTo(enemyPlayerLabel.snp.bottom).offset(20)
-                $0.leading.trailing.equalToSuperview().offset(14)
-                $0.height.equalToSuperview().multipliedBy(0.1)
-                $0.bottom.equalTo(safeArea.snp.bottom)
-            }
+        
+        noMatchView.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+            $0.width.height.equalTo(200)
+        }
+        matchStackView.snp.makeConstraints {
+            $0.top.equalTo(safeArea).offset(10)
+            $0.centerX.equalToSuperview()
+        }
+        
+        todayMatchInfoView.snp.makeConstraints {
+            $0.top.equalTo(matchStackView.snp.bottom).offset(10)
+            $0.centerX.equalToSuperview()
+        }
+        
+        playerTitle.snp.makeConstraints {
+            $0.top.equalTo(todayMatchInfoView.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview().offset(14)
+        }
+        
+        manUtdPlayerLabel.snp.makeConstraints {
+            $0.top.equalTo(playerTitle.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview().offset(14)
+        }
+        
+        playerCollectionView.snp.makeConstraints {
+            $0.top.equalTo(manUtdPlayerLabel.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview().offset(14)
+            $0.height.equalToSuperview().multipliedBy(0.1)
+        }
+        
+        enemyPlayerLabel.snp.makeConstraints {
+            $0.top.equalTo(playerCollectionView.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview().offset(14)
+        }
+        
+        enemyPlayerCollectionView.snp.makeConstraints {
+            $0.top.equalTo(enemyPlayerLabel.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview().offset(14)
+            $0.height.equalToSuperview().multipliedBy(0.1)
+            $0.bottom.equalTo(safeArea.snp.bottom)
         }
     }
     
@@ -121,11 +116,11 @@ class TodayMatchView: UIView {
         collectionView.backgroundColor = .clear
         return collectionView
     }
-
+    
     private func createLayout() -> UICollectionViewCompositionalLayout {
         let config = UICollectionViewCompositionalLayoutConfiguration()
         config.interSectionSpacing = 20
-
+        
         return UICollectionViewCompositionalLayout(sectionProvider: { sectionIndex, _ in
             switch sectionIndex {
             case 0:
@@ -137,15 +132,15 @@ class TodayMatchView: UIView {
             }
         }, configuration: config)
     }
-
+    
     private func createPlayerListSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1/3))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = .init(top: 5, leading: 5, bottom: 5, trailing: 5)
-
+        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/2.2), heightDimension: .fractionalHeight(1))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-
+        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         return section

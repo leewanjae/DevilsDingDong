@@ -9,17 +9,19 @@ import UIKit
 import SnapKit
 
 class MatchStackView: UIStackView {
+    private var manLabel: UILabel?
+    private var enemyLabel: UILabel?
+    private var logoImageView: UIImageView?
+    
     init(teamName: String, enemyName: String) {
         super.init(frame: .zero)
-        setUI(teamName: teamName, enemyName: enemyName)
+        setUI(teamName: "맨유", enemyName: enemyName)
     }
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-extension MatchStackView {
+    
     private func setUI(teamName: String, enemyName: String) {
         axis = .horizontal
         spacing = 20
@@ -29,9 +31,18 @@ extension MatchStackView {
         let vsLabel = createLabel(size: 17, weight: .regular, text: "VS")
         let enemyLogoStackView = createTeamStackView(teamName: enemyName)
         
+        manLabel = manLogoStackView.arrangedSubviews.last as? UILabel
+        enemyLabel = enemyLogoStackView.arrangedSubviews.last as? UILabel
+        
         addArrangedSubview(manLogoStackView)
         addArrangedSubview(vsLabel)
         addArrangedSubview(enemyLogoStackView)
+    }
+    
+    func update(teamName: String, enemyName: String) {
+        manLabel?.text = teamName
+        enemyLabel?.text = enemyName
+        logoImageView?.image = UIImage(named: enemyName)
     }
     
     private func createLabel(size: CGFloat, weight: UIFont.Weight, text: String) -> UILabel {
@@ -48,13 +59,13 @@ extension MatchStackView {
         stackView.alignment = .center
         stackView.spacing = 10
         
-        let logoImageView = createImage(url: teamName)
+        logoImageView = createImage(url: teamName)
         let teamLabel = createLabel(size: 24, weight: .semibold, text: teamName)
-        logoImageView.snp.makeConstraints {
+        logoImageView?.snp.makeConstraints {
             $0.width.height.equalTo(70)
         }
         
-        stackView.addArrangedSubview(logoImageView)
+        stackView.addArrangedSubview(logoImageView ?? UIImageView())
         stackView.addArrangedSubview(teamLabel)
         
         return stackView
@@ -67,4 +78,3 @@ extension MatchStackView {
         return image
     }
 }
-

@@ -9,6 +9,12 @@ import UIKit
 import SnapKit
 
 class TodayMatchInfoView: UIStackView {
+    private var dateLabel = UILabel()
+    private var timeLabel = UILabel()
+    private var matchTypeLabel = UILabel()
+    private var roundLabel = UILabel()
+    private var stadiumLabel = UILabel()
+    
     init(date: String, time: String, matchType: String, round: String, stadium: String) {
         super.init(frame: .zero)
         setUI(date: date, time: time, matchType: matchType, round: round, stadium: stadium)
@@ -17,9 +23,7 @@ class TodayMatchInfoView: UIStackView {
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-extension TodayMatchInfoView {
+    
     private func setUI(date: String, time: String, matchType: String, round: String, stadium: String) {
         axis = .vertical
         alignment = .center
@@ -28,11 +32,11 @@ extension TodayMatchInfoView {
         let matchTypeStackView = createStackView()
         let dateStackView = createStackView()
         
-        let matchTypeLabel = createLabel(size: 18, weight: .regular, text: matchType)
-        let roundLabel = createLabel(size: 14, weight: .regular, text: round)
-        let stadiumLabel = createLabel(size: 14, weight: .regular, text: stadium)
-        let dateLabel = createLabel(size: 20, weight: .regular, text: date)
-        let timeLabel = createLabel(size: 20, weight: .regular, text: time)
+        matchTypeLabel = createLabel(size: 18, weight: .regular, text: matchType)
+        roundLabel = createLabel(size: 14, weight: .regular, text: round)
+        stadiumLabel = createLabel(size: 14, weight: .regular, text: stadium)
+        dateLabel = createLabel(size: 20, weight: .regular, text: date)
+        timeLabel = createLabel(size: 20, weight: .regular, text: time)
         
         matchTypeStackView.addArrangedSubview(matchTypeLabel)
         matchTypeStackView.addArrangedSubview(roundLabel)
@@ -44,7 +48,15 @@ extension TodayMatchInfoView {
         addArrangedSubview(stadiumLabel)
         addArrangedSubview(dateStackView)
         
-        [matchTypeLabel, roundLabel, stadiumLabel].forEach { $0.textColor = .gray }
+        [matchTypeLabel, roundLabel, stadiumLabel].forEach { $0?.textColor = .gray }
+    }
+    
+    func update(date: String, time: String, matchType: String, round: String, stadium: String) {
+        dateLabel.text = date
+        timeLabel.text = time
+        matchTypeLabel.text = matchType
+        roundLabel.text = round
+        stadiumLabel.text = stadium
     }
     
     private func createLabel(size: CGFloat, weight: UIFont.Weight, text: String) -> UILabel {
