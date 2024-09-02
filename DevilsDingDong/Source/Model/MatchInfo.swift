@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MatchInfo: Decodable {
+struct MatchInfo: Codable {
     let id: Int
     let matchType: String
     let round: String
@@ -21,11 +21,11 @@ struct MatchInfo: Decodable {
     let score: String?
     let manUtdGoal: [String]?
     let enemyGoal: [String]?
-    let player: [Player]?
-    let enemyPlayer: [Player]?
+    var player: [Player]?
+    var enemyPlayer: [Player]?
 }
 
-struct Player: Hashable, Decodable {
+struct Player: Hashable, Codable {
     let id = UUID()
     let position: String
     let name: String

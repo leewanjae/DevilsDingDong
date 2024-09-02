@@ -5,12 +5,9 @@
 //  Created by LeeWanJae on 7/6/24.
 //
 
-//import Foundation
+import Foundation
 
-
-//        let scoreList = ScoreList(scores: Score.score)
-//        let firebaseStoreManager = FirebaseStoreManager()
-//        firebaseStoreManager.addFirestore(collection: "24-25_Score", document: "score", data: scoreList)
+// MARK: - 한 시즌 전체 경기 데이터 틀
 
 //extension MatchInfo {
 //    static let match = [
@@ -93,59 +90,62 @@
 //, round: "38", date: "25년 05월 26일 (월)", time: "00:00", stadium: "Old Trafford", enemy: "애스턴빌라", home: true, finished: false, highlight: "", score: "", manUtdGoal: [], enemyGoal: [], player: [], enemyPlayer: []),
 //    ]
 //}
-////
+
+// MARK: - 선발 출전 선수
+
 //extension Player{
 //    static let playerDB: [Player] = [
-//        Player(id: 38, position: "FW", name: "가르나초"),
-//        Player(id: 38, position: "MF", name: "페르난데스"),
-//        Player(id: 38, position: "MF", name: "마이누"),
-//        Player(id: 38, position: "MF", name: "카제미루"),
-//        Player(id: 38, position: "MF", name: "맥토미니"),
-//        Player(id: 38, position: "MF", name: "디알로"),
-//        Player(id: 38, position: "MF", name: "암라바트"),
-//        Player(id: 38, position: "DF", name: "달롯"),
-//        Player(id: 38, position: "DF", name: "마르티네즈"),
-//        Player(id: 38, position: "DF", name: "완 비사카"),
-//        Player(id: 38, position: "GK", name: "오나나"),
+//        Player(id: 243, position: "FW", name: "지르크제이"),
+//        Player(id: 243, position: "FW", name: "래시퍼드"),
+//        Player(id: 243, position: "FW", name: "페르난데스"),
+//        Player(id: 243, position: "FW", name: "가르나초"),
+//        Player(id: 243, position: "MF", name: "카제미루"),
+//        Player(id: 243, position: "MF", name: "마이누"),
+//        Player(id: 243, position: "DF", name: "마즈라위"),
+//        Player(id: 243, position: "DF", name: "더 리흐트"),
+//        Player(id: 243, position: "DF", name: "마르티네즈"),
+//        Player(id: 243, position: "DF", name: "달롯"),
+//        Player(id: 243, position: "GK", name: "오나나"),
 //    ]
 //    
 //    static let enemyPlayerDB: [Player] = [
-//        Player(id: 38, position: "FW", name: "웰벡"),
-//        Player(id: 38, position: "MF", name: "주앙 페드루"),
-//        Player(id: 38, position: "MF", name: "랄라나"),
-//        Player(id: 38, position: "MF", name: "아딩그라"),
-//        Player(id: 38, position: "MF", name: "모데르"),
-//        Player(id: 38, position: "MF", name: "발레바"),
-//        Player(id: 38, position: "DF", name: "그로스"),
-//        Player(id: 38, position: "DF", name: "웹스터"),
-//        Player(id: 38, position: "DF", name: "이고르 줄리우"),
-//        Player(id: 38, position: "DF", name: "바르코"),
-//        Player(id: 38, position: "GK", name: "스틸"),
+//        Player(id: 243, position: "FW", name: "조타"),
+//        Player(id: 243, position: "FW", name: "디아스"),
+//        Player(id: 243, position: "FW", name: "소보슬라이"),
+//        Player(id: 243, position: "FW", name: "살라"),
+//        Player(id: 243, position: "MF", name: "맥 앨리스터"),
+//        Player(id: 243, position: "MF", name: "흐라벤베르흐"),
+//        Player(id: 243, position: "DF", name: "로버트슨"),
+//        Player(id: 243, position: "DF", name: "반 다이크"),
+//        Player(id: 243, position: "DF", name: "코나테"),
+//        Player(id: 243, position: "DF", name: "알렉산더 아놀드"),
+//        Player(id: 243, position: "GK", name: "알리송 베커"),
 //    ]
 //}
 
+// MARK: - 리그 순위
 
-extension Score {
-    static let scoreDB = [
-        Score(rank: 1, team:"맨시티", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%86%E1%85%A2%E1%86%AB%E1%84%89%E1%85%B5%E1%84%90%E1%85%B5.svg?alt=media&token=f2f8b4b1-2026-4d76-8389-61289c125bbc"),
-        Score(rank: 2, team:"아스널", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%8B%E1%85%A1%E1%84%89%E1%85%B3%E1%84%82%E1%85%A1%E1%86%AF.svg?alt=media&token=fb07b4c3-83e5-46b4-ac6a-735bf589874c"),
-        Score(rank: 3, team:"리버풀", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%85%E1%85%B5%E1%84%87%E1%85%A5%E1%84%91%E1%85%AE%E1%86%AF.svg?alt=media&token=ed6b56cd-80d6-4d54-971d-610ca09e64d4"),
-        Score(rank: 4, team:"애스턴빌라", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%8B%E1%85%A2%E1%84%89%E1%85%B3%E1%84%90%E1%85%A5%E1%86%AB%E1%84%87%E1%85%B5%E1%86%AF%E1%84%85%E1%85%A1.svg?alt=media&token=26ca870b-8f4d-4990-b049-b520ce5ad08c"),
-        Score(rank: 5, team:"토트넘", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%90%E1%85%A9%E1%84%90%E1%85%B3%E1%84%82%E1%85%A5%E1%86%B7.svg?alt=media&token=5ddd4344-2685-4f0b-9612-4e95ad332c11"),
-        Score(rank: 6, team:"첼시", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%8E%E1%85%A6%E1%86%AF%E1%84%89%E1%85%B5.svg?alt=media&token=30c781dc-df9a-4a0c-ac29-f7fa3f0e9fdc"),
-        Score(rank: 7, team:"뉴캐슬", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%82%E1%85%B2%E1%84%8F%E1%85%A2%E1%84%89%E1%85%B3%E1%86%AF.svg?alt=media&token=e4422ba5-4caa-4cd2-bb39-5ee683e5aecb"),
-        Score(rank: 8, team:"맨유", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%86%E1%85%A2%E1%86%AB%E1%84%8B%E1%85%B2.svg?alt=media&token=b4b80a55-92be-495a-a6f7-4a0b1fe5396c"),
-        Score(rank: 9, team:"웨스트햄", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%8B%E1%85%B0%E1%84%89%E1%85%B3%E1%84%90%E1%85%B3%E1%84%92%E1%85%A2%E1%86%B7.svg?alt=media&token=c082e625-1067-4df9-85a8-ef84d4b3f0ce"),
-        Score(rank: 10, team:"팰리스", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%91%E1%85%A2%E1%86%AF%E1%84%85%E1%85%B5%E1%84%89%E1%85%B3.svg?alt=media&token=8a6b270a-808c-4ec0-8a78-e469053fba4b"),
-        Score(rank: 11, team:"브라이턴", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%87%E1%85%B3%E1%84%85%E1%85%A1%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%E1%86%AB.svg?alt=media&token=dc805d0f-51ed-42fe-9847-f79cb88a94bf"),
-        Score(rank: 12, team:"본머스", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%87%E1%85%A9%E1%86%AB%E1%84%86%E1%85%A5%E1%84%89%E1%85%B3.svg?alt=media&token=6700d64b-4c69-4732-96df-796883c913cf"),
-        Score(rank: 13, team:"풀럼", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%91%E1%85%AE%E1%86%AF%E1%84%85%E1%85%A5%E1%86%B7.svg?alt=media&token=2e873a8d-ecec-4faf-9e1a-15c09e085b90"),
-        Score(rank: 14, team:"울버햄튼", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%8B%E1%85%AE%E1%86%AF%E1%84%87%E1%85%A5%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%B3%E1%86%AB.svg?alt=media&token=a7d00e95-1414-4b60-890d-8595da4c9218"),
-        Score(rank: 15, team:"에버턴", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%8B%E1%85%A6%E1%84%87%E1%85%A5%E1%84%90%E1%85%B3%E1%86%AB.svg?alt=media&token=28fc188a-a065-4b7f-a30d-5dfade9585cc"),
-        Score(rank: 16, team:"브렌트퍼드", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%87%E1%85%B3%E1%84%85%E1%85%A6%E1%86%AB%E1%84%90%E1%85%B3%E1%84%91%E1%85%A5%E1%84%83%E1%85%B3.svg?alt=media&token=48923b31-7c47-423a-8a3f-b3ac47113178"),
-        Score(rank: 17, team:"노팅엄", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%82%E1%85%A9%E1%84%90%E1%85%B5%E1%86%BC%E1%84%8B%E1%85%A5%E1%86%B7.svg?alt=media&token=58f0c4af-00e1-44fb-a54e-9fe535b411f5"),
-        Score(rank: 18, team:"입스위치", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%8B%E1%85%B5%E1%86%B8%E1%84%89%E1%85%B3%E1%84%8B%E1%85%B1%E1%84%8E%E1%85%B5.svg?alt=media&token=9dab8d9f-db82-47b0-99cc-d03fa1bb1e92"),
-        Score(rank: 19, team:"레스터", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%85%E1%85%A6%E1%84%89%E1%85%B3%E1%84%90%E1%85%A5.svg?alt=media&token=1a364554-9b50-47f0-a489-8c0caa7a3b73"),
-        Score(rank: 20, team:"사우샘프턴", round: "1", point: 0, win: 0, draw: 0, loss: 0, gd: 0, image: "https://firebasestorage.googleapis.com/v0/b/devilsdingdong-8fcb2.appspot.com/o/%E1%84%89%E1%85%A1%E1%84%8B%E1%85%AE%E1%84%89%E1%85%A2%E1%86%B7%E1%84%91%E1%85%B3%E1%84%90%E1%85%A5%E1%86%AB.svg?alt=media&token=60f18efc-74ea-4e82-8814-ae191112b5ef"),
-    ]
-}
+//extension Score {
+//    static let scoreDB = [
+//        Score(rank: 1, team:"맨시티", round: "3", point: 9, win: 3, draw: 0, loss: 0, gd: 7, image: ""),
+//        Score(rank: 2, team:"리버풀", round: "3", point: 9, win: 3, draw: 0, loss: 0, gd: 7, image: ""),
+//        Score(rank: 3, team:"브라이턴", round: "3", point: 7, win: 2, draw: 1, loss: 0, gd: 4, image: ""),
+//        Score(rank: 4, team:"아스널", round: "3", point: 7, win: 2, draw: 1, loss: 0, gd: 4, image: ""),
+//        Score(rank: 5, team:"뉴캐슬", round: "3", point: 7, win: 2, draw: 1, loss: 0, gd: 2, image: ""),
+//        Score(rank: 6, team:"브렌트퍼드", round: "3", point: 6, win: 2, draw: 0, loss: 1, gd: 1, image: ""),
+//        Score(rank: 7, team:"애스턴빌라", round: "3", point: 6, win: 2, draw: 0, loss: 1, gd: 0, image: ""),
+//        Score(rank: 8, team:"본머스", round: "3", point: 5, win: 1, draw: 2, loss: 0, gd: 1, image: ""),
+//        Score(rank: 9, team:"노팅엄", round: "3", point: 5, win: 1, draw: 2, loss: 0, gd: 1, image: ""),
+//        Score(rank: 10, team:"토트넘", round: "3", point: 4, win: 1, draw: 1, loss: 1, gd: 3, image: ""),
+//        Score(rank: 11, team:"첼시", round: "3", point: 4, win: 1, draw: 1, loss: 1, gd: 2, image: ""),
+//        Score(rank: 12, team:"풀럼", round: "3", point: 4, win: 1, draw: 1, loss: 1, gd: 0, image: ""),
+//        Score(rank: 13, team:"웨스트햄", round: "3", point: 3, win: 1, draw: 0, loss: 2, gd: -1, image: ""),
+//        Score(rank: 14, team:"맨유", round: "3", point: 3, win: 1, draw: 0, loss: 2, gd: -3, image: ""),
+//        Score(rank: 15, team:"레스터", round: "3", point: 1, win: 0, draw: 1, loss: 2, gd: -2, image: ""),
+//        Score(rank: 16, team:"팰리스", round: "3", point: 1, win: 0, draw: 1, loss: 2, gd: -3, image: ""),
+//        Score(rank: 17, team:"입스위치", round: "3", point: 1, win: 0, draw: 1, loss: 2, gd: -5, image: ""),
+//        Score(rank: 18, team:"울버햄튼", round: "3", point: 1, win: 0, draw: 1, loss: 2, gd: -6, image: ""),
+//        Score(rank: 19, team:"사우샘프턴", round: "3", point: 0, win: 0, draw: 0, loss: 3, gd: -4, image: ""),
+//        Score(rank: 20, team:"에버턴", round: "3", point: 0, win: 0, draw: 0, loss: 3, gd: -8, image: ""),
+//    ]
+//}
