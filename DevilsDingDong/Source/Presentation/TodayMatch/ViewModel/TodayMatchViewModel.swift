@@ -13,7 +13,6 @@ class TodayMatchViewModel: ViewModelType {
     // MARK: - Properties
     
     private let firebaseStoreManager = FirebaseStoreManager()
-    private let disposeBag = DisposeBag()
     
     // MARK: - Input
     struct Input {
