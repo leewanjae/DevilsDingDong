@@ -9,23 +9,22 @@ import UIKit
 import SnapKit
 
 class MatchInfoView: UIView {
-    let monthNavigationView: MonthNavigationView
+    let monthNavigationView = MonthNavigationView()
     let tableView = UITableView()
     let emptyCharacter = UIImageView()
     let emptyStateLabel = UILabel()
 
-    init(viewModel: MatchInfoViewModel) {
-        self.monthNavigationView = MonthNavigationView(viewModel: viewModel)
+    init() {
         super.init(frame: .zero)
-        setupUI()
-        setupConstraints()
+        setUI()
+        setAutoLayout()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupUI() {
+    private func setUI() {
         backgroundColor = .bgColor
 
         emptyCharacter.image = UIImage(named: "ch")
@@ -46,11 +45,11 @@ class MatchInfoView: UIView {
         addSubview(emptyCharacter)
     }
 
-    private func setupConstraints() {
+    private func setAutoLayout() {
         let safeArea = self.safeAreaLayoutGuide
 
         monthNavigationView.snp.makeConstraints {
-            $0.top.equalTo(safeArea.snp.top).offset(-20)
+            $0.top.equalTo(safeArea.snp.top)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalToSuperview().multipliedBy(0.1)

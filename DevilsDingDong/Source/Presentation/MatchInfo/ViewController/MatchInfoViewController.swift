@@ -6,70 +6,87 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class MatchInfoViewController: UIViewController {
+    private var matchInfoView = MatchInfoView()
     private let viewModel = MatchInfoViewModel()
-    private var matchInfoView: MatchInfoView?
-
+    private var output: MatchInfoViewModel.Output? = nil
+    private let disposeBag = DisposeBag()
+    private var currentFilteredMatches: [MatchInfo] = []
+    
     override func loadView() {
-        matchInfoView = MatchInfoView(viewModel: viewModel)
         self.view = matchInfoView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupNavigationBar()
-        setupTableView()
+        setNavigationBar()
+        setTableView()
         bindViewModel()
     }
-
-    private func setupNavigationBar() {
+    
+    private func setNavigationBar() {
         navigationItem.title = "경기 일정"
         navigationItem.largeTitleDisplayMode = .never
     }
-
-    private func setupTableView() {
-        matchInfoView?.tableView.delegate = self
-        matchInfoView?.tableView.dataSource = self
-        matchInfoView?.tableView.register(MatchInfoCell.self, forCellReuseIdentifier: MatchInfoCell.id)
+    
+    private func setTableView() {
+        matchInfoView.tableView.delegate = self
+        matchInfoView.tableView.register(MatchInfoCell.self, forCellReuseIdentifier: MatchInfoCell.id)
     }
-
+    
     private func bindViewModel() {
-        viewModel.viewUpdateCloser = { [weak self] in
-            self?.matchInfoView?.tableView.reloadData()
-            self?.updateEmptyState()
-        }
-    }
-
-    private func updateEmptyState() {
-        let hasMatches = viewModel.filteredMatches.count != 0
-        matchInfoView?.emptyCharacter.isHidden = hasMatches
-        matchInfoView?.emptyStateLabel.isHidden = hasMatches
+        let input = MatchInfoViewModel.Input(
+            previousMonthTap: matchInfoView.monthNavigationView.prevButton.rx.tap,
+            nextMonthTap: matchInfoView.monthNavigationView.nextButton.rx.tap,
+            fetchMatches: .just(())
+        )
+        
+        output = viewModel.transform(input: input, disposeBag: disposeBag)
+        
+        output?.filteredMatches
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] matches in
+                self?.currentFilteredMatches = matches
+            })
+            .disposed(by: disposeBag)
+        
+        output?.filteredMatches
+            .observe(on: MainScheduler.instance)
+            .bind(to: matchInfoView.tableView.rx.items(cellIdentifier: MatchInfoCell.id, cellType: MatchInfoCell.self)) { index, matchInfo, cell in
+                let state = matchInfo.finished ? "종료" : "예정"
+                cell.configure(matchDate: matchInfo.date, matchTime: matchInfo.time, stadium: matchInfo.stadium, state: state, enemy: matchInfo.enemy, round: matchInfo.round)
+            }
+            .disposed(by: disposeBag)
+        
+        output?.formattedCurrentYearMonth
+            .observe(on: MainScheduler.instance)
+            .bind(to: matchInfoView.monthNavigationView.monthLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output?.isEmptyState
+            .observe(on: MainScheduler.instance)
+            .bind { [weak self] isEmpty in
+                self?.matchInfoView.emptyCharacter.isHidden = !isEmpty
+                self?.matchInfoView.emptyStateLabel.isHidden = !isEmpty
+            }
+            .disposed(by: disposeBag)
     }
 }
 
-extension MatchInfoViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.filteredMatches.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MatchInfoCell.id, for: indexPath) as? MatchInfoCell else { return UITableViewCell() }
-        let matchInfo = viewModel.filteredMatches[indexPath.row]
-        let state = matchInfo.finished ? "종료" : "예정"
-        cell.configure(matchDate: matchInfo.date, matchTime: matchInfo.time, stadium: matchInfo.stadium, state: state, enemy: matchInfo.enemy, round: matchInfo.round )
-        return cell
-    }
-
+extension MatchInfoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UIDevice.current.userInterfaceIdiom == .phone ? 170 : 250
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let matchInfo = viewModel.filteredMatches[indexPath.row]
-        if matchInfo.finished {
-            navigationController?.pushViewController(MatchInfoDetailViewController(matchInfo: matchInfo), animated: true)
-        }
+        guard currentFilteredMatches.indices.contains(indexPath.row) else { return }
+        let matchInfo = currentFilteredMatches[indexPath.row]
+        
+        let detailViewController = MatchInfoDetailViewController(matchInfo: matchInfo)
+        navigationController?.pushViewController(detailViewController, animated: true)
+        
     }
 }

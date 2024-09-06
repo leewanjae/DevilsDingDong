@@ -9,27 +9,19 @@ import UIKit
 import SnapKit
 
 class MonthNavigationView: UIView {
-    private var viewModel: MatchInfoViewModel
     
-    private lazy var prevButton = createButton(image: "chevron.left", action: #selector(previousMonthTapped))
-    private lazy var nextButton = createButton(image: "chevron.right", action: #selector(nextMonthTapped))
-    private lazy var monthLabel: UILabel = {
-        let label = UILabel()
-        label.text = "\(viewModel.formattedCurrentYearMonth)"
-        label.textColor = .black
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 28)
-        return label
-    }()
+    // MARK: - Properties
     
-    init(viewModel: MatchInfoViewModel) {
-        self.viewModel = viewModel
+    var prevButton = UIButton()
+    var nextButton = UIButton()
+    var monthLabel = UILabel()
+    
+    // MARK: - Life Cycle
+    
+    init() {
         super.init(frame: .zero)
         setUI()
         setAutoLayout()
-        viewModel.monthUpdateCloser = { [weak self] in
-            self?.monthLabel.text = "\(self?.viewModel.formattedCurrentYearMonth ?? "00년 00월")"
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -37,7 +29,16 @@ class MonthNavigationView: UIView {
     }
     
     private func setUI() {
-        [monthLabel, prevButton, nextButton].forEach { addSubview($0)}
+        prevButton = createButton(image: "chevron.left")
+        nextButton = createButton(image: "chevron.right")
+        
+        monthLabel.textColor = .black
+        monthLabel.textAlignment = .center
+        monthLabel.font = UIFont.systemFont(ofSize: 28)
+
+        addSubview(monthLabel)
+        addSubview(prevButton)
+        addSubview(nextButton)
     }
     
     private func setAutoLayout() {
@@ -61,19 +62,10 @@ class MonthNavigationView: UIView {
 }
 
 extension MonthNavigationView {
-    @objc private func previousMonthTapped() {
-        viewModel.previousMonthTapped()
-    }
-    
-    @objc private func nextMonthTapped() {
-        viewModel.nextMonthTapped()
-    }
-    
-    private func createButton(image: String, action: Selector) -> UIButton {
+    private func createButton(image: String) -> UIButton {
         let button = UIButton()
         button.setImage(UIImage(systemName: image), for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: action, for: .touchUpInside)
         return button
     }
 }

@@ -7,103 +7,129 @@
 
 import UIKit
 
-class MatchInfoViewModel {
+import RxSwift
+import RxCocoa
+
+class MatchInfoViewModel: ViewModelType {
+    
+    // MARK: - Properties
+    
     private let firebaseStoreManager = FirebaseStoreManager()
-    var matches: [MatchInfo] = []
-    var filteredMatches: [MatchInfo] = []
-    var todayMatch: [MatchInfo] = []
-    var currentDate = Calendar.current.dateComponents([.year, .month], from: Date()) {
-        didSet {
-            viewUpdateCloser?()
-            monthUpdateCloser?()
-        }
-    }
-    var formattedCurrentYearMonth: String {
-           guard let year = currentDate.year, let month = currentDate.month else { return "" }
-           let formattedYear = String(format: "%02d", year % 100)
-           let formattedMonth = String(format: "%02d", month)
-           return "\(formattedYear)년 \(formattedMonth)월"
-       }
-    var viewUpdateCloser: (() -> Void)?
-    var monthUpdateCloser: (() -> Void)?
+    let matchesSubject = BehaviorSubject<[MatchInfo]>(value: [])
+    private let currentDateSubject = BehaviorSubject<DateComponents>(value: Calendar.current.dateComponents([.year, .month], from: Date()))
     
-    init() {
-        fetchMatchData()
+    // MARK: - Input
+    
+    struct Input {
+        let previousMonthTap: ControlEvent<Void>
+        let nextMonthTap: ControlEvent<Void>
+        let fetchMatches: Observable<Void>
     }
     
-    func previousMonthTapped() {
-        if let currentMonth = currentDate.month, let currentYear = currentDate.year {
-            var newMonth = currentMonth - 1
-            var newYear = currentYear
-            
-            if newMonth < 1 {
-                newMonth = 12
-                newYear -= 1
-            }
-            
-            if newYear < 2023 {
-                newYear = 2023
-                newMonth = 1
-            }
-            
-            currentDate.month = newMonth
-            currentDate.year = newYear
-            setFilterMatchData()
-        }
+    // MARK: - Output
+    
+    struct Output {
+        let filteredMatches: Observable<[MatchInfo]>
+        let formattedCurrentYearMonth: Observable<String>
+        let isEmptyState: Observable<Bool>
     }
     
-    func nextMonthTapped() {
-        if let currentMonth = currentDate.month, let currentYear = currentDate.year {
-            var newMonth = currentMonth + 1
-            var newYear = currentYear
-            
-            if newMonth > 12 {
-                newMonth = 1
-                newYear += 1
+    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+        input.fetchMatches
+            .flatMapLatest { [weak self] in
+                self?.fetchMatchData() ?? .just([])
             }
-            
-            if newYear > 2025 {
-                newYear = 2025
-                newMonth = 12
+            .subscribe { [weak self] matches in
+                self?.matchesSubject.onNext(matches)
             }
-            
-            currentDate.month = newMonth
-            currentDate.year = newYear
-            setFilterMatchData()
-        }
-    }
-    
-    func fetchMatchData() {
-            firebaseStoreManager.fetchMatchesFirestore(collection: "matches") { [weak self] (result: Result<[MatchInfo], Error>) in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let matches):
-                        self?.matches = matches
-                        self?.setFilterMatchData()
-                        self?.setTodayMatch()
-                    case .failure(let error):
-                        print("Error fetching matches: \(error)")
-                    }
+            .disposed(by: disposeBag)
+        
+        input.previousMonthTap
+            .withLatestFrom(currentDateSubject)
+            .map { [weak self]  in
+                self?.updateMonth(dateComponents: $0, change: -1)
+            }
+            .subscribe { [weak self]  newDate in
+                if let newDate = newDate {
+                    self?.currentDateSubject.onNext(newDate)
                 }
             }
-        }
-    
-    func setFilterMatchData() {
-        filteredMatches = matches.filter { match in
-            match.date.contains("\(formattedCurrentYearMonth)")
-        }
-        viewUpdateCloser?()
+            .disposed(by: disposeBag)
+        
+        input.nextMonthTap
+            .withLatestFrom(currentDateSubject)
+            .map { [weak self] in
+                self?.updateMonth(dateComponents: $0, change: 1)
+            }
+            .subscribe { [weak self] newDate in
+                if let newDate = newDate {
+                    self?.currentDateSubject.onNext(newDate)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        let filteredMatches = Observable.combineLatest(matchesSubject, currentDateSubject)
+            .map { matches, currentDate in
+                let formattedYearMonth = self.formatYearMonth(from: currentDate)
+                return matches.filter { $0.date.contains(formattedYearMonth) }
+            }
+        
+        let formattedCurrentYearMonth = currentDateSubject
+            .map { self.formatYearMonth(from: $0) }
+        
+        let isEmptyState = filteredMatches
+            .map { $0.isEmpty }
+        
+        return Output(
+            filteredMatches: filteredMatches,
+            formattedCurrentYearMonth: formattedCurrentYearMonth,
+            isEmptyState: isEmptyState
+        )
     }
     
-    func setTodayMatch() {
-        let date = Date()
-        let formatted = DateFormatter()
-        formatted.dateFormat = "yy년 MM월 dd일"
-        formatted.locale = Locale(identifier: "ko_KR")
-        let formattedDate = formatted.string(from: date)
+    private func fetchMatchData() -> Observable<[MatchInfo]> {
+         return Observable.create { observer in
+             self.firebaseStoreManager.fetchMatchesFirestore(collection: "matches") { (result: Result<[MatchInfo], Error>) in
+                 switch result {
+                 case .success(let matches):
+                     observer.onNext(matches)
+                     observer.onCompleted()
+                 case .failure(let error):
+                     observer.onError(error)
+                 }
+             }
+             return Disposables.create()
+         }
+     }
+    
+    private func updateMonth(dateComponents: DateComponents, change: Int) -> DateComponents {
+        var newDate = dateComponents
+        var newMonth = (newDate.month ?? 1) + change
+        var newYear = newDate.year ?? 2023
         
-        todayMatch = matches.filter { match in
-            match.date.contains(formattedDate)
+        if newMonth < 1 {
+            newMonth = 12
+            newYear -= 1
+        } else if newMonth > 12 {
+            newMonth = 1
+            newYear += 1
         }
+        
+        if newYear < 2023 {
+            newYear = 2023
+            newMonth = 1
+        } else if newYear > 2025 {
+            newYear = 2025
+            newMonth = 12
+        }
+        
+        newDate.month = newMonth
+        newDate.year = newYear
+        return newDate
+    }
+    
+    private func formatYearMonth(from dateComponents: DateComponents) -> String {
+        guard let year = dateComponents.year, let month = dateComponents.month else { return "" }
+        return String(format: "%02d년 %02d월", year % 100, month)
     }
 }
