@@ -10,13 +10,20 @@ import RxSwift
 import RxCocoa
 
 class TodayMatchViewController: UIViewController {
+
+    // MARK: - Components
+
     private let viewModel = TodayMatchViewModel()
     private var todayMatchView: TodayMatchView?
-    private let disposeBag = DisposeBag()
     
+    // MARK: - Properties
+    
+    private let disposeBag = DisposeBag()
     var playerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
     var enemyPlayerDataSource: UICollectionViewDiffableDataSource<Section, Player>?
     
+    // MARK: - Life Cycle
+
     override func loadView() {
         todayMatchView = TodayMatchView()
         self.view = todayMatchView
@@ -31,6 +38,8 @@ class TodayMatchViewController: UIViewController {
         setDataSource()
     }
     
+    // MARK: - UI
+
     private func setupNavigationBar() {
         navigationItem.title = "오늘의 경기"
         navigationItem.largeTitleDisplayMode = .always
@@ -62,6 +71,8 @@ class TodayMatchViewController: UIViewController {
         }
     }
     
+    // MARK: - Bind
+
     private func bindViewModel() {
         let input = TodayMatchViewModel.Input(fetchTrigger: Observable.just(()))
         let output = viewModel.transform(input: input, disposeBag: disposeBag)

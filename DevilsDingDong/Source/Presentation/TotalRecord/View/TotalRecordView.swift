@@ -9,9 +9,14 @@ import UIKit
 import SnapKit
 
 class TotalRecordView: UIView {
+    
+    // MARK: - Properties
+    
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private lazy var scoreTitleStackView: UIStackView = UIStackView()
     
+    // MARK: - Life Cycle
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
@@ -23,7 +28,8 @@ class TotalRecordView: UIView {
     }
 }
 
-// MARK: - Configure
+// MARK: - UI
+
 extension TotalRecordView {
     private func setUI() {
         backgroundColor = .bgColor
@@ -60,7 +66,6 @@ extension TotalRecordView {
     }
 }
 
-// MARK: - Create UI
 extension TotalRecordView {
     private func createTitleLabel(text: String) -> UILabel {
         let label = UILabel()

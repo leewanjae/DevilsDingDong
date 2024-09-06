@@ -13,6 +13,18 @@ struct Section: Hashable {
 }
 
 class TodayMatchView: UIView {
+
+    // MARK: - Properties
+    
+    let playerTitle = UILabel()
+    let manUtdPlayerLabel = UILabel()
+    let enemyPlayerLabel = UILabel()
+    
+    lazy var playerCollectionView = createCollectionView()
+    lazy var enemyPlayerCollectionView = createCollectionView()
+    
+    // MARK: - Components
+
     let noMatchView = NoMatchView()
     let matchStackView = MatchStackView(
         teamName: "N/A",
@@ -26,12 +38,7 @@ class TodayMatchView: UIView {
         stadium: "N/A"
     )
     
-    let playerTitle = UILabel()
-    let manUtdPlayerLabel = UILabel()
-    let enemyPlayerLabel = UILabel()
-    
-    lazy var playerCollectionView = createCollectionView()
-    lazy var enemyPlayerCollectionView = createCollectionView()
+    // MARK: - Life Cycle
     
     init() {
         super.init(frame: .zero)
@@ -43,6 +50,8 @@ class TodayMatchView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UI
+
     private func setUI() {
         backgroundColor = .bgColor
         playerTitle.text = "선수 명단"

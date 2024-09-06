@@ -10,12 +10,16 @@ import RxSwift
 import RxCocoa
 
 class MatchInfoViewController: UIViewController {
+    
+    // MARK: - Properties
+    
     private var matchInfoView = MatchInfoView()
     private let viewModel = MatchInfoViewModel()
     private var output: MatchInfoViewModel.Output? = nil
     private let disposeBag = DisposeBag()
     private var currentFilteredMatches: [MatchInfo] = []
     
+    // MARK: - Life Cycle
     override func loadView() {
         self.view = matchInfoView
     }
@@ -27,6 +31,7 @@ class MatchInfoViewController: UIViewController {
         bindViewModel()
     }
     
+    // MARK: - UI
     private func setNavigationBar() {
         navigationItem.title = "경기 일정"
         navigationItem.largeTitleDisplayMode = .never
@@ -37,6 +42,7 @@ class MatchInfoViewController: UIViewController {
         matchInfoView.tableView.register(MatchInfoCell.self, forCellReuseIdentifier: MatchInfoCell.id)
     }
     
+    // MARK: - bind
     private func bindViewModel() {
         let input = MatchInfoViewModel.Input(
             previousMonthTap: matchInfoView.monthNavigationView.prevButton.rx.tap,
@@ -76,6 +82,7 @@ class MatchInfoViewController: UIViewController {
     }
 }
 
+    // MARK: - Delegate
 extension MatchInfoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UIDevice.current.userInterfaceIdiom == .phone ? 170 : 250

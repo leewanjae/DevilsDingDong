@@ -9,9 +9,14 @@ import UIKit
 import SnapKit
 
 class NoMatchView: UIView {
+
+    // MARK: - Properties
+
     private var characterImageView = UIImageView()
     private var noMatchLabel = UILabel()
     
+    // MARK: - Life Cycle
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
@@ -22,6 +27,8 @@ class NoMatchView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UI
+
     private func setUI() {
         characterImageView = createImage(url: "ch")
         noMatchLabel = createLabel(size: 17, weight: .regular, text: "경기 일정이 없습니다", color: .gray)

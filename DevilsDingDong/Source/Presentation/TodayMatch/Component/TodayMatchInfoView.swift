@@ -9,12 +9,17 @@ import UIKit
 import SnapKit
 
 class TodayMatchInfoView: UIStackView {
+    
+    // MARK: - Properties
+
     private var dateLabel = UILabel()
     private var timeLabel = UILabel()
     private var matchTypeLabel = UILabel()
     private var roundLabel = UILabel()
     private var stadiumLabel = UILabel()
     
+    // MARK: - Life Cycle
+
     init(date: String, time: String, matchType: String, round: String, stadium: String) {
         super.init(frame: .zero)
         setUI(date: date, time: time, matchType: matchType, round: round, stadium: stadium)
@@ -24,6 +29,8 @@ class TodayMatchInfoView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UI
+
     private func setUI(date: String, time: String, matchType: String, round: String, stadium: String) {
         axis = .vertical
         alignment = .center

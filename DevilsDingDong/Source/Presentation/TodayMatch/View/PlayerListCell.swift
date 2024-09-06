@@ -9,6 +9,9 @@ import UIKit
 import SnapKit
 
 class PlayerListCell: UICollectionViewCell {
+
+    // MARK: - Properties
+
     static let id = "PlayerListCell"
     private lazy var playerStackView: UIStackView = {
         let view = UIStackView()
@@ -21,6 +24,8 @@ class PlayerListCell: UICollectionViewCell {
     private lazy var playerPosition = createLabel()
     private lazy var playerName = createLabel()
     
+    // MARK: - Life Cycle
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
@@ -30,9 +35,9 @@ class PlayerListCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
 
-extension PlayerListCell {
+    // MARK: - UI
+
     private func setUI() {
         addSubview(playerStackView)
         

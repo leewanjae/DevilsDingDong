@@ -2,18 +2,20 @@ import UIKit
 import SnapKit
 
 class TotalRecordCell: UICollectionViewCell {
+    
+    // MARK: - Properties
     static let id = "TotalRecordCell"
     private lazy var topDivider = createDivider()
     private lazy var bottomDivider = createDivider()
     
-    private lazy var rankLabel = createScoreDBLabel()
-    private lazy var teamLabel = createScoreDBLabel()
-    private lazy var roundLabel = createScoreDBLabel()
-    private lazy var pointLabel = createScoreDBLabel()
-    private lazy var winLabel = createScoreDBLabel()
-    private lazy var drawLabel = createScoreDBLabel()
-    private lazy var lossLabel = createScoreDBLabel()
-    private lazy var gdLabel = createScoreDBLabel()
+    private lazy var rankLabel = createLabel()
+    private lazy var teamLabel = createLabel()
+    private lazy var roundLabel = createLabel()
+    private lazy var pointLabel = createLabel()
+    private lazy var winLabel = createLabel()
+    private lazy var drawLabel = createLabel()
+    private lazy var lossLabel = createLabel()
+    private lazy var gdLabel = createLabel()
     
     private lazy var logoImage: UIImageView = {
         let image = UIImageView()
@@ -36,6 +38,8 @@ class TotalRecordCell: UICollectionViewCell {
         return stackView
     }()
     
+    // MARK: - Life Cycle
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
@@ -47,7 +51,7 @@ class TotalRecordCell: UICollectionViewCell {
     }
 }
 
-// MARK: - UI Methods
+// MARK: - UI
 extension TotalRecordCell {
     private func setUI() {
         let contentViewItems = [topDivider, scoreDBStackView, bottomDivider]
@@ -91,7 +95,7 @@ extension TotalRecordCell {
         }
     }
     
-    private func createScoreDBLabel() -> UILabel {
+    private func createLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center

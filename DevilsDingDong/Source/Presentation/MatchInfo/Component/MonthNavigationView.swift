@@ -28,6 +28,8 @@ class MonthNavigationView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UI
+
     private func setUI() {
         prevButton = createButton(image: "chevron.left")
         nextButton = createButton(image: "chevron.right")

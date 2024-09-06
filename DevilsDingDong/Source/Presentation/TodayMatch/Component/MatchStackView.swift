@@ -9,9 +9,14 @@ import UIKit
 import SnapKit
 
 class MatchStackView: UIStackView {
+    
+    // MARK: - Properties
+
     private var manLabel: UILabel?
     private var enemyLabel: UILabel?
     private var logoImageView: UIImageView?
+    
+    // MARK: - Life Cycle
     
     init(teamName: String, enemyName: String) {
         super.init(frame: .zero)
@@ -22,6 +27,8 @@ class MatchStackView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UI
+
     private func setUI(teamName: String, enemyName: String) {
         axis = .horizontal
         spacing = 20

@@ -9,10 +9,18 @@ import UIKit
 import SnapKit
 
 class MatchInfoView: UIView {
-    let monthNavigationView = MonthNavigationView()
+    
+    // MARK: - Properties
+
     let tableView = UITableView()
     let emptyCharacter = UIImageView()
     let emptyStateLabel = UILabel()
+
+    // MARK: - Components
+    
+    let monthNavigationView = MonthNavigationView()
+    
+    // MARK: - Life Cycle
 
     init() {
         super.init(frame: .zero)
@@ -23,6 +31,8 @@ class MatchInfoView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - UI
 
     private func setUI() {
         backgroundColor = .bgColor

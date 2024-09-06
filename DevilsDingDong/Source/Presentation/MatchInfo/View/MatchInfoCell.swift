@@ -9,6 +9,9 @@ import UIKit
 import SnapKit
 
 class MatchInfoCell: UITableViewCell {
+
+    // MARK: - Properties
+
     static let id = "MatchInfoCell"
     
     private lazy var container: UIView = {
@@ -34,6 +37,8 @@ class MatchInfoCell: UITableViewCell {
     private lazy var enemy: UILabel = createDynamicLabel(size: 16, weight: .medium)
     private lazy var round = createLabel(font: 12, weight: .medium, color: .subTextColor ?? .black)
     
+    // MARK: - LifeCycle
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
@@ -52,7 +57,7 @@ class MatchInfoCell: UITableViewCell {
     }
 }
 
-// MARK: - UI Methods
+// MARK: - UI
 extension MatchInfoCell {
     private func setUI() {
         contentView.addSubview(container)
