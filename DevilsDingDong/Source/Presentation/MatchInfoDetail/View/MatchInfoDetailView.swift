@@ -50,10 +50,28 @@ extension MatchInfoDetailView {
     }
     
     private func setAutoLayout() {
-        matchResultView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalToSuperview().multipliedBy(0.4)
+        let screenHeight = UIScreen.main.bounds.height
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            
+            if screenHeight <= 667 {
+                matchResultView.snp.makeConstraints {
+                    $0.top.equalToSuperview()
+                    $0.leading.trailing.equalToSuperview()
+                    $0.height.equalToSuperview().multipliedBy(0.55)
+                }
+            } else {
+                matchResultView.snp.makeConstraints {
+                    $0.top.equalToSuperview()
+                    $0.leading.trailing.equalToSuperview()
+                    $0.height.equalToSuperview().multipliedBy(0.5)
+                }
+            }
+        } else {
+            matchResultView.snp.makeConstraints {
+                $0.top.equalToSuperview()
+                $0.leading.trailing.equalToSuperview()
+                $0.height.equalToSuperview().multipliedBy(0.4)
+            }
         }
         
         highlightTitleLabel.snp.makeConstraints {
@@ -62,11 +80,20 @@ extension MatchInfoDetailView {
         }
         
         if UIDevice.current.userInterfaceIdiom == .phone {
-            highlightContainerView.snp.makeConstraints {
-                $0.centerX.equalToSuperview()
-                $0.height.equalTo(snp.height).multipliedBy(0.26)
-                $0.width.equalToSuperview().offset(-30)
-                $0.top.equalTo(highlightTitleLabel.snp.bottom).offset(20)
+            if screenHeight <= 667 {
+                highlightContainerView.snp.makeConstraints {
+                    $0.centerX.equalToSuperview()
+                    $0.height.equalTo(snp.height).multipliedBy(0.25)
+                    $0.width.equalToSuperview().offset(-30)
+                    $0.top.equalTo(highlightTitleLabel.snp.bottom).offset(20)
+                }
+            }else {
+                highlightContainerView.snp.makeConstraints {
+                    $0.centerX.equalToSuperview()
+                    $0.height.equalTo(snp.height).multipliedBy(0.26)
+                    $0.width.equalToSuperview().offset(-30)
+                    $0.top.equalTo(highlightTitleLabel.snp.bottom).offset(20)
+                }
             }
             
             highlightView.snp.makeConstraints {
