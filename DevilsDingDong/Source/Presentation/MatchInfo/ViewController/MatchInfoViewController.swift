@@ -93,7 +93,9 @@ extension MatchInfoViewController: UITableViewDelegate {
         let matchInfo = currentFilteredMatches[indexPath.row]
         
         let detailViewController = MatchInfoDetailViewController(matchInfo: matchInfo)
-        navigationController?.pushViewController(detailViewController, animated: true)
+        if matchInfo.finished {
+            navigationController?.pushViewController(detailViewController, animated: true)
+        }
         
     }
 }
