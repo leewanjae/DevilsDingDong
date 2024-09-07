@@ -21,11 +21,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        MatchInfo.match.forEach { match in
 //            firebase.addFirestore(collection: "matches", document: "\(match.id)", data: match)
 //        }
-        
+          
+        // MARK: - Score 업데이트
 //        let scoreList = ScoreList(scores: Score.scoreDB)
-//                let firebaseStoreManager = FirebaseStoreManager()
-//                firebaseStoreManager.addFirestore(collection: "24-25_Score", document: "score", data: scoreList)
-
+//        firebase.addFirestore(collection: "24-25_Score", document: "score", data: scoreList)
+        
+        // MARK: - 선발 선수 업데이트
+//        firebase.updatePlayerData(collection: <#T##String#>, documentID: <#T##String#>, playerDB: <#T##[Player]?#>, enemyPlayerDB: <#T##[Player]?#>)
         return true
     }
     
