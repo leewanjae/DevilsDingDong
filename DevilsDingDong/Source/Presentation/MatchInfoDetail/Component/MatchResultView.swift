@@ -9,6 +9,9 @@ import UIKit
 import SnapKit
 
 class MatchResultView: UIView {
+
+    // MARK: - Properties
+
     private var scrollView = UIScrollView()
     private var resultTitleLabel = UILabel()
     private var resultContainer = UIView()
@@ -26,6 +29,8 @@ class MatchResultView: UIView {
     var manUtdGoalsView = UIView()
     var enemyGoalsView = UIView()
     
+    // MARK: - Life Cycle
+
     init() {
         super.init(frame: .zero)
         setUI()
@@ -35,6 +40,8 @@ class MatchResultView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - UI
     
     private func setUI() {
         scrollView = createScrollView()

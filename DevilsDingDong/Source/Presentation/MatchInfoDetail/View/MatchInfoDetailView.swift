@@ -10,11 +10,18 @@ import WebKit
 import SnapKit
 
 class MatchInfoDetailView: UIView {
-    var matchResultView = MatchResultView()
+    
+    // MARK: - Properties
+
     var highlightContainerView = UIView()
     var highlightTitleLabel = UILabel()
     var highlightView = WKWebView()
+
+    // MARK: - Components
+    
+    var matchResultView = MatchResultView()
  
+    // MARK: - Life Cycle
     init() {
         super.init(frame: .zero)
         setUI()
@@ -26,7 +33,8 @@ class MatchInfoDetailView: UIView {
     }
 }
 
-// MARK: - UI Methods
+// MARK: - UI
+
 extension MatchInfoDetailView {
     private func setUI() {
         backgroundColor = UIColor.bg

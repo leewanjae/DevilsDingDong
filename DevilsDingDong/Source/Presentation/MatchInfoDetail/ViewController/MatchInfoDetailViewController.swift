@@ -8,8 +8,16 @@
 import UIKit
 
 class MatchInfoDetailViewController: UIViewController {
+    
+    // MARK: - Properties
+    
     private var matchInfo: MatchInfo
+    
+    // MARK: - Components
+    
     private var matchInfoDetailView = MatchInfoDetailView()
+    
+    // MARK: - Life Cycle
     
     init(matchInfo: MatchInfo) {
         self.matchInfo = matchInfo
@@ -28,6 +36,8 @@ class MatchInfoDetailViewController: UIViewController {
         super.viewDidLoad()
         dataBinding(matchInfo: matchInfo)
     }
+    
+    // MARK: - bind
     
     private func dataBinding(matchInfo: MatchInfo) {
         // MatchResultView 설정
