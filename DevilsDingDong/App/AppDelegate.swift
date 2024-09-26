@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        firebase.addFirestore(collection: "24-25_Score", document: "score", data: scoreList)
         
         // MARK: - 선발 선수 업데이트
-//        firebase.updatePlayerData(collection: <#T##String#>, documentID: <#T##String#>, playerDB: <#T##[Player]?#>, enemyPlayerDB: <#T##[Player]?#>)
+//        firebase.updatePlayerData(collection: "matches", documentID: "244", playerDB: Player.playerDB, enemyPlayerDB: Player.enemyPlayerDB)
         return true
     }
     

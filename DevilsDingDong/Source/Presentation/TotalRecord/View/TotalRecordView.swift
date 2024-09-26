@@ -11,9 +11,18 @@ import SnapKit
 class TotalRecordView: UIView {
     
     // MARK: - Properties
+
+    let tableView = UITableView()
+    let scoreContainer = UIView()
     
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    private lazy var scoreTitleStackView: UIStackView = UIStackView()
+    // MARK: - Components
+    
+    let navTitleView = NavTitleView()
+    let rankerView2 = RankerView(rankLabelsize: 20, teamLabelsize: 16, weight: .medium, circleSize: CGSize(width: 100, height: 100), ribbonSize: CGSize(width: 100, height: 116), logoSize: CGSize(width: 62.73, height: 63.64))
+    let rankerView1 = RankerView(rankLabelsize: 24, teamLabelsize: 20, weight: .semibold, circleSize: CGSize(width: 120, height: 120), ribbonSize: CGSize(width: 120, height: 152), logoSize: CGSize(width: 75.27, height: 76.36))
+    let rankerView3 = RankerView(rankLabelsize: 20, teamLabelsize: 16, weight: .medium, circleSize: CGSize(width: 100, height: 100), ribbonSize: CGSize(width: 100, height: 116), logoSize: CGSize(width: 62.73, height: 63.64))
+    
+    let scoreTitleView = ScoreTitleView()
     
     // MARK: - Life Cycle
 
@@ -34,47 +43,62 @@ extension TotalRecordView {
     private func setUI() {
         backgroundColor = .bgColor
         
-        collectionView.backgroundColor = .white
-        collectionView.layer.cornerRadius = 12
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.layer.shadowOpacity = 0.1
+        scoreContainer.backgroundColor = .white
+        scoreContainer.layer.cornerRadius = 15
         
-        let titles = ["순위", "팀", "경기", "승", "무", "패", "승점", "득실"]
-        let labels = titles.map { createTitleLabel(text: $0) }
-        scoreTitleStackView = UIStackView(arrangedSubviews: labels)
-        scoreTitleStackView.axis = .horizontal
-        scoreTitleStackView.alignment = .fill
-        scoreTitleStackView.distribution = .fillEqually
+        tableView.backgroundColor = .white
+        tableView.layer.cornerRadius = 12
+        tableView.showsVerticalScrollIndicator = false
         
-        self.addSubview(scoreTitleStackView)
-        self.addSubview(collectionView)
+        scoreContainer.addSubview(scoreTitleView)
+        scoreContainer.addSubview(tableView)
+        
+        addSubview(navTitleView)
+        addSubview(rankerView2)
+        addSubview(rankerView1)
+        addSubview(rankerView3)
+        addSubview(scoreContainer)
     }
     
     private func setAutoLayout() {
         let safeArea = self.safeAreaLayoutGuide
-        scoreTitleStackView.snp.makeConstraints {
-            $0.top.equalTo(safeArea.snp.top).offset(20)
-            $0.leading.equalToSuperview().offset(10)
-            $0.trailing.equalToSuperview().offset(-10)
+        navTitleView.snp.makeConstraints {
+            $0.top.equalTo(safeArea.snp.top)
+            $0.leading.trailing.equalToSuperview()
         }
         
-        collectionView.snp.makeConstraints {
-            $0.top.equalTo(scoreTitleStackView.snp.bottom).offset(10)
-            $0.bottom.equalTo(safeArea.snp.bottom)
-            $0.leading.trailing.equalTo(scoreTitleStackView)
+        rankerView2.snp.makeConstraints {
+            $0.top.equalTo(navTitleView.snp.bottom).offset(71)
+            $0.leading.equalToSuperview().offset(31)
+            $0.bottom.equalTo(scoreContainer.snp.top)
         }
-    }
-}
 
-extension TotalRecordView {
-    private func createTitleLabel(text: String) -> UILabel {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-        label.text = text
-        return label
+        rankerView1.snp.makeConstraints {
+            $0.top.equalTo(navTitleView.snp.bottom).offset(24)
+            $0.leading.equalTo(rankerView2.snp.trailing).offset(6)
+            $0.trailing.equalTo(rankerView3.snp.leading).offset(-6)
+            $0.bottom.equalTo(scoreContainer.snp.top)
+        }
+
+        rankerView3.snp.makeConstraints {
+            $0.top.equalTo(navTitleView.snp.bottom).offset(71)
+            $0.trailing.equalToSuperview().offset(-30)
+            $0.bottom.equalTo(scoreContainer.snp.top)
+        }
+        
+        scoreContainer.snp.makeConstraints {
+            $0.top.equalTo(rankerView2.snp.bottom)
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().offset(-16)
+            $0.bottom.equalTo(safeArea.snp.bottom)
+            $0.width.equalTo(361)
+            $0.height.equalTo(434)
+        }
+        
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(scoreTitleView.snp.bottom).offset(31)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(scoreContainer.snp.bottom)
+        }
     }
 }

@@ -1,143 +1,131 @@
 import UIKit
 import SnapKit
 
-class TotalRecordCell: UICollectionViewCell {
+class TotalRecordCell: UITableViewCell {
     
     // MARK: - Properties
     static let id = "TotalRecordCell"
-    private lazy var topDivider = createDivider()
-    private lazy var bottomDivider = createDivider()
-    
-    private lazy var rankLabel = createLabel()
-    private lazy var teamLabel = createLabel()
-    private lazy var roundLabel = createLabel()
-    private lazy var pointLabel = createLabel()
-    private lazy var winLabel = createLabel()
-    private lazy var drawLabel = createLabel()
-    private lazy var lossLabel = createLabel()
-    private lazy var gdLabel = createLabel()
-    
-    private lazy var logoImage: UIImageView = {
-        let image = UIImageView()
-        image.contentMode = .scaleAspectFit
-        return image
-    }()
-    
-    private lazy var teamView: UIView = {
-        let view = UIView()
-        return view
-    }()
-    
-    private lazy var scoreDBStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [
-            rankLabel, teamView, roundLabel, winLabel, drawLabel, lossLabel, pointLabel, gdLabel
-        ])
-        stackView.axis = .horizontal
-        stackView.alignment = .fill
-        stackView.distribution = .fillEqually
-        return stackView
-    }()
-    
+
+    let rankLabel = UILabel()
+    let teamLabel = UILabel()
+    let roundLabel = UILabel()
+    let winLabel = UILabel()
+    let drawLabel = UILabel()
+    let lossLabel = UILabel()
+    let pointLabel = UILabel()
+    let gdLabel = UILabel()
+    let logoImage = UIImageView()
+
     // MARK: - Life Cycle
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUI()
         setAutoLayout()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
 
-// MARK: - UI
-extension TotalRecordCell {
+    // MARK: - UI
+
     private func setUI() {
-        let contentViewItems = [topDivider, scoreDBStackView, bottomDivider]
-        contentViewItems.forEach { contentView.addSubview($0) }
-       
-        let teamViewItems = [logoImage, teamLabel]
-        teamViewItems.forEach { teamView.addSubview($0) }
+        [rankLabel, teamLabel, roundLabel, winLabel, drawLabel, lossLabel, pointLabel, gdLabel, logoImage].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            contentView.addSubview($0)
+        }
+
+        logoImage.contentMode = .scaleAspectFit
+
+        teamLabel.textAlignment = .center
+
+        [rankLabel, roundLabel, winLabel, drawLabel, lossLabel, pointLabel, gdLabel].forEach {
+            $0.textAlignment = .center
+            $0.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+            $0.adjustsFontSizeToFitWidth = true
+            $0.minimumScaleFactor = 0.5
+        }
     }
-    
+
     private func setAutoLayout() {
-        topDivider.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(contentView.snp.top).offset(5)
+        rankLabel.snp.makeConstraints {
+            $0.centerY.equalTo(snp.centerY)
+            $0.leading.equalToSuperview().offset(16)
+            $0.width.height.equalTo(22)
         }
-        
-        scoreDBStackView.snp.makeConstraints {
-            $0.top.equalTo(topDivider.snp.bottom).offset(10)
-            $0.bottom.equalTo(bottomDivider.snp.top).offset(-10)
-            $0.leading.trailing.equalToSuperview()
-        }
-        
-        bottomDivider.snp.makeConstraints {
-            $0.bottom.equalTo(contentView.snp.bottom).offset(-5)
-            $0.leading.trailing.equalToSuperview()
-        }
-        
+
         logoImage.snp.makeConstraints {
-            $0.width.height.equalTo(30)
-            $0.centerX.equalTo(teamView.snp.centerX)
-            $0.top.equalTo(teamView.snp.top)
+            $0.top.equalTo(snp.top).offset(12)
+            $0.centerX.equalTo(teamLabel.snp.centerX)
+            $0.width.height.equalTo(26)
         }
-        
+
         teamLabel.snp.makeConstraints {
-            $0.top.equalTo(logoImage.snp.bottom).offset(5)
-            $0.bottom.equalTo(teamView.snp.bottom)
-            $0.centerX.equalTo(teamView.snp.centerX)
+            $0.leading.equalTo(rankLabel.snp.trailing).offset(11)
+            $0.top.equalTo(logoImage.snp.bottom)
+            $0.bottom.equalTo(snp.bottom).offset(-4)
+            $0.width.equalTo(61)
+            $0.height.equalTo(26)
         }
-        
-        teamView.snp.makeConstraints {
-            $0.centerY.equalTo(scoreDBStackView.snp.centerY)
+      
+        roundLabel.snp.makeConstraints {
+            $0.top.equalTo(rankLabel.snp.top)
+            $0.leading.equalTo(teamLabel.snp.trailing).offset(20)
+            $0.width.height.equalTo(22)
+        }
+
+        winLabel.snp.makeConstraints {
+            $0.top.equalTo(rankLabel.snp.top)
+            $0.leading.equalTo(roundLabel.snp.trailing).offset(16)
+            $0.width.height.equalTo(22)
+        }
+
+        drawLabel.snp.makeConstraints {
+            $0.top.equalTo(rankLabel.snp.top)
+            $0.leading.equalTo(winLabel.snp.trailing).offset(16)
+            $0.width.height.equalTo(22)
+        }
+
+        lossLabel.snp.makeConstraints {
+            $0.top.equalTo(rankLabel.snp.top)
+            $0.leading.equalTo(drawLabel.snp.trailing).offset(16)
+            $0.width.height.equalTo(22)
+        }
+
+        pointLabel.snp.makeConstraints {
+            $0.top.equalTo(rankLabel.snp.top)
+            $0.leading.equalTo(lossLabel.snp.trailing).offset(16)
+            $0.width.height.equalTo(22)
+        }
+
+        gdLabel.snp.makeConstraints {
+            $0.top.equalTo(rankLabel.snp.top)
+            $0.leading.equalTo(pointLabel.snp.trailing).offset(16)
+            $0.width.height.equalTo(22)
         }
     }
-    
-    private func createLabel() -> UILabel {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-        return label
-    }
-    
-    private func createDivider() -> UIView {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .lightGray
-        view.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        view.isHidden = false
-        return view
-    }
-    
-    func configure(rankLabel: String, teamLabel: String, roundLabel: String, winLabel: String, drawLabel: String, lossLabel: String, pointLabel: String, gdLabel: String, logoURL: String, isFirstCell: Bool, isLastCell: Bool) {
-        self.rankLabel.text = rankLabel
-        self.teamLabel.text = teamLabel
-        self.roundLabel.text = roundLabel
-        self.winLabel.text = winLabel
-        self.drawLabel.text = drawLabel
-        self.lossLabel.text = lossLabel
-        self.pointLabel.text = pointLabel
-        self.gdLabel.text = gdLabel
-        self.logoImage.image = UIImage(named: teamLabel)
+
+    func configure(rank: String, team: String, round: String, win: String, draw: String, loss: String, point: String, gd: String, logoImageName: String) {
+        rankLabel.text = rank
+        teamLabel.text = team
+        roundLabel.text = round
+        winLabel.text = win
+        drawLabel.text = draw
+        lossLabel.text = loss
+        pointLabel.text = point
+        gdLabel.text = gd
+        logoImage.image = UIImage(named: logoImageName)
+
+        rankLabel.font = .systemFont(ofSize: 20, weight: .bold)
+        rankLabel.textColor = .accent
         
-        self.topDivider.isHidden = isFirstCell
-        self.bottomDivider.isHidden = isLastCell
-        
-        self.rankLabel.font = .systemFont(ofSize: 16, weight: .bold)
-        switch rankLabel {
-        case "1", "2", "3", "4":
-            self.rankLabel.textColor = .rank14
-        case "5", "6":
-            self.rankLabel.textColor = .rank56
-        case "18", "19", "20":
-            self.rankLabel.textColor = .lightGray
-        default:
-            self.rankLabel.textColor = .black
-        }
+        teamLabel.font = .systemFont(ofSize: 14, weight: .medium)
+        roundLabel.font = .systemFont(ofSize: 16, weight: .medium)
+        winLabel.font = .systemFont(ofSize: 16, weight: .medium)
+        drawLabel.font = .systemFont(ofSize: 16, weight: .medium)
+        lossLabel.font = .systemFont(ofSize: 16, weight: .medium)
+        pointLabel.font = .systemFont(ofSize: 16, weight: .medium)
+        gdLabel.font = .systemFont(ofSize: 16, weight: .medium)
     }
 }
