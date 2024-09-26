@@ -15,36 +15,30 @@ class TotalRecordViewController: UIViewController {
     
     private let viewModel = TotalRecordViewModel()
     private let disposeBag = DisposeBag()
-
+    
     // MARK: - Componets
     
     private let totalRecordView = TotalRecordView()
     
     //MARK: - Life Cycle
-
+    
     override func loadView() {
         view = totalRecordView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUI()
         registerCell()
+        totalRecordView.tableView.rowHeight = 67
+        totalRecordView.tableView.estimatedRowHeight = 67
+
         bindViewModel()
     }
-
+    
     // MARK: - UI
     
-    private func setUI() {
-        navigationItem.title = "리그 순위"
-        navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
-        totalRecordView.collectionView.delegate = self
-    }
-    
     private func registerCell() {
-        totalRecordView.collectionView.register(TotalRecordCell.self, forCellWithReuseIdentifier: TotalRecordCell.id)
+        totalRecordView.tableView.register(TotalRecordCell.self, forCellReuseIdentifier: TotalRecordCell.id)
     }
     
     // MARK: - Bind
@@ -55,36 +49,27 @@ class TotalRecordViewController: UIViewController {
         
         output.scores
             .observe(on: MainScheduler.instance)
-            .bind(to: totalRecordView.collectionView.rx.items(cellIdentifier: TotalRecordCell.id, cellType: TotalRecordCell.self)) { index, score, cell in
-                let isFirstCell = index == 0
-                let isLastCell = index == (try! output.scores.value().count) - 1
+            .subscribe(onNext: {[weak self] scores in
+                guard let self = self else { return }
+                if scores.count >= 3 {
+                    self.totalRecordView.rankerView1.configure(rank: "\(scores[0].rank)위", team: scores[0].team, logo: scores[0].team)
+                    self.totalRecordView.rankerView2.configure(rank: "\(scores[1].rank)위", team: scores[1].team, logo: scores[1].team)
+                    self.totalRecordView.rankerView3.configure(rank: "\(scores[2].rank)위", team: scores[2].team, logo: scores[2].team)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        output.scores
+            .observe(on: MainScheduler.instance)
+            .bind(to: totalRecordView.tableView.rx.items(cellIdentifier: TotalRecordCell.id, cellType: TotalRecordCell.self)) { row, item, cell in
                 cell.configure(
-                    rankLabel: "\(score.rank)",
-                    teamLabel: score.team,
-                    roundLabel: "\(score.round)",
-                    winLabel: "\(score.win)",
-                    drawLabel: "\(score.draw)",
-                    lossLabel: "\(score.loss)",
-                    pointLabel: "\(score.point)",
-                    gdLabel: "\(score.gd )",
-                    logoURL: score.team,
-                    isFirstCell: isFirstCell,
-                    isLastCell: isLastCell
-                )
+                    rank: "\(item.rank)",
+                    team: item.team,
+                    round: item.round,
+                    win: "\(item.win)",
+                    draw: "\(item.draw)",
+                    loss: "\(item.loss)", point: "\(item.point)", gd: "\(item.gd)", logoImageName: item.team)
             }
             .disposed(by: disposeBag)
     }
 }
-
-// MARK: - Delegate
-
-extension TotalRecordViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .zero
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.bounds.width
-        return CGSize(width: width, height: 80)
-    }
-}
-

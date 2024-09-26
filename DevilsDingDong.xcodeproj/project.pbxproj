@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -107,6 +107,10 @@
 		CCD931002C183395009A6D42 /* TodayMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayMatchView.swift; sourceTree = "<group>"; };
 		CCD931022C1833A6009A6D42 /* TotalRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRecordView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		CCDEA5EC2CA1358C00911FFF /* Component */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Component; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		CC3780722BE9E95A009313EA /* Frameworks */ = {
@@ -415,6 +419,7 @@
 		CCD930FF2C18333F009A6D42 /* TotalRecord */ = {
 			isa = PBXGroup;
 			children = (
+				CCDEA5EC2CA1358C00911FFF /* Component */,
 				CC6B4B622C80397800618A38 /* View */,
 				CC6B4B6B2C80412200618A38 /* ViewController */,
 				CC6B4B632C80398800618A38 /* ViewModel */,
@@ -436,6 +441,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				CCDEA5EC2CA1358C00911FFF /* Component */,
 			);
 			name = DevilsDingDong;
 			packageProductDependencies = (
